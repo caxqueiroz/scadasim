@@ -1,0 +1,246 @@
+import inet.nodes.inet.Router;
+import rease.nodes.inet.InetUserHost;
+import rease.nodes.inet.BackupServer;
+import rease.nodes.inet.NameServer;
+import rease.nodes.inet.InteractiveServer;
+import rease.nodes.inet.MailServer;
+import rease.nodes.inet.WebServer;
+import rease.nodes.inet.StreamingServer;
+import rease.nodes.inet.TraceRouter;
+import rease.base.ConnectionManager;
+import rease.base.TrafficProfileManager;
+import rease.networklayer.autorouting.TGMNetworkConfigurator;
+
+channel server2edge extends ned.DatarateChannel
+{
+    parameters:
+        delay = 1us;
+        datarate = 10Mbps;
+}
+
+channel host2edge extends ned.DatarateChannel
+{
+    parameters:
+        delay = 1us;
+        datarate = 0.128Mbps;
+}
+channel edge2host extends ned.DatarateChannel
+{
+    parameters:
+        delay = 1us;
+        datarate = 0.768Mbps;
+}
+channel edge2gateway extends ned.DatarateChannel
+{
+    parameters:
+        delay = 1us;
+        datarate = 155Mbps;
+}
+channel gateway2core extends ned.DatarateChannel
+{
+    parameters:
+        delay = 1us;
+        datarate = 1000Mbps;
+}
+channel core2core extends ned.DatarateChannel
+{
+    parameters:
+        delay = 1us;
+        datarate = 2500Mbps;
+}
+channel stub2stub extends ned.DatarateChannel
+{
+    parameters:
+        delay = 1us;
+        datarate = 5000Mbps;
+}
+channel stub2transit extends ned.DatarateChannel
+{
+    parameters:
+        delay = 1us;
+        datarate = 5000Mbps;
+}
+channel transit2transit extends ned.DatarateChannel
+{
+    parameters:
+        delay = 1us;
+        datarate = 10000Mbps;
+}
+
+module Internet
+{
+    parameters:
+        @Internet();
+    submodules:
+        tgmNetworkConfigurator: TGMNetworkConfigurator {
+            parameters:
+                totalCountOfAS = 3;
+                @display("p=20,20;i=abstract/table_s");
+        }
+        connectionManager: ConnectionManager {
+            parameters:
+                @display("p=60,20;i=block/classifier_s");
+        }
+        trafficProfileManager: TrafficProfileManager {
+            parameters:
+                @display("p=100,20;i=block/cogwheel_s");
+        }
+
+        tas0: TAS0 {
+            parameters:
+                @AS();
+                @display("i=misc/globe_s");
+        }
+        sas1: SAS1 {
+            parameters:
+                @AS();
+                @display("i=misc/cloud_s");
+        }
+        sas2: SAS2 {
+            parameters:
+                @AS();
+                @display("i=misc/cloud_s");
+        }
+
+    connections:
+        tas0.pppg++ <--> stub2transit <--> sas1.pppg++;
+        tas0.pppg++ <--> stub2transit <--> sas2.pppg++;
+        sas1.pppg++ <--> stub2stub <--> sas2.pppg++;
+
+}
+
+network Inet extends Internet
+{
+    parameters:
+}
+
+module TAS0
+{
+    gates:
+        inout pppg[];
+    submodules:
+        connectionManager: ConnectionManager {
+            parameters:
+                @display("p=20,20;i=block/classifier_s");
+        }
+
+        core0: Router {
+            parameters:
+                @RL();
+                @CoreRouter();
+                @display("i=abstract/switch");
+        }
+        gw1: Router {
+            parameters:
+                @RL();
+                @display("i=abstract/router2");
+        }
+        edge2: Router {
+            parameters:
+                @RL();
+                @display("i=abstract/router");
+        }
+        host_WebServer5: WebServer {
+            parameters:
+                @RL();
+                @display("i=device/laptop");
+        }
+        host6: InetUserHost {
+            parameters:
+                @RL();
+                @display("i=device/laptop");
+        }
+    connections:
+        pppg++ <--> core0.pppg++;
+        pppg++ <--> core0.pppg++;
+
+        core0.pppg++ <--> gateway2core <--> gw1.pppg++;
+        gw1.pppg++ <--> edge2gateway <--> edge2.pppg++;
+        host_WebServer5.pppg$o++ --> server2edge --> edge2.pppg$i++;
+        edge2.pppg$o++ --> server2edge --> host_WebServer5.pppg$i++;
+        host6.pppg$o++ --> host2edge --> edge2.pppg$i++;
+        edge2.pppg$o++ --> edge2host --> host6.pppg$i++;
+}
+
+module SAS1
+{
+    gates:
+        inout pppg[];
+    submodules:
+        connectionManager: ConnectionManager {
+            parameters:
+                @display("p=20,20;i=block/classifier_s");
+        }
+
+        core0: Router {
+            parameters:
+                @RL();
+                @CoreRouter();
+                @display("i=abstract/switch");
+        }
+        gw1: Router {
+            parameters:
+                @RL();
+                @display("i=abstract/router2");
+        }
+        edge6: Router {
+            parameters:
+                @RL();
+                @display("i=abstract/router");
+        }
+        host_WebServer23: WebServer {
+            parameters:
+                @RL();
+                @display("i=device/laptop");
+        }
+    connections:
+        pppg++ <--> core0.pppg++;
+        pppg++ <--> core0.pppg++;
+
+        core0.pppg++ <--> gateway2core <--> gw1.pppg++;
+        gw1.pppg++ <--> edge2gateway <--> edge6.pppg++;
+        host_WebServer23.pppg$o++ --> server2edge --> edge6.pppg$i++;
+        edge6.pppg$o++ --> server2edge --> host_WebServer23.pppg$i++;
+}
+
+module SAS2
+{
+    gates:
+        inout pppg[];
+    submodules:
+        connectionManager: ConnectionManager {
+            parameters:
+                @display("p=20,20;i=block/classifier_s");
+        }
+
+        core0: Router {
+            parameters:
+                @RL();
+                @CoreRouter();
+                @display("i=abstract/switch");
+        }
+        gw1: Router {
+            parameters:
+                @RL();
+                @display("i=abstract/router2");
+        }
+        edge4: Router {
+            parameters:
+                @RL();
+                @display("i=abstract/router");
+        }
+        host_WebServer13: WebServer {
+            parameters:
+                @RL();
+                @display("i=device/laptop");
+        }
+    connections:
+        pppg++ <--> core0.pppg++;
+        pppg++ <--> core0.pppg++;
+
+        core0.pppg++ <--> gateway2core <--> gw1.pppg++;
+        gw1.pppg++ <--> edge2gateway <--> edge4.pppg++;
+        host_WebServer13.pppg$o++ --> server2edge --> edge4.pppg$i++;
+        edge4.pppg$o++ --> server2edge --> host_WebServer13.pppg$i++;
+}
+

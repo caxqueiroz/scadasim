@@ -1,0 +1,13 @@
+<Profile>
+	<Id><3>
+	<Label><Web Traffic>
+	<RequestLength><200>
+	<RequestsPerSession><1>
+	<ReplyLength><1000>
+	<ReplyPerRequest><1>
+	<TimeBetweenRequests><1.0>
+	<TimeToRespond><0.5>
+	<TimeBetweenSessions><1.0>
+	<Ratio><36.0>
+	<WANRatio><73.0>
+</Profile>

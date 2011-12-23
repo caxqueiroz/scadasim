@@ -1,0 +1,223 @@
+import rease.nodes.inet.DDoSZombie;
+import inet.nodes.inet.Router;
+import rease.nodes.inet.InetUserHost;
+import rease.nodes.inet.BackupServer;
+import rease.nodes.inet.NameServer;
+import rease.nodes.inet.DatabaseServer;
+import rease.nodes.inet.MailServer;
+import rease.nodes.inet.WebServer;
+import rease.nodes.inet.StreamingServer;
+import rease.nodes.inet.TraceRouter;
+import rease.base.ConnectionManager;
+import rease.base.TrafficProfileManager;
+import rease.networklayer.autorouting.TGMNetworkConfigurator;
+
+
+channel server2edge extends ned.DatarateChannel
+{
+    parameters:
+        delay = 10us;
+        datarate = 0.128Mbps;
+}
+
+channel host2edge extends ned.DatarateChannel
+{
+    parameters:
+        delay = 100us;
+        datarate = 0.128Mbps;
+}
+channel edge2host extends ned.DatarateChannel
+{
+    parameters:
+        delay = 10us;
+        datarate = 0.256Mbps;
+}
+channel edge2gateway extends ned.DatarateChannel
+{
+    parameters:
+        delay = 1us;
+        datarate = 155Mbps;
+}
+channel gateway2core extends ned.DatarateChannel
+{
+    parameters:
+        delay = 1us;
+        datarate = 1000Mbps;
+}
+channel core2core extends ned.DatarateChannel
+{
+    parameters:
+        delay = 1us;
+        datarate = 2500Mbps;
+}
+channel stub2stub extends ned.DatarateChannel
+{
+    parameters:
+        delay = 1us;
+        datarate = 5000Mbps;
+}
+channel stub2transit extends ned.DatarateChannel
+{
+    parameters:
+        delay = 1us;
+        datarate = 5000Mbps;
+}
+channel transit2transit extends ned.DatarateChannel
+{
+    parameters:
+        delay = 1us;
+        datarate = 10000Mbps;
+}
+
+module Internet
+{
+    parameters:
+        @Internet();
+    submodules:
+        tgmNetworkConfigurator: TGMNetworkConfigurator {
+            parameters:
+                totalCountOfAS = 2;
+                @display("p=119,23;i=abstract/table_s");
+        }
+        connectionManager: ConnectionManager {
+            parameters:
+                @display("p=311,125;i=block/classifier_s");
+        }
+        trafficProfileManager: TrafficProfileManager {
+            parameters:
+                @display("p=275,32;i=block/cogwheel_s");
+        }
+
+        corporate: Corporate {
+            parameters:
+                @AS();
+                @display("i=misc/globe_s;p=82,225");
+        }
+
+
+
+        field: Field {
+            parameters:
+                @AS();
+                @display("i=misc/globe_s;p=230,225");
+        }
+
+
+
+    connections:
+        corporate.pppg++ <--> stub2transit <--> field.pppg++;
+
+        //fn0.pppg++ <--> stub2stub <--> fn1.pppg++;
+
+}
+
+network Inet extends Internet
+{
+    parameters:
+    submodules:
+}
+
+module Corporate
+{
+    gates:
+        inout pppg[];
+    submodules:
+        connectionManager: ConnectionManager {
+            parameters:
+                @display("p=93,45;i=block/classifier_s");
+        }
+
+        core0: Router {
+            parameters:
+                @RL();
+                @CoreRouter();
+                @display("i=abstract/switch;p=279,65");
+        }
+        gw1: Router {
+            parameters:
+                @RL();
+                @display("i=abstract/router2;p=377,96");
+        }
+
+        edge3: Router {
+            parameters:
+                @RL();
+                @display("i=abstract/router;p=499,191");
+        }
+        host_userHost: InetUserHost {
+            parameters:
+                @RL();
+                @display("i=device/laptop;p=318,224");
+        }
+        host_HMIServer: WebServer {
+            parameters:
+                @RL();
+                @display("i=device/laptop;p=628,220");
+        }
+        host_MTU: WebServer {
+            parameters:
+                @RL();
+                @display("i=device/laptop;p=610,116");
+        }
+    connections:
+        pppg++ <--> core0.pppg++;
+        core0.pppg++ <--> gateway2core <--> gw1.pppg++;
+
+        gw1.pppg++ <--> edge2gateway <--> edge3.pppg++;
+        host_MTU.pppg$o++ --> host2edge --> edge3.pppg$i++;
+        edge3.pppg$o++ --> edge2host --> host_MTU.pppg$i++;
+        host_userHost.pppg$o++ --> host2edge --> edge3.pppg$i++;
+        edge3.pppg$o++ --> edge2host --> host_userHost.pppg$i++;
+        host_HMIServer.pppg$o++ --> host2edge --> edge3.pppg$i++;
+        edge3.pppg$o++ --> edge2host --> host_HMIServer.pppg$i++;
+}
+
+module Field
+{
+    gates:
+        inout pppg[];
+    submodules:
+        connectionManager: ConnectionManager {
+            parameters:
+                @display("p=93,45;i=block/classifier_s");
+        }
+
+        core0: Router {
+            parameters:
+                @RL();
+                @CoreRouter();
+                @display("i=abstract/switch;p=279,65");
+        }
+        gw1: Router {
+            parameters:
+                @RL();
+                @display("i=abstract/router2;p=377,96");
+        }
+
+        edge3: Router {
+            parameters:
+                @RL();
+                @display("i=abstract/router;p=499,191");
+        }
+        host_PLC0: WebServer {
+            parameters:
+                @RL();
+                @display("i=device/laptop;p=318,224");
+        }
+        host_PLC1: WebServer {
+            parameters:
+                @RL();
+                @display("i=device/laptop;p=628,220");
+        }
+    connections:
+        pppg++ <--> core0.pppg++;
+        core0.pppg++ <--> gateway2core <--> gw1.pppg++;
+
+        gw1.pppg++ <--> edge2gateway <--> edge3.pppg++;
+
+        host_PLC0.pppg$o++ --> host2edge --> edge3.pppg$i++;
+        edge3.pppg$o++ --> edge2host --> host_PLC0.pppg$i++;
+        host_PLC1.pppg$o++ --> host2edge --> edge3.pppg$i++;
+        edge3.pppg$o++ --> edge2host --> host_PLC1.pppg$i++;
+}
+
