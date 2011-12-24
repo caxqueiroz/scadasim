@@ -48,6 +48,7 @@ INCLUDE_PATH = \
     -Iapplications/udpApp \
     -Iapplications/worm \
     -Ibase \
+    -Iexternal \
     -Inetworklayer \
     -Inetworklayer/autorouting \
     -Inetworklayer/contract \
@@ -90,6 +91,12 @@ OBJS = \
     $O/applications/worm/UDPWormVictim.o \
     $O/base/ConnectionManager.o \
     $O/base/TrafficProfileManager.o \
+    $O/external/ModbusGate.o \
+    $O/external/SSGate.o \
+    $O/external/SSProxy.o \
+    $O/external/SSScheduler.o \
+    $O/external/SSThread.o \
+    $O/external/modbus.o \
     $O/networklayer/autorouting/TGMNetworkConfigurator.o \
     $O/networklayer/ipv4/IP_hack.o \
     $O/networklayer/queue/DropTailTraceQueue.o \
@@ -194,6 +201,7 @@ clean:
 	-rm -f applications/udpApp/*_m.cc applications/udpApp/*_m.h
 	-rm -f applications/worm/*_m.cc applications/worm/*_m.h
 	-rm -f base/*_m.cc base/*_m.h
+	-rm -f external/*_m.cc external/*_m.h
 	-rm -f networklayer/*_m.cc networklayer/*_m.h
 	-rm -f networklayer/autorouting/*_m.cc networklayer/autorouting/*_m.h
 	-rm -f networklayer/contract/*_m.cc networklayer/contract/*_m.h
@@ -211,7 +219,7 @@ cleanall: clean
 	-rm -rf $(PROJECT_OUTPUT_DIR)
 
 depend:
-	$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc applications/*.cc applications/ddos/*.cc applications/generic/*.cc applications/modbusApp/*.cc applications/pingApp/*.cc applications/tcpApp/*.cc applications/udpApp/*.cc applications/worm/*.cc base/*.cc networklayer/*.cc networklayer/autorouting/*.cc networklayer/contract/*.cc networklayer/ipv4/*.cc networklayer/queue/*.cc nodes/*.cc nodes/inet/*.cc transport/*.cc transport/contract/*.cc transport/tcp/*.cc transport/udp/*.cc util/*.cc
+	$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc applications/*.cc applications/ddos/*.cc applications/generic/*.cc applications/modbusApp/*.cc applications/pingApp/*.cc applications/tcpApp/*.cc applications/udpApp/*.cc applications/worm/*.cc base/*.cc external/*.cc networklayer/*.cc networklayer/autorouting/*.cc networklayer/contract/*.cc networklayer/ipv4/*.cc networklayer/queue/*.cc nodes/*.cc nodes/inet/*.cc transport/*.cc transport/contract/*.cc transport/tcp/*.cc transport/udp/*.cc util/*.cc
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 $O/applications/ddos/TribeFloodNetwork.o: applications/ddos/TribeFloodNetwork.cc \
@@ -479,6 +487,37 @@ $O/base/TrafficProfileManager.o: base/TrafficProfileManager.cc \
 	applications/generic/TransmissionConfig.h \
 	base/ReaSEDefs.h \
 	base/TrafficProfileManager.h
+$O/external/ModbusGate.o: external/ModbusGate.cc \
+	external/ModbusGate.h \
+	external/SSGate.h \
+	external/SSProxy.h \
+	external/SSThread.h \
+	external/modbus.h
+$O/external/SSGate.o: external/SSGate.cc \
+	external/ModbusGate.h \
+	external/SSGate.h \
+	external/SSProxy.h \
+	external/SSScheduler.h \
+	external/SSThread.h \
+	external/modbus.h
+$O/external/SSProxy.o: external/SSProxy.cc \
+	external/ModbusGate.h \
+	external/SSGate.h \
+	external/SSProxy.h \
+	external/SSScheduler.h \
+	external/SSThread.h \
+	external/modbus.h
+$O/external/SSScheduler.o: external/SSScheduler.cc \
+	external/ModbusGate.h \
+	external/SSGate.h \
+	external/SSProxy.h \
+	external/SSScheduler.h \
+	external/SSThread.h \
+	external/modbus.h
+$O/external/SSThread.o: external/SSThread.cc \
+	external/SSThread.h
+$O/external/modbus.o: external/modbus.cc \
+	external/modbus.h
 $O/networklayer/autorouting/TGMNetworkConfigurator.o: networklayer/autorouting/TGMNetworkConfigurator.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/INotifiable.h \
