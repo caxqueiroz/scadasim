@@ -1,16 +1,16 @@
-import rease.nodes.inet.DDoSZombie;
+import scadasim.nodes.inet.DDoSZombie;
 import inet.nodes.inet.Router;
-import rease.nodes.inet.InetUserHost;
-import rease.nodes.inet.BackupServer;
-import rease.nodes.inet.NameServer;
-import rease.nodes.inet.DatabaseServer;
-import rease.nodes.inet.MailServer;
-import rease.nodes.inet.WebServer;
-import rease.nodes.inet.StreamingServer;
-import rease.nodes.inet.TraceRouter;
-import rease.base.ConnectionManager;
-import rease.base.TrafficProfileManager;
-import rease.networklayer.autorouting.TGMNetworkConfigurator;
+import scadasim.nodes.inet.InetUserHost;
+import scadasim.nodes.inet.BackupServer;
+import scadasim.nodes.inet.NameServer;
+import scadasim.nodes.inet.DatabaseServer;
+import scadasim.nodes.inet.MailServer;
+import scadasim.nodes.inet.WebServer;
+import scadasim.nodes.inet.StreamingServer;
+import scadasim.nodes.inet.TraceRouter;
+import scadasim.base.ConnectionManager;
+import scadasim.base.TrafficProfileManager;
+import scadasim.networklayer.autorouting.TGMNetworkConfigurator;
 
 
 channel server2edge extends ned.DatarateChannel
