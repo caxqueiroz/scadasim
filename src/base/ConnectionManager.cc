@@ -263,7 +263,7 @@ void ConnectionManager::getForeignServer(TargetInfo &ti, int profileId, int modu
 		//check if the network has a server for current profile
 		//and return the profile written in ti
 		if (!subCM[i]->manager->haveProfile(ti, profileId)) {
-		    cout << "no server for profile " << profileId << " found in AS " << subCM[i]->manager->getFullPath().c_str() << endl;
+		    //cout << "no server for profile " << profileId << " found in AS " << subCM[i]->manager->getFullPath().c_str() << endl;
 			continue;
 		}
 		goOn = false;
@@ -275,6 +275,7 @@ void ConnectionManager::getForeignServer(TargetInfo &ti, int profileId, int modu
 		ti.address = IPvXAddress();
 		ti.port = -1;
 	    cerr << "getForeignServer: no foreign server for profile " << profileId << " could be found (tried 100 times)" << endl;
+	    cout << "getForeignServer: no foreign server for profile " << profileId << " could be found (tried 100 times)" << endl;
 	}
 }
 

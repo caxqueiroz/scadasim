@@ -1,66 +1,26 @@
 <Profile>
-	<Id><2>
-	<Label><Interactive Traffic>
-	<RequestLength><100>
-	<RequestsPerSession><70>
-	<ReplyLength><400>
-	<ReplyPerRequest><1>
-	<TimeBetweenRequests><0.5>
-	<TimeToRespond><0.1>
-	<TimeBetweenSessions><1.0>
-	<Ratio><3.2>
-	<WANRatio><11.0>
-</Profile>
-<Profile>
 	<Id><3>
 	<Label><Web Traffic>
 	<RequestLength><200>
-	<RequestsPerSession><100>
+	<RequestsPerSession><10>
 	<ReplyLength><1000>
 	<ReplyPerRequest><1>
 	<TimeBetweenRequests><1.0>
 	<TimeToRespond><0.5>
 	<TimeBetweenSessions><1.0>
-	<Ratio><50.0>
-	<WANRatio><50.0>
+	<Ratio><5.0>
+	<WANRatio><10.0>
 </Profile>
 <Profile>
-	<Id><4>
-	<Label><Mail Traffic>
-	<RequestLength><4000>
-	<RequestsPerSession><10>
+	<Id><5>
+	<Label><MODBUS>
+	<RequestLength><250>
+	<RequestsPerSession><100>
 	<ReplyLength><100>
-	<ReplyPerRequest><1>
-	<TimeBetweenRequests><0.1>
-	<TimeToRespond><0.1>
-	<TimeBetweenSessions><3.0>
-	<Ratio><2.8>
-	<WANRatio><5.0>
-</Profile>
-<Profile>
-	<Id><13>
-	<Label><UDP Misc>
-	<RequestLength><300>
-	<RequestsPerSession><10>
-	<ReplyLength><300>
-	<ReplyPerRequest><2>
+	<ReplyPerRequest><17>
 	<TimeBetweenRequests><1.0>
 	<TimeToRespond><0.5>
-	<TimeBetweenSessions><3.0>
-	<Ratio><9.7>
-	<WANRatio><4.0>
-</Profile>
-<Profile>
-	<Id><21>
-	<Label><Ping>
-	<RequestLength><64>
-	<RequestsPerSession><3>
-	<ReplyLength><64>
-	<ReplyPerRequest><4>
-	<TimeBetweenRequests><1.0>
-	<TimeToRespond><0.2>
-	<TimeBetweenSessions><1.0>
-	<Ratio><4.3>
-	<WANRatio><50.0>
-	<Hoplimit><255>
+	<TimeBetweenSessions><5.0>
+	<Ratio><50.9>
+	<WANRatio><80.0>
 </Profile>

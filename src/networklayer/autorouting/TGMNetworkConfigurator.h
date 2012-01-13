@@ -76,7 +76,7 @@ struct nodeInfoRL {
 		else if ((index = fullPath.find("remote")) != -1)
 			asType = STUB_AS;
 		else if ((index = fullPath.find("field")) != -1)
-			asType = TRANSIT_AS;
+			asType = STUB_AS;
 		else if ((index = fullPath.find("SCADA")) != -1)
 			asType = UNSPECIFIED;
 		else {
@@ -88,13 +88,14 @@ struct nodeInfoRL {
 		}
 
 		// set index to char position after substring "sas/tas"
-		if (asType == STUB_AS || asType == TRANSIT_AS) {
-			index += 3;
-			string currentId;
-			while (isdigit(fullPath[index]) && (index < fullPath.length()))
-				currentId += fullPath[index++];
-			asId = atoi(currentId.data());
-		}
+//		if (asType == STUB_AS || asType == TRANSIT_AS) {
+//			index += 3;
+//			string currentId;
+//			while (isdigit(fullPath[index]) && (index < fullPath.length()))
+//				currentId += fullPath[index++];
+//			asId = atoi(currentId.data());
+//		}
+		asId = random();
 
 		if (fullPath.find("core") != string::npos)
 			routerType = CORE;
@@ -205,7 +206,7 @@ struct nodeInfoAS {
 		else if ((index = fullPath.find("remote")) != -1)
 			asType = STUB_AS;
 		else if ((index = fullPath.find("field")) != -1)
-			asType = TRANSIT_AS;
+			asType = STUB_AS;
 		else if ((index = fullPath.find("SCADA")) != -1)
 			asType = UNSPECIFIED;
 		else {

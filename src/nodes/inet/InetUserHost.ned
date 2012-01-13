@@ -14,7 +14,7 @@ import scadasim.applications.tcpApp.GenericTCPApplication;
 import scadasim.applications.udpApp.GenericUDPApplication;
 import scadasim.transport.udp.UDP_hack;
 import inet.transport.tcp.TCP;
-
+import inet.transport.udp.UDP;
 //
 // Default IP host which replaces the standard host of the original
 // INET framework.
@@ -70,8 +70,8 @@ module InetUserHost
         clientTCP: GenericTCPApplication {
             parameters:
                 isServer = false;
-				profileNumber = 3;
-				port = 1;
+                profileNumber = 3;
+                port = 0;
                 @display("p=163,67;i=block/app");
 
         }
@@ -81,30 +81,30 @@ module InetUserHost
                 @display("p=163,154;i=block/wheelbarrow");
 
         }
-        //        udpApp: GenericUDPApplication {
-        //            parameters:
-        //                isServer = false;
-        //                profileNumber = 13;
-        //                port = 2101;
-        //                noThreads = 0;
-        //                @display("i=block/app;p=272,67");
-        //
-        //        }
-        //        udp: UDP_hack {
-        //            parameters:
-        //                @display("p=272,154;i=block/transport");
-        //
-        //        }
-        //        pingApp: GenericICMPPingApplication {
-        //            parameters:
-        //                isServer = false;
-        //                profileNumber = 21;
-        //                port = 0;
-        //                noThreads = 0;
-        //                @display("i=block/app;p=343,200");
-        //
-        //        }
-        networkLayer: NetworkLayer_hack {
+//        udpApp: GenericUDPApplication {
+//            parameters:
+//                isServer = false;
+//                profileNumber = 13;
+//                port = 2101;
+//                noThreads = 0;
+//                @display("i=block/app;p=272,67");
+//
+//        }
+//        udp: UDP {
+//            parameters:
+//                @display("p=272,154;i=block/transport");
+//
+//        }
+//        pingApp: GenericICMPPingApplication {
+//            parameters:
+//                isServer = false;
+//                profileNumber = 21;
+//                port = 0;
+//                noThreads = 0;
+//                @display("i=block/app;p=343,200");
+//
+//        }
+        networkLayer: NetworkLayer {
             parameters:
                 proxyARP = false;
                 @display("p=248,247;i=block/fork;q=queue");

@@ -53,7 +53,7 @@ void TGMNetworkConfigurator::initialize(int stage)
 	{
 		if (rlTopology[i]->getNumNodes() > (0xffffffff - NET_MASK))
 			opp_error("to many nodes in current topology");
-		ev << asNodeVec[i].module->getFullPath() << std::endl;
+		std::cout << asNodeVec[i].module->getFullPath() << std::endl;
 		//
 		//  insert each router-level node into a node map
 		//
