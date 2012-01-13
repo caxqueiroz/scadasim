@@ -173,6 +173,8 @@ void TrafficProfileManager::initialize(int stages) {
 	if (profiles.size() == 0)
 		opp_error(
 				"No traffic profiles specified for generation of background traffic");
+	else
+		cout << "# traffic profiles: " << profiles.size() << endl;
 
 #ifndef DONT_NORMALIZE_TOTAL_TRAFFIC_PROBS
 	// normalization can be switched off by above macro definition (for debugging purposes only)
