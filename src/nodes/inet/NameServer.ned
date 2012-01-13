@@ -11,8 +11,8 @@ import inet.util.NAMTraceWriter;
 import scadasim.applications.pingApp.GenericICMPPingApplication;
 import scadasim.applications.udpApp.GenericUDPApplication;
 import scadasim.transport.udp.UDP_hack;
-
-
+import inet.transport.tcp.TCP;
+import inet.transport.udp.UDP;
 //
 // NameServer: Server system for DNS traffic profile using UDP as 
 // transport protocol.
@@ -55,10 +55,10 @@ module NameServer
                 @display("p=60,230;i=block/table");
 
         }
-        tcp: TCP_hack {
+        tcp: TCP {
             parameters:
                 @display("p=163,154;i=block/wheelbarrow");
-				maxThreadCount = maxTCPThreadCount;
+		//		maxThreadCount = maxTCPThreadCount;
 
 
         }
@@ -70,7 +70,7 @@ module NameServer
                 @display("i=block/app;p=272,67");
 
         }
-        udp: UDP_hack {
+        udp: UDP {
             parameters:
                 @display("p=272,154;i=block/transport");
 

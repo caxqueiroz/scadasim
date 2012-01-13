@@ -153,8 +153,7 @@ void InetUser::initialize() {
 	ConnectionManagerAccess cma;
 
 	string asName = getParentModule()->getParentModule()->getFullName();
-	if (asName.find("tas") != string::npos
-			|| asName.find("sas") != string::npos) {
+	if (asName.find("corporate") != string::npos || asName.find("field") != string::npos || asName.find("remote") != string::npos) {
 		// get AS-specific connection manager
 		cm = cma.get(asName);
 	} else {

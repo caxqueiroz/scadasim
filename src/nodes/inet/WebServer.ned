@@ -12,7 +12,7 @@ import scadasim.applications.pingApp.GenericICMPPingApplication;
 import scadasim.applications.tcpApp.GenericTCPApplication;
 import scadasim.transport.tcp.TCP_hack;
 import scadasim.transport.udp.UDP_hack;
-
+import inet.transport.tcp.TCP;
 
 //
 // WebServer: Server system for web traffic profile using TCP as 
@@ -64,9 +64,9 @@ module WebServer
                 @display("p=163,67;i=block/app");
 
         }
-        tcp: TCP_hack {
+        tcp: TCP {
             parameters:
-                maxThreadCount = maxTCPThreadCount;
+             //   maxThreadCount = maxTCPThreadCount;
                 @display("p=163,154;i=block/wheelbarrow");
 
         }
@@ -83,7 +83,7 @@ module WebServer
         //                @display("i=block/app;p=343,200");
         //
         //        }
-        networkLayer: NetworkLayer_hack {
+        networkLayer: NetworkLayer {
             parameters:
                 proxyARP = false;
                 @display("p=248,247;i=block/fork;q=queue");
@@ -102,15 +102,15 @@ module WebServer
                 @display("p=240,350,row,90;q=txQueue;i=block/ifcard");
 
         }
-        tcpdump: TCPDump {
-            parameters:
-                @display("p=336,302;i=abstract/cache_s");
-            gates:
-                ifIn[sizeof(pppg)+sizeof(ethg)];
-                in2[sizeof(pppg)+sizeof(ethg)];
-                ifOut[sizeof(pppg)+sizeof(ethg)];
-                out2[sizeof(pppg)+sizeof(ethg)];
-        }
+//        tcpdump: TCPDump {
+//            parameters:
+//                @display("p=336,302;i=abstract/cache_s");
+//            gates:
+//                ifIn[sizeof(pppg)+sizeof(ethg)];
+//                in2[sizeof(pppg)+sizeof(ethg)];
+//                ifOut[sizeof(pppg)+sizeof(ethg)];
+//                out2[sizeof(pppg)+sizeof(ethg)];
+//        }
     connections allowunconnected:
         tcpApp.tcpOut --> tcp.appIn++;
         tcpApp.tcpIn <-- tcp.appOut++;
@@ -125,33 +125,33 @@ module WebServer
 //        networkLayer.pingIn <-- pingApp.pingOut;
 
         // connections to network outside
-//        for i=0..sizeof(pppg)-1 {
-//            pppg[i] <--> ppp[i].phys;
-//            ppp[i].netwOut --> networkLayer.ifIn[i];
-//            ppp[i].netwIn <-- networkLayer.ifOut[i];
-//        }
-//
-//        for i=0..sizeof(ethg)-1 {
-//            ethg[i] <--> eth[i].phys;
-//            eth[i].netwOut --> networkLayer.ifIn[sizeof(pppg)+i];
-//            eth[i].netwIn <-- networkLayer.ifOut[sizeof(pppg)+i];
-//        }
-// connections to network outside
         for i=0..sizeof(pppg)-1 {
             pppg[i] <--> ppp[i].phys;
-            ppp[i].netwOut --> tcpdump.ifIn[i];
-            tcpdump.out2[i] --> networkLayer.ifIn[i];
-            ppp[i].netwIn <-- tcpdump.ifOut[i];
-            tcpdump.in2[i] <-- networkLayer.ifOut[i];
+            ppp[i].netwOut --> networkLayer.ifIn[i];
+            ppp[i].netwIn <-- networkLayer.ifOut[i];
         }
 
         for i=0..sizeof(ethg)-1 {
             ethg[i] <--> eth[i].phys;
-            eth[i].netwOut --> tcpdump.ifIn[sizeof(pppg)+i];
-            tcpdump.out2[sizeof(pppg)+i] --> networkLayer.ifIn[sizeof(pppg)+i];
-            eth[i].netwIn <-- tcpdump.ifOut[sizeof(pppg)+i];
-            tcpdump.in2[sizeof(pppg)+i] <-- networkLayer.ifOut[sizeof(pppg)+i];
+            eth[i].netwOut --> networkLayer.ifIn[sizeof(pppg)+i];
+            eth[i].netwIn <-- networkLayer.ifOut[sizeof(pppg)+i];
         }
+// connections to network outside
+//        for i=0..sizeof(pppg)-1 {
+//            pppg[i] <--> ppp[i].phys;
+//            ppp[i].netwOut --> tcpdump.ifIn[i];
+//            tcpdump.out2[i] --> networkLayer.ifIn[i];
+//            ppp[i].netwIn <-- tcpdump.ifOut[i];
+//            tcpdump.in2[i] <-- networkLayer.ifOut[i];
+//        }
+//
+//        for i=0..sizeof(ethg)-1 {
+//            ethg[i] <--> eth[i].phys;
+//            eth[i].netwOut --> tcpdump.ifIn[sizeof(pppg)+i];
+//            tcpdump.out2[sizeof(pppg)+i] --> networkLayer.ifIn[sizeof(pppg)+i];
+//            eth[i].netwIn <-- tcpdump.ifOut[sizeof(pppg)+i];
+//            tcpdump.in2[sizeof(pppg)+i] <-- networkLayer.ifOut[sizeof(pppg)+i];
+//        }
 
 }
 

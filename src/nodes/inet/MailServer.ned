@@ -11,7 +11,7 @@ import scadasim.applications.pingApp.GenericICMPPingApplication;
 import scadasim.applications.tcpApp.GenericTCPApplication;
 import scadasim.transport.tcp.TCP_hack;
 import scadasim.transport.udp.UDP_hack;
-
+import inet.transport.tcp.TCP;
 
 //
 // MailServer: Server system for mail traffic profile using TCP as 
@@ -63,9 +63,9 @@ module MailServer
                 @display("p=163,67;i=block/app");
 
         }
-        tcp: TCP_hack {
+        tcp: TCP {
             parameters:
-                maxThreadCount = maxTCPThreadCount;
+             //   maxThreadCount = maxTCPThreadCount;
                 @display("p=163,154;i=block/wheelbarrow");
 
         }

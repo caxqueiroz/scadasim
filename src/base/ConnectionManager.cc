@@ -263,7 +263,7 @@ void ConnectionManager::getForeignServer(TargetInfo &ti, int profileId, int modu
 		//check if the network has a server for current profile
 		//and return the profile written in ti
 		if (!subCM[i]->manager->haveProfile(ti, profileId)) {
-//		    cout << "no server for profile " << profileId << " found in AS " << subCM[i]->manager->getFullPath().c_str() << endl;
+		    cout << "no server for profile " << profileId << " found in AS " << subCM[i]->manager->getFullPath().c_str() << endl;
 			continue;
 		}
 		goOn = false;
@@ -274,7 +274,7 @@ void ConnectionManager::getForeignServer(TargetInfo &ti, int profileId, int modu
 	        // this is necessary in case only a single AS exists -> haveProfile is never called within this method and thus, ti is not set to invalid state else
 		ti.address = IPvXAddress();
 		ti.port = -1;
-	        cerr << "getForeignServer: no foreign server for profile " << profileId << " could be found (tried 100 times)" << endl;
+	    cerr << "getForeignServer: no foreign server for profile " << profileId << " could be found (tried 100 times)" << endl;
 	}
 }
 
@@ -342,7 +342,7 @@ bool ConnectionManager::haveProfile(TargetInfo &ti, int profileId, int moduleId)
 		// set TargetInfo
 		ti.address = (*svector)[i]->address;
 		ti.port = (*svector)[i]->port;
-//		std::cout << "found server for profile " << profileId << ": address " << (*svector)[i]->address.str() << ", port " << (*svector)[i]->port << std::endl;
+		//cout << "found server for profile " << profileId << ": address " << (*svector)[i]->address.str() << ", port " << (*svector)[i]->port << std::endl;
 	}
 
 	if (runs == 100 && goOn)

@@ -43,9 +43,10 @@ void GenericApplication::initialize(int stages)
 		cm = NULL;
 		ConnectionManagerAccess cac;
 		string asName = getParentModule()->getParentModule()->getFullName();
-		if(asName.find("tas") != string::npos || asName.find("sas") != string::npos) {
+		if(asName.find("corporate") != string::npos || asName.find("remote") != string::npos || asName.find("field") != string::npos) {
 		    // get AS-specific connection manager
 		    cm = cac.get(asName);
+
 		} else {
 		    // get global connection manager
 		    cm = cac.get();

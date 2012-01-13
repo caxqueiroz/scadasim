@@ -1,4 +1,4 @@
-package scadasim.nodes.inet;
+package scadasim.nodes.scada;
 
 import inet.base.NotificationBoard;
 import inet.linklayer.ethernet.EthernetInterface;
@@ -11,24 +11,22 @@ import scadasim.applications.pingApp.GenericICMPPingApplication;
 import scadasim.applications.tcpApp.GenericTCPApplication;
 import scadasim.transport.tcp.TCP_hack;
 import scadasim.transport.udp.UDP_hack;
-import scadasim.applications.generic.InetUser;
-
+import inet.transport.tcp.TCP;
 
 //
-// WebServer: Server system for web traffic profile using TCP as 
-// transport protocol.
-// This profile generates small client requests and many large
-// server replies.
-// 
+// InteractiveServer: Server system for interactive traffic profile using 
+// TCP as transport protocol.
+// This profile generates a similar number of equally large client requests
+// and server replies.
+//
 // \IP host with TCP, UDP layers and applications.
 //
-module MTU
+module Historian
 {
     parameters:
         @node();
         int namid;
         int maxTCPThreadCount;
-        
     gates:
         inout pppg[];
         inout ethg[];
@@ -57,37 +55,17 @@ module MTU
                 @display("p=60,230;i=block/table");
 
         }
-
-        inetUser: InetUser {
+//                tcpApp: GenericTCPApplication {
+//                    parameters:
+//                        isServer = true;
+//                        profileNumber = 2;
+//                        port = 80;
+//                        @display("p=163,67;i=block/app");
+//        
+//                }
+        tcp: TCP {
             parameters:
-                @display("p=60,390;i=abstract/person");
-
-        }
-
-
-        mtuServer: GenericTCPApplication {
-            parameters:
-                isServer = true;
-                profileNumber = 3;
-                port = 80;
-                
-                @display("p=163,67;i=block/app");
-
-        }
-
-        mtuClient: GenericTCPApplication {
-            parameters:
-                isServer = false;
-                profileNumber = 5;
-                port = 1;
-                @display("p=267,67;i=block/app");
-
-        }
-
-        tcp: TCP_hack {
-            parameters:
-                maxThreadCount = maxTCPThreadCount;
-
+              //  maxThreadCount = maxTCPThreadCount;
                 @display("p=163,154;i=block/wheelbarrow");
 
         }
@@ -104,7 +82,7 @@ module MTU
         //                @display("i=block/app;p=343,200");
         //
         //        }
-        networkLayer: NetworkLayer_hack {
+        networkLayer: NetworkLayer {
             parameters:
                 proxyARP = false;
                 @display("p=248,247;i=block/fork;q=queue");
@@ -115,27 +93,24 @@ module MTU
         }
         ppp[sizeof(pppg)]: PPPInterface {
             parameters:
-                @display("p=147,350,row,90;q=txQueue;i=block/ifcard");
+                @display("p=202,350,row,90;q=txQueue;i=block/ifcard");
 
         }
         eth[sizeof(ethg)]: EthernetInterface {
             parameters:
-                @display("p=331,343,row,90;q=txQueue;i=block/ifcard");
+                @display("p=349,350,row,90;q=txQueue;i=block/ifcard");
 
         }
     connections allowunconnected:
-        mtuServer.tcpOut --> tcp.appIn++;
-        mtuServer.tcpIn <-- tcp.appOut++;
-
-		mtuClient.tcpIn <-- tcp.appOut++;
-		mtuClient.tcpOut --> tcp.appIn++;
+//        tcpApp.tcpOut --> tcp.appIn++;
+//        tcpApp.tcpIn <-- tcp.appOut++;
 
         tcp.ipOut --> networkLayer.tcpIn;
         tcp.ipIn <-- networkLayer.tcpOut;
 
 //        udp.ipOut --> networkLayer.udpIn;
 //        udp.ipIn <-- networkLayer.udpOut;
-
+//
 //        networkLayer.pingOut --> pingApp.pingIn;
 //        networkLayer.pingIn <-- pingApp.pingOut;
 

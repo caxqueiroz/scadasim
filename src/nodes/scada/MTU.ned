@@ -1,4 +1,4 @@
-package scadasim.nodes.inet;
+package scadasim.nodes.scada;
 
 import inet.base.NotificationBoard;
 import inet.linklayer.ethernet.EthernetInterface;
@@ -11,6 +11,8 @@ import scadasim.applications.pingApp.GenericICMPPingApplication;
 import scadasim.applications.tcpApp.GenericTCPApplication;
 import scadasim.transport.tcp.TCP_hack;
 import scadasim.transport.udp.UDP_hack;
+import inet.transport.tcp.TCP;
+import scadasim.applications.generic.InetUser;
 
 
 //
@@ -21,12 +23,13 @@ import scadasim.transport.udp.UDP_hack;
 // 
 // \IP host with TCP, UDP layers and applications.
 //
-module PLC
+module MTU
 {
     parameters:
         @node();
         int namid;
         int maxTCPThreadCount;
+        
     gates:
         inout pppg[];
         inout ethg[];
@@ -55,17 +58,37 @@ module PLC
                 @display("p=60,230;i=block/table");
 
         }
-        plcServer: GenericTCPApplication {
+
+        inetUser: InetUser {
+            parameters:
+                @display("p=60,390;i=abstract/person");
+
+        }
+
+
+        mtuServer: GenericTCPApplication {
             parameters:
                 isServer = true;
-                profileNumber = 5;
-                port = 502;
+                profileNumber = 3;
+                port = 80;
+                
                 @display("p=163,67;i=block/app");
 
         }
-        tcp: TCP_hack {
+
+        mtuClient: GenericTCPApplication {
             parameters:
-                maxThreadCount = maxTCPThreadCount;
+                isServer = false;
+                profileNumber = 5;
+                port = 1;
+                @display("p=267,67;i=block/app");
+
+        }
+
+        tcp: TCP {
+            parameters:
+                //maxThreadCount = maxTCPThreadCount;
+
                 @display("p=163,154;i=block/wheelbarrow");
 
         }
@@ -82,7 +105,7 @@ module PLC
         //                @display("i=block/app;p=343,200");
         //
         //        }
-        networkLayer: NetworkLayer_hack {
+        networkLayer: NetworkLayer {
             parameters:
                 proxyARP = false;
                 @display("p=248,247;i=block/fork;q=queue");
@@ -98,12 +121,15 @@ module PLC
         }
         eth[sizeof(ethg)]: EthernetInterface {
             parameters:
-                @display("p=240,350,row,90;q=txQueue;i=block/ifcard");
+                @display("p=331,343,row,90;q=txQueue;i=block/ifcard");
 
         }
     connections allowunconnected:
-        plcServer.tcpOut --> tcp.appIn++;
-        plcServer.tcpIn <-- tcp.appOut++;
+        mtuServer.tcpOut --> tcp.appIn++;
+        mtuServer.tcpIn <-- tcp.appOut++;
+
+		mtuClient.tcpIn <-- tcp.appOut++;
+		mtuClient.tcpOut --> tcp.appIn++;
 
         tcp.ipOut --> networkLayer.tcpIn;
         tcp.ipIn <-- networkLayer.tcpOut;

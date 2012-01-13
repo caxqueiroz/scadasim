@@ -56,6 +56,7 @@ INCLUDE_PATH = \
     -Inetworklayer/queue \
     -Inodes \
     -Inodes/inet \
+    -Inodes/scada \
     -Itransport \
     -Itransport/contract \
     -Itransport/tcp \
@@ -209,6 +210,7 @@ clean:
 	-rm -f networklayer/queue/*_m.cc networklayer/queue/*_m.h
 	-rm -f nodes/*_m.cc nodes/*_m.h
 	-rm -f nodes/inet/*_m.cc nodes/inet/*_m.h
+	-rm -f nodes/scada/*_m.cc nodes/scada/*_m.h
 	-rm -f transport/*_m.cc transport/*_m.h
 	-rm -f transport/contract/*_m.cc transport/contract/*_m.h
 	-rm -f transport/tcp/*_m.cc transport/tcp/*_m.h
@@ -219,7 +221,7 @@ cleanall: clean
 	-rm -rf $(PROJECT_OUTPUT_DIR)
 
 depend:
-	$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc applications/*.cc applications/ddos/*.cc applications/generic/*.cc applications/modbusApp/*.cc applications/pingApp/*.cc applications/tcpApp/*.cc applications/udpApp/*.cc applications/worm/*.cc base/*.cc external/*.cc networklayer/*.cc networklayer/autorouting/*.cc networklayer/contract/*.cc networklayer/ipv4/*.cc networklayer/queue/*.cc nodes/*.cc nodes/inet/*.cc transport/*.cc transport/contract/*.cc transport/tcp/*.cc transport/udp/*.cc util/*.cc
+	$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc applications/*.cc applications/ddos/*.cc applications/generic/*.cc applications/modbusApp/*.cc applications/pingApp/*.cc applications/tcpApp/*.cc applications/udpApp/*.cc applications/worm/*.cc base/*.cc external/*.cc networklayer/*.cc networklayer/autorouting/*.cc networklayer/contract/*.cc networklayer/ipv4/*.cc networklayer/queue/*.cc nodes/*.cc nodes/inet/*.cc nodes/scada/*.cc transport/*.cc transport/contract/*.cc transport/tcp/*.cc transport/udp/*.cc util/*.cc
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 $O/applications/ddos/TribeFloodNetwork.o: applications/ddos/TribeFloodNetwork.cc \

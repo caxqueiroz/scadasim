@@ -13,7 +13,7 @@ import scadasim.applications.pingApp.GenericICMPPingApplication;
 import scadasim.applications.tcpApp.GenericTCPApplication;
 import scadasim.applications.udpApp.GenericUDPApplication;
 import scadasim.transport.udp.UDP_hack;
-
+import inet.transport.tcp.TCP;
 
 //
 // Default IP host which replaces the standard host of the original
@@ -75,9 +75,9 @@ module InetUserHost
                 @display("p=163,67;i=block/app");
 
         }
-        tcp: TCP_hack {
+        tcp: TCP {
             parameters:
-                maxThreadCount = maxTCPThreadCount;
+                //maxThreadCount = maxTCPThreadCount;
                 @display("p=163,154;i=block/wheelbarrow");
 
         }
