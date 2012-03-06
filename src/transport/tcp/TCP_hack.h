@@ -4,7 +4,7 @@
 #include <omnetpp.h>
 #include <limits.h>
 #include "TCP.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 
 /**
  * @brief Extends the original TCP implementation by limited number of open 
@@ -17,7 +17,7 @@
  *
  * @class TCP_hack
  */
-class REASE_API TCP_hack : public TCP
+class SCADASIM_API TCP_hack : public TCP
 {
 protected:
 	/// Maximum number of open TCP connections allowed

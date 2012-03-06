@@ -35,9 +35,9 @@ IPControlInfo_hacked::IPControlInfo_hacked() : IPControlInfo()
     this->attackTag_var = 0;
 }
 
-IPControlInfo_hacked::IPControlInfo_hacked(const IPControlInfo_hacked& other) : IPControlInfo()
+IPControlInfo_hacked::IPControlInfo_hacked(const IPControlInfo_hacked& other) : IPControlInfo(other)
 {
-    operator=(other);
+    copy(other);
 }
 
 IPControlInfo_hacked::~IPControlInfo_hacked()
@@ -48,8 +48,13 @@ IPControlInfo_hacked& IPControlInfo_hacked::operator=(const IPControlInfo_hacked
 {
     if (this==&other) return *this;
     IPControlInfo::operator=(other);
-    this->attackTag_var = other.attackTag_var;
+    copy(other);
     return *this;
+}
+
+void IPControlInfo_hacked::copy(const IPControlInfo_hacked& other)
+{
+    this->attackTag_var = other.attackTag_var;
 }
 
 void IPControlInfo_hacked::parsimPack(cCommBuffer *b)

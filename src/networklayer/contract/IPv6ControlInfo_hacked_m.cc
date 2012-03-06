@@ -35,9 +35,9 @@ IPv6ControlInfo_hacked::IPv6ControlInfo_hacked() : IPv6ControlInfo()
     this->attackTag_var = 0;
 }
 
-IPv6ControlInfo_hacked::IPv6ControlInfo_hacked(const IPv6ControlInfo_hacked& other) : IPv6ControlInfo()
+IPv6ControlInfo_hacked::IPv6ControlInfo_hacked(const IPv6ControlInfo_hacked& other) : IPv6ControlInfo(other)
 {
-    operator=(other);
+    copy(other);
 }
 
 IPv6ControlInfo_hacked::~IPv6ControlInfo_hacked()
@@ -48,8 +48,13 @@ IPv6ControlInfo_hacked& IPv6ControlInfo_hacked::operator=(const IPv6ControlInfo_
 {
     if (this==&other) return *this;
     IPv6ControlInfo::operator=(other);
-    this->attackTag_var = other.attackTag_var;
+    copy(other);
     return *this;
+}
+
+void IPv6ControlInfo_hacked::copy(const IPv6ControlInfo_hacked& other)
+{
+    this->attackTag_var = other.attackTag_var;
 }
 
 void IPv6ControlInfo_hacked::parsimPack(cCommBuffer *b)

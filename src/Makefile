@@ -174,7 +174,7 @@ $(TARGET) : $O/$(TARGET)
 
 $O/$(TARGET): $(OBJS)  $(wildcard $(EXTRA_OBJS)) Makefile
 	@$(MKPATH) $O
-	$(CXX) $(LDFLAGS) -o $O/$(TARGET)  $(OBJS) $(EXTRA_OBJS) $(WHOLE_ARCHIVE_ON) $(LIBS) $(WHOLE_ARCHIVE_OFF) $(OMNETPP_LIBS)
+	$(CXX) $(LDFLAGS) -o $O/$(TARGET)  $(OBJS) $(EXTRA_OBJS) $(AS_NEEDED_OFF) $(WHOLE_ARCHIVE_ON) $(LIBS) $(WHOLE_ARCHIVE_OFF) $(OMNETPP_LIBS)
 
 .PHONY:
 
@@ -259,7 +259,7 @@ $O/applications/ddos/TribeFloodNetwork.o: applications/ddos/TribeFloodNetwork.cc
 	$(INET_PROJ)/src/transport/udp/UDPPacket.h \
 	$(INET_PROJ)/src/transport/udp/UDPPacket_m.h \
 	applications/ddos/TribeFloodNetwork.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	networklayer/contract/IPControlInfo_hacked_m.h \
 	networklayer/contract/IPv6ControlInfo_hacked_m.h
 $O/applications/generic/GenericApplication.o: applications/generic/GenericApplication.cc \
@@ -273,12 +273,12 @@ $O/applications/generic/GenericApplication.o: applications/generic/GenericApplic
 	applications/generic/InetUser.h \
 	applications/generic/TransmissionConfig.h \
 	base/ConnectionManager.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h
 $O/applications/generic/GenericApplicationMessage_m.o: applications/generic/GenericApplicationMessage_m.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	applications/generic/GenericApplicationMessage_m.h \
-	base/ReaSEDefs.h
+	base/SCADASIMDefs.h
 $O/applications/generic/InetUser.o: applications/generic/InetUser.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/ModuleAccess.h \
@@ -297,7 +297,7 @@ $O/applications/generic/InetUser.o: applications/generic/InetUser.cc \
 	applications/tcpApp/GenericTCPApplication.h \
 	applications/udpApp/GenericUDPApplication.h \
 	base/ConnectionManager.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h \
 	transport/contract/UDPSocketVector.h
 $O/applications/modbusApp/ModbusTCP.o: applications/modbusApp/ModbusTCP.cc \
@@ -320,7 +320,7 @@ $O/applications/pingApp/GenericICMPPingApplication.o: applications/pingApp/Gener
 	applications/generic/TransmissionConfig.h \
 	applications/pingApp/GenericICMPPingApplication.h \
 	base/ConnectionManager.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h
 $O/applications/tcpApp/GenericTCPApplication.o: applications/tcpApp/GenericTCPApplication.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
@@ -338,7 +338,7 @@ $O/applications/tcpApp/GenericTCPApplication.o: applications/tcpApp/GenericTCPAp
 	applications/tcpApp/GenericTCPApplicationClientThread.h \
 	applications/tcpApp/GenericTCPApplicationServerThread.h \
 	base/ConnectionManager.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h
 $O/applications/tcpApp/GenericTCPApplicationClientThread.o: applications/tcpApp/GenericTCPApplicationClientThread.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
@@ -356,7 +356,7 @@ $O/applications/tcpApp/GenericTCPApplicationClientThread.o: applications/tcpApp/
 	applications/tcpApp/GenericTCPApplication.h \
 	applications/tcpApp/GenericTCPApplicationClientThread.h \
 	base/ConnectionManager.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h
 $O/applications/tcpApp/GenericTCPApplicationServerThread.o: applications/tcpApp/GenericTCPApplicationServerThread.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
@@ -374,7 +374,7 @@ $O/applications/tcpApp/GenericTCPApplicationServerThread.o: applications/tcpApp/
 	applications/tcpApp/GenericTCPApplication.h \
 	applications/tcpApp/GenericTCPApplicationServerThread.h \
 	base/ConnectionManager.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h
 $O/applications/udpApp/GenericUDPApplication.o: applications/udpApp/GenericUDPApplication.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
@@ -392,7 +392,7 @@ $O/applications/udpApp/GenericUDPApplication.o: applications/udpApp/GenericUDPAp
 	applications/udpApp/GenericUDPApplicationClientThread.h \
 	applications/udpApp/GenericUDPApplicationServerThread.h \
 	base/ConnectionManager.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h \
 	transport/contract/UDPSocketVector.h
 $O/applications/udpApp/GenericUDPApplicationClientThread.o: applications/udpApp/GenericUDPApplicationClientThread.cc \
@@ -410,7 +410,7 @@ $O/applications/udpApp/GenericUDPApplicationClientThread.o: applications/udpApp/
 	applications/udpApp/GenericUDPApplication.h \
 	applications/udpApp/GenericUDPApplicationClientThread.h \
 	base/ConnectionManager.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h \
 	transport/contract/UDPSocketVector.h
 $O/applications/udpApp/GenericUDPApplicationServerThread.o: applications/udpApp/GenericUDPApplicationServerThread.cc \
@@ -428,7 +428,7 @@ $O/applications/udpApp/GenericUDPApplicationServerThread.o: applications/udpApp/
 	applications/udpApp/GenericUDPApplication.h \
 	applications/udpApp/GenericUDPApplicationServerThread.h \
 	base/ConnectionManager.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h \
 	transport/contract/UDPSocketVector.h
 $O/applications/udpApp/GenericUDPApplicationTimeout.o: applications/udpApp/GenericUDPApplicationTimeout.cc \
@@ -445,12 +445,12 @@ $O/applications/udpApp/GenericUDPApplicationTimeout.o: applications/udpApp/Gener
 	applications/udpApp/GenericUDPApplication.h \
 	applications/udpApp/GenericUDPApplicationTimeout.h \
 	base/ConnectionManager.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h \
 	transport/contract/UDPSocketVector.h
 $O/applications/worm/UDPWormQueryMessage_m.o: applications/worm/UDPWormQueryMessage_m.cc \
 	applications/worm/UDPWormQueryMessage_m.h \
-	base/ReaSEDefs.h
+	base/SCADASIMDefs.h
 $O/applications/worm/UDPWormVictim.o: applications/worm/UDPWormVictim.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
@@ -467,7 +467,7 @@ $O/applications/worm/UDPWormVictim.o: applications/worm/UDPWormVictim.cc \
 	$(INET_PROJ)/src/transport/udp/UDPPacket_m.h \
 	applications/worm/UDPWormQueryMessage_m.h \
 	applications/worm/UDPWormVictim.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	networklayer/contract/IPControlInfo_hacked_m.h \
 	networklayer/contract/IPv6ControlInfo_hacked_m.h
 $O/base/ConnectionManager.o: base/ConnectionManager.cc \
@@ -478,7 +478,7 @@ $O/base/ConnectionManager.o: base/ConnectionManager.cc \
 	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
 	applications/generic/TransmissionConfig.h \
 	base/ConnectionManager.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h
 $O/base/TrafficProfileManager.o: base/TrafficProfileManager.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
@@ -487,7 +487,7 @@ $O/base/TrafficProfileManager.o: base/TrafficProfileManager.cc \
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
 	applications/generic/TransmissionConfig.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h
 $O/external/ModbusGate.o: external/ModbusGate.cc \
 	external/ModbusGate.h \
@@ -540,7 +540,7 @@ $O/networklayer/autorouting/TGMNetworkConfigurator.o: networklayer/autorouting/T
 	$(INET_PROJ)/src/networklayer/ipv4/IPv4InterfaceData.h \
 	$(INET_PROJ)/src/networklayer/ipv4/IRoutingTable.h \
 	$(INET_PROJ)/src/networklayer/ipv4/RoutingTable.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	networklayer/autorouting/TGMNetworkConfigurator.h
 $O/networklayer/contract/IPControlInfo_hacked_m.o: networklayer/contract/IPControlInfo_hacked_m.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
@@ -548,7 +548,7 @@ $O/networklayer/contract/IPControlInfo_hacked_m.o: networklayer/contract/IPContr
 	$(INET_PROJ)/src/networklayer/contract/IPControlInfo.h \
 	$(INET_PROJ)/src/networklayer/contract/IPControlInfo_m.h \
 	$(INET_PROJ)/src/networklayer/contract/IPProtocolId_m.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	networklayer/contract/IPControlInfo_hacked_m.h
 $O/networklayer/contract/IPv6ControlInfo_hacked_m.o: networklayer/contract/IPv6ControlInfo_hacked_m.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
@@ -556,7 +556,7 @@ $O/networklayer/contract/IPv6ControlInfo_hacked_m.o: networklayer/contract/IPv6C
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6ControlInfo.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6ControlInfo_m.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	networklayer/contract/IPv6ControlInfo_hacked_m.h
 $O/networklayer/ipv4/IPDatagram_hacked_m.o: networklayer/ipv4/IPDatagram_hacked_m.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
@@ -564,7 +564,7 @@ $O/networklayer/ipv4/IPDatagram_hacked_m.o: networklayer/ipv4/IPDatagram_hacked_
 	$(INET_PROJ)/src/networklayer/contract/IPProtocolId_m.h \
 	$(INET_PROJ)/src/networklayer/ipv4/IPDatagram.h \
 	$(INET_PROJ)/src/networklayer/ipv4/IPDatagram_m.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	networklayer/ipv4/IPDatagram_hacked_m.h
 $O/networklayer/ipv4/IP_hack.o: networklayer/ipv4/IP_hack.cc \
 	$(INET_PROJ)/src/base/AbstractQueue.h \
@@ -597,7 +597,7 @@ $O/networklayer/ipv4/IP_hack.o: networklayer/ipv4/IP_hack.cc \
 	$(INET_PROJ)/src/networklayer/ipv4/RoutingTableAccess.h \
 	$(INET_PROJ)/src/transport/udp/UDPPacket.h \
 	$(INET_PROJ)/src/transport/udp/UDPPacket_m.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	networklayer/contract/IPControlInfo_hacked_m.h \
 	networklayer/ipv4/IPDatagram_hacked_m.h \
 	networklayer/ipv4/IP_hack.h
@@ -614,7 +614,7 @@ $O/transport/contract/UDPSocketVector.o: transport/contract/UDPSocketVector.cc \
 	$(INET_PROJ)/src/transport/contract/UDPControlInfo_m.h \
 	$(INET_PROJ)/src/transport/contract/UDPSocket.h \
 	applications/generic/TransmissionConfig.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	transport/contract/UDPSocketVector.h
 $O/transport/tcp/TCPConnection_hack.o: transport/tcp/TCPConnection_hack.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
@@ -630,7 +630,7 @@ $O/transport/tcp/TCPConnection_hack.o: transport/tcp/TCPConnection_hack.cc \
 	$(INET_PROJ)/src/transport/tcp/TCPSegment.h \
 	$(INET_PROJ)/src/transport/tcp/TCPSegment_m.h \
 	$(INET_PROJ)/src/transport/tcp/TCPSendQueue.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	transport/tcp/TCPConnection_hack.h \
 	transport/tcp/TCP_hack.h
 $O/transport/tcp/TCP_hack.o: transport/tcp/TCP_hack.cc \
@@ -646,7 +646,7 @@ $O/transport/tcp/TCP_hack.o: transport/tcp/TCP_hack.cc \
 	$(INET_PROJ)/src/transport/tcp/TCPConnection.h \
 	$(INET_PROJ)/src/transport/tcp/TCPSegment.h \
 	$(INET_PROJ)/src/transport/tcp/TCPSegment_m.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	transport/tcp/TCPConnection_hack.h \
 	transport/tcp/TCP_hack.h
 $O/transport/udp/UDP_hack.o: transport/udp/UDP_hack.cc \
@@ -659,7 +659,7 @@ $O/transport/udp/UDP_hack.o: transport/udp/UDP_hack.cc \
 	$(INET_PROJ)/src/transport/udp/UDPPacket.h \
 	$(INET_PROJ)/src/transport/udp/UDPPacket_m.h \
 	applications/generic/GenericApplicationMessage_m.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	transport/udp/UDP_hack.h
 $O/util/DataDump.o: util/DataDump.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
@@ -691,7 +691,7 @@ $O/util/DataDump.o: util/DataDump.cc \
 	$(INET_PROJ)/src/transport/tcp/TCPSegment.h \
 	$(INET_PROJ)/src/transport/tcp/TCPSegment_m.h \
 	applications/generic/GenericApplicationMessage_m.h \
-	base/ReaSEDefs.h \
+	base/SCADASIMDefs.h \
 	transport/tcp/TCPConnection_hack.h \
 	transport/tcp/TCP_hack.h \
 	util/DataDump.h

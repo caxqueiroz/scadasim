@@ -2,7 +2,7 @@
 #define TCPCONNECTION_HACK_H_
 #include <omnetpp.h>
 #include "TCPConnection.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 
 /**
  * @brief Extends the original TCP implementation by limited number of open 
@@ -15,7 +15,7 @@
  *
  * @class TCPConnection_hack
  */
-class REASE_API TCPConnection_hack: public TCPConnection {
+class SCADASIM_API TCPConnection_hack: public TCPConnection {
 protected:
 	/// @brief state variable: Worker thread or not?
 	bool worker;

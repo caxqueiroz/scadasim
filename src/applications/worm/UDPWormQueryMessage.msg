@@ -4,7 +4,7 @@
 //
 
 cplusplus {{
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 }}
 
 packet UDPWormQueryMessage

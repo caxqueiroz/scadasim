@@ -21,7 +21,7 @@ class GenericTCPApplicationThreadBase;
  *
  * @class GenericTCPApplication
  */
-class REASE_API GenericTCPApplication: public GenericApplication
+class SCADASIM_API GenericTCPApplication: public GenericApplication
 {
 typedef std::list<GenericTCPApplicationThreadBase*> ThreadList;
 protected:
@@ -64,7 +64,7 @@ protected:
  *
  * @class GenericTCPApplicationThreadBase
  */
-class REASE_API GenericTCPApplicationThreadBase : public cPolymorphic, public TCPSocket::CallbackInterface
+class SCADASIM_API GenericTCPApplicationThreadBase : public cPolymorphic, public TCPSocket::CallbackInterface
 {
 protected:
 	/// Pointer to application that started this thread

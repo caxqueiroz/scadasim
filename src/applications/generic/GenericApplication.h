@@ -6,7 +6,7 @@
 #include "InetUser.h"
 #include "ConnectionManager.h"
 #include "TransmissionConfig.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 #include <string>
 
 using namespace std;
@@ -39,7 +39,7 @@ class InetUser;
  *
  * @class GenericApplication
  */
-class REASE_API GenericApplication : public cSimpleModule
+class SCADASIM_API GenericApplication : public cSimpleModule
 {
 protected:
 	/// Pointer to the InetUser in case of a client

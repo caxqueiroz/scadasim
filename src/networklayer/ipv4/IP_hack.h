@@ -4,7 +4,7 @@
 #include <omnetpp.h>
 #include "IP.h"
 #include "IPDatagram_hacked_m.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 
 /**
  * @brief Extension of the original IP protocol.
@@ -13,7 +13,7 @@
  * packet tracing.
  * These tasks are necessary for simulation of attacks
  */
-class REASE_API IP_hack : public IP
+class SCADASIM_API IP_hack : public IP
 {
 protected:
 	// service flags

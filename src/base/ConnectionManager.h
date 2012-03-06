@@ -2,7 +2,7 @@
 #define CONNECTIONMANAGER2_H_
 
 #include <omnetpp.h>
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 #include "IPvXAddress.h"
 #include "TransmissionConfig.h"
 #include "ModuleAccess.h"
@@ -109,7 +109,7 @@ typedef std::vector<foreignNetwork*> networkVector;
  *
  * @class ConnectionManager
  */
-class REASE_API ConnectionManager: public cSimpleModule
+class SCADASIM_API ConnectionManager: public cSimpleModule
 {
 protected:
 	/// Used by CM: Map of servers registered within own AS
@@ -171,7 +171,7 @@ protected:
  *
  * @class ConnectionManagerAccess
  */
-class REASE_API ConnectionManagerAccess
+class SCADASIM_API ConnectionManagerAccess
 {
   public:
     ConnectionManagerAccess() {}
@@ -193,7 +193,7 @@ class REASE_API ConnectionManagerAccess
 // cannot use standard ModuleAccess interface, because of changes to its search pattern in omnet 4.0
 // search would terminate at first module with @node property and toplevel connectionmanager cannot be found
 //
-//class REASE_API ConnectionManagerAccess : public ModuleAccess<ConnectionManager>
+//class SCADASIM_API ConnectionManagerAccess : public ModuleAccess<ConnectionManager>
 //{
 //  public:
 //    ConnectionManagerAccess() : ModuleAccess<ConnectionManager>("connectionManager") {}

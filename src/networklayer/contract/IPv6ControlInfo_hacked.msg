@@ -1,6 +1,6 @@
 cplusplus {{
 #include "IPv6ControlInfo.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 }}
 
 class noncobject IPv6ControlInfo;

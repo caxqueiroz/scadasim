@@ -4,7 +4,7 @@
 #include <omnetpp.h>
 #include "IPvXAddress.h"
 #include <vector>
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 
 /// Attack tags describing different DDoS attack types
 /// @{
@@ -33,7 +33,7 @@ using std::vector;
  *
  * @class TribeFloodNetwork
  */
-class REASE_API TribeFloodNetwork: public cSimpleModule
+class SCADASIM_API TribeFloodNetwork: public cSimpleModule
 {
 	typedef void (TribeFloodNetwork::*FloodingFunc)();
 	typedef vector<cMessage *> START_TIME_VEC;

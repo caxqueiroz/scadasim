@@ -41,10 +41,9 @@ GenericApplicationMessage::GenericApplicationMessage(const char *name, int kind)
     this->packetNumber_var = 0;
 }
 
-GenericApplicationMessage::GenericApplicationMessage(const GenericApplicationMessage& other) : cPacket()
+GenericApplicationMessage::GenericApplicationMessage(const GenericApplicationMessage& other) : cPacket(other)
 {
-    setName(other.getName());
-    operator=(other);
+    copy(other);
 }
 
 GenericApplicationMessage::~GenericApplicationMessage()
@@ -55,12 +54,17 @@ GenericApplicationMessage& GenericApplicationMessage::operator=(const GenericApp
 {
     if (this==&other) return *this;
     cPacket::operator=(other);
+    copy(other);
+    return *this;
+}
+
+void GenericApplicationMessage::copy(const GenericApplicationMessage& other)
+{
     this->replyLength_var = other.replyLength_var;
     this->replyPerRequest_var = other.replyPerRequest_var;
     this->timeToRespond_var = other.timeToRespond_var;
     this->last_var = other.last_var;
     this->packetNumber_var = other.packetNumber_var;
-    return *this;
 }
 
 void GenericApplicationMessage::parsimPack(cCommBuffer *b)

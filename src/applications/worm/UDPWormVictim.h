@@ -4,7 +4,7 @@
 #include <omnetpp.h>
 #include "IPvXAddress.h"
 #include "UDPSocket.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 
 const int FIRST_ATTACK_ID_OF_WORM_SPREAD = 10000;
 
@@ -19,7 +19,7 @@ const int FIRST_ATTACK_ID_OF_WORM_SPREAD = 10000;
  *
  * @class UDPWormVictim
  */
-class REASE_API UDPWormVictim : public cSimpleModule
+class SCADASIM_API UDPWormVictim : public cSimpleModule
 {
 protected:
 	/// Fixed inter-packet delay for subsequent probing packets

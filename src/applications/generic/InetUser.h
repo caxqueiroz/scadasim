@@ -12,7 +12,7 @@
 #include "GenericApplication.h"
 #include "TrafficProfileManager.h"
 #include "ConnectionManager.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 
 class GenericApplication;
 
@@ -29,7 +29,7 @@ class GenericApplication;
  *
  * @class InetUser
  */
-class REASE_API InetUser: public cSimpleModule
+class SCADASIM_API InetUser: public cSimpleModule
 {
 protected:
 	/// Map of available applications
@@ -77,7 +77,7 @@ protected:
  *
  * @class InetUserAccess
  */ 
-class REASE_API InetUserAccess : public ModuleAccess<InetUser>
+class SCADASIM_API InetUserAccess : public ModuleAccess<InetUser>
 {
   public:
     InetUserAccess() : ModuleAccess<InetUser>("inetUser"){}

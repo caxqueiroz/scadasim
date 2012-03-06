@@ -5,7 +5,7 @@
 #include <omnetpp.h>
 #include "TransmissionConfig.h"
 #include "ModuleAccess.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 
 /**
  * @brief Manages available traffic profiles and randomly selects one for
@@ -18,7 +18,7 @@
  *
  * @class TrafficProfileManager
  */
-class REASE_API TrafficProfileManager : public cSimpleModule
+class SCADASIM_API TrafficProfileManager : public cSimpleModule
 {
 private:
 	/// Vector of available traffic profiles
@@ -47,7 +47,7 @@ protected:
  *
  * @class TrafficProfileManagerAccess
  */ 
-class REASE_API TrafficProfileManagerAccess : public ModuleAccess<TrafficProfileManager>
+class SCADASIM_API TrafficProfileManagerAccess : public ModuleAccess<TrafficProfileManager>
 {
 public:
 	TrafficProfileManagerAccess() : ModuleAccess<TrafficProfileManager>("trafficProfileManager"){};

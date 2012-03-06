@@ -16,7 +16,7 @@
 #include "NetworkConfigurator.h"
 #include "IPv4InterfaceData.h"
 #include "InterfaceEntry.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 
 using std::vector;
 using std::map;
@@ -201,13 +201,19 @@ struct nodeInfoAS {
 
 		// check if stubstring "sas" (StubAS) or "tas" (TransitAS)
 		// is contained in fullPath
-		if ((index = fullPath.find("corporate")) != -1)
+		if ((index = fullPath.find("Internet")) != -1)
 			asType = STUB_AS;
-		else if ((index = fullPath.find("remote")) != -1)
+		else if ((index = fullPath.find("brc")) != -1)
 			asType = STUB_AS;
-		else if ((index = fullPath.find("field")) != -1)
+		else if ((index = fullPath.find("brr")) != -1)
 			asType = STUB_AS;
-		else if ((index = fullPath.find("SCADA")) != -1)
+		else if ((index = fullPath.find("brf00")) != -1)
+		            asType = STUB_AS;
+		else if ((index = fullPath.find("brf01")) != -1)
+		            asType = STUB_AS;
+		else if ((index = fullPath.find("brf02")) != -1)
+		            asType = STUB_AS;
+		else if ((index = fullPath.find("CaseStudy")) != -1)
 			asType = UNSPECIFIED;
 		else {
 			cerr << "found module that doesn't belong to TAS or SAS: "
@@ -239,7 +245,7 @@ typedef std::vector<nodeInfoAS> NODE_INFO_AS_VEC;
  *
  * @class TGMNetworkConfigurator
  */
-class REASE_API TGMNetworkConfigurator: public cSimpleModule {
+class SCADASIM_API TGMNetworkConfigurator: public cSimpleModule {
 protected:
 	std::vector<cTopology*> rlTopology;
 	cTopology asTopology;

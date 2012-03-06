@@ -4,7 +4,7 @@
 #include <omnetpp.h>
 #include <queue>
 #include "GenericTCPApplication.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 
 /**
  * @brief A server thread implements the endpoint of a client/server connection.
@@ -16,7 +16,7 @@
  *
  * @class GenericTCPApplicationServerThread
  */
-class REASE_API GenericTCPApplicationServerThread : public GenericTCPApplicationThreadBase
+class SCADASIM_API GenericTCPApplicationServerThread : public GenericTCPApplicationThreadBase
 {
 private:
 	/// Indicates that the socket should be closed due to end of the transmission

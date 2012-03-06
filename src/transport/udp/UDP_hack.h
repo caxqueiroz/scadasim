@@ -5,7 +5,7 @@
 #include "UDP.h"
 #include "UDPPacket.h"
 #include "UDPControlInfo_m.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 
 /**
  * @brief Overwrites original UDP in order to process 
@@ -20,7 +20,7 @@
  *
  * @class UDP_hack
  */
-class REASE_API UDP_hack : public UDP
+class SCADASIM_API UDP_hack : public UDP
 {
 public:
 	UDP_hack();

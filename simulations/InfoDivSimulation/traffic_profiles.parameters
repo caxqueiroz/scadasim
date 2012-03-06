@@ -1,6 +1,6 @@
 <Profile>
-	<Id><3>
-	<Label><Web Traffic>
+	<Id><2>
+	<Label><Remote Interactive Traffic>
 	<RequestLength><200>
 	<RequestsPerSession><10>
 	<ReplyLength><1000>
@@ -12,15 +12,15 @@
 	<WANRatio><10.0>
 </Profile>
 <Profile>
-	<Id><5>
-	<Label><MODBUS>
-	<RequestLength><250>
-	<RequestsPerSession><100>
-	<ReplyLength><100>
-	<ReplyPerRequest><17>
+	<Id><3>
+	<Label><Web Traffic>
+	<RequestLength><200>
+	<RequestsPerSession><10>
+	<ReplyLength><1000>
+	<ReplyPerRequest><1>
 	<TimeBetweenRequests><1.0>
 	<TimeToRespond><0.5>
-	<TimeBetweenSessions><5.0>
-	<Ratio><50.9>
-	<WANRatio><80.0>
+	<TimeBetweenSessions><1.0>
+	<Ratio><5.0>
+	<WANRatio><10.0>
 </Profile>

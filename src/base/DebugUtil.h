@@ -6,7 +6,7 @@
 #include <cstdio>
 
 /**
- * @brief Sets current debug level of ReaSE
+ * @brief Sets current debug level
  *
  * The higher the level the more debug output is generated.
  * Maximum level: 2, minimum level: 0 (no debug output).

@@ -23,7 +23,7 @@ class GenericUDPApplicationThreadBase;
  *
  * @class GenericUDPApplication
  */
-class REASE_API GenericUDPApplication: public GenericApplication
+class SCADASIM_API GenericUDPApplication: public GenericApplication
 {
 /**
  * Structure that contains information about a UDP thread
@@ -87,7 +87,7 @@ protected:
  * @class GenericUDPApplicationThreadBase
  */
 
-class REASE_API GenericUDPApplicationThreadBase : public cPolymorphic, public UDPSocket::CallbackInterface
+class SCADASIM_API GenericUDPApplicationThreadBase : public cPolymorphic, public UDPSocket::CallbackInterface
 {
 
 protected:

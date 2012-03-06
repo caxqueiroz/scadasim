@@ -1,6 +1,6 @@
 cplusplus {{
 #include "INETDefs.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 }}
 
 //

@@ -3,7 +3,7 @@
 
 #include <omnetpp.h>
 #include "GenericTCPApplication.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 
 /**
  * @brief A client thread implements the endpoint of a client/server connection.
@@ -15,7 +15,7 @@
  *
  * @class GenericTCPApplicationClientThread
  */
-class REASE_API GenericTCPApplicationClientThread : public GenericTCPApplicationThreadBase
+class SCADASIM_API GenericTCPApplicationClientThread : public GenericTCPApplicationThreadBase
 {
 private:
 	/// Traffic profile used by this thread

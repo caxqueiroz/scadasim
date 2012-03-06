@@ -3,7 +3,7 @@
 
 #include <omnetpp.h>
 #include "GenericUDPApplication.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 
 #define MSG_KIND_TIMEOUT 1033
 
@@ -12,7 +12,7 @@
  *
  * @class GenericUDPApplicationTimeout
  */
-class REASE_API GenericUDPApplicationTimeout : public cPolymorphic
+class SCADASIM_API GenericUDPApplicationTimeout : public cPolymorphic
 {
 private:
 	/// Time of last timeout

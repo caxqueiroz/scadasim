@@ -4,7 +4,7 @@
 #include <omnetpp.h>
 #include "GenericApplication.h"
 #include "TransmissionConfig.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 
 /**
  * @brief Implementation of an ICMP Ping application.
@@ -15,7 +15,7 @@
  *
  * @class GenericICMPPingApplication
  */
-class REASE_API GenericICMPPingApplication: public GenericApplication
+class SCADASIM_API GenericICMPPingApplication: public GenericApplication
 {
 private:
 	/// IP address of the ICMP client

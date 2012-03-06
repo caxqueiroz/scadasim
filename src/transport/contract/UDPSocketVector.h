@@ -6,7 +6,7 @@
 #include "UDPSocket.h"
 #include "TransmissionConfig.h"
 #include "IPvXAddress.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 
 //
 // this is just a copy of the functionality of TCPSocketMap
@@ -42,7 +42,7 @@ struct UDPSocketVectorInfo
  *
  * @class UDPSocketVector
  */
-class REASE_API UDPSocketVector
+class SCADASIM_API UDPSocketVector
 {
 protected:
 	typedef std::vector<UDPSocketVectorInfo*> SocketVector;

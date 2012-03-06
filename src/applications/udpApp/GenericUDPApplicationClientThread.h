@@ -17,7 +17,7 @@
  *
  * @class GenericUDPApplicationClientThread
  */
-class REASE_API  GenericUDPApplicationClientThread : public GenericUDPApplicationThreadBase
+class SCADASIM_API  GenericUDPApplicationClientThread : public GenericUDPApplicationThreadBase
 {
 private:
 	/// Traffic profile used by this thread

@@ -36,10 +36,9 @@ UDPWormQueryMessage::UDPWormQueryMessage(const char *name, int kind) : cPacket(n
 {
 }
 
-UDPWormQueryMessage::UDPWormQueryMessage(const UDPWormQueryMessage& other) : cPacket()
+UDPWormQueryMessage::UDPWormQueryMessage(const UDPWormQueryMessage& other) : cPacket(other)
 {
-    setName(other.getName());
-    operator=(other);
+    copy(other);
 }
 
 UDPWormQueryMessage::~UDPWormQueryMessage()
@@ -50,7 +49,12 @@ UDPWormQueryMessage& UDPWormQueryMessage::operator=(const UDPWormQueryMessage& o
 {
     if (this==&other) return *this;
     cPacket::operator=(other);
+    copy(other);
     return *this;
+}
+
+void UDPWormQueryMessage::copy(const UDPWormQueryMessage& other)
+{
 }
 
 void UDPWormQueryMessage::parsimPack(cCommBuffer *b)

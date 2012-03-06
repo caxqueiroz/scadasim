@@ -16,19 +16,19 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 
-#ifndef __REASE_REASEDEFS_H
-#define __REASE_REASEDEFS_H
+#ifndef __SCADASIM_SCADASIMDEFS_H
+#define __SCADASIM_SCADASIMDEFS_H
 
-#if OMNETPP_VERSION < 0x0302
+#if OMNETPP_VERSION < 0x0402
 #  error At least OMNeT++/OMNEST version 4.0 required
 #endif
 
 #if defined(REASE_EXPORT)
-#  define REASE_API OPP_DLLEXPORT
+#  define SCADASIM_API OPP_DLLEXPORT
 #elif defined(REASE_IMPORT)
-#  define REASE_API OPP_DLLIMPORT
+#  define SCADASIM_API OPP_DLLIMPORT
 #else
-#  define REASE_API
+#  define SCADASIM_API
 #endif
 
 

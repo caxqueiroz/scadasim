@@ -37,10 +37,9 @@ IPDatagram_hacked::IPDatagram_hacked(const char *name, int kind) : IPDatagram(na
     this->attackTag_var = 0;
 }
 
-IPDatagram_hacked::IPDatagram_hacked(const IPDatagram_hacked& other) : IPDatagram()
+IPDatagram_hacked::IPDatagram_hacked(const IPDatagram_hacked& other) : IPDatagram(other)
 {
-    setName(other.getName());
-    operator=(other);
+    copy(other);
 }
 
 IPDatagram_hacked::~IPDatagram_hacked()
@@ -51,8 +50,13 @@ IPDatagram_hacked& IPDatagram_hacked::operator=(const IPDatagram_hacked& other)
 {
     if (this==&other) return *this;
     IPDatagram::operator=(other);
-    this->attackTag_var = other.attackTag_var;
+    copy(other);
     return *this;
+}
+
+void IPDatagram_hacked::copy(const IPDatagram_hacked& other)
+{
+    this->attackTag_var = other.attackTag_var;
 }
 
 void IPDatagram_hacked::parsimPack(cCommBuffer *b)

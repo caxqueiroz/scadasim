@@ -1,6 +1,6 @@
 cplusplus {{
 #include "IPDatagram.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 }}
 
 packet IPDatagram;

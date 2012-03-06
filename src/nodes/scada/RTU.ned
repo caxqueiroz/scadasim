@@ -1,4 +1,4 @@
-package scadasim.nodes.inet;
+package scadasim.nodes.scada;
 
 import inet.base.NotificationBoard;
 import inet.linklayer.ethernet.EthernetInterface;
@@ -14,14 +14,14 @@ import scadasim.transport.udp.UDP_hack;
 import inet.transport.tcp.TCP;
 
 //
-// InteractiveServer: Server system for interactive traffic profile using 
-// TCP as transport protocol.
-// This profile generates a similar number of equally large client requests
-// and server replies.
-//
+// WebServer: Server system for web traffic profile using TCP as 
+// transport protocol.
+// This profile generates small client requests and many large
+// server replies.
+// 
 // \IP host with TCP, UDP layers and applications.
 //
-module InteractiveServer
+module RTU
 {
     parameters:
         @node();
@@ -55,33 +55,33 @@ module InteractiveServer
                 @display("p=60,230;i=block/table");
 
         }
-        tcpApp: GenericTCPApplication {
+        plcServer: GenericTCPApplication {
             parameters:
                 isServer = true;
-                profileNumber = 2;
-                port = 413;
+                profileNumber = 5;
+                port = 502;
                 @display("p=163,67;i=block/app");
 
         }
         tcp: TCP {
             parameters:
-          //      maxThreadCount = maxTCPThreadCount;
+                //maxThreadCount = maxTCPThreadCount;
                 @display("p=163,154;i=block/wheelbarrow");
 
         }
-        udp: UDP_hack {
-            parameters:
-                @display("p=272,154;i=block/transport");
-
-        }
-        pingApp: GenericICMPPingApplication {
-            parameters:
-                isServer = true;
-                profileNumber = 21;
-                port = 0;
-                @display("i=block/app;p=343,200");
-
-        }
+        //        udp: UDP_hack {
+        //            parameters:
+        //                @display("p=272,154;i=block/transport");
+        //
+        //        }
+        //        pingApp: GenericICMPPingApplication {
+        //            parameters:
+        //                isServer = true;
+        //                profileNumber = 21;
+        //                port = 0;
+        //                @display("i=block/app;p=343,200");
+        //
+        //        }
         networkLayer: NetworkLayer {
             parameters:
                 proxyARP = false;
@@ -93,7 +93,7 @@ module InteractiveServer
         }
         ppp[sizeof(pppg)]: PPPInterface {
             parameters:
-                @display("p=205,350,row,90;q=txQueue;i=block/ifcard");
+                @display("p=147,350,row,90;q=txQueue;i=block/ifcard");
 
         }
         eth[sizeof(ethg)]: EthernetInterface {
@@ -102,17 +102,17 @@ module InteractiveServer
 
         }
     connections allowunconnected:
-        tcpApp.tcpOut --> tcp.appIn++;
-        tcpApp.tcpIn <-- tcp.appOut++;
+        plcServer.tcpOut --> tcp.appIn++;
+        plcServer.tcpIn <-- tcp.appOut++;
 
         tcp.ipOut --> networkLayer.tcpIn;
         tcp.ipIn <-- networkLayer.tcpOut;
 
-        udp.ipOut --> networkLayer.udpIn;
-        udp.ipIn <-- networkLayer.udpOut;
+//        udp.ipOut --> networkLayer.udpIn;
+//        udp.ipIn <-- networkLayer.udpOut;
 
-        networkLayer.pingOut --> pingApp.pingIn;
-        networkLayer.pingIn <-- pingApp.pingOut;
+//        networkLayer.pingOut --> pingApp.pingIn;
+//        networkLayer.pingIn <-- pingApp.pingOut;
 
         // connections to network outside
         for i=0..sizeof(pppg)-1 {

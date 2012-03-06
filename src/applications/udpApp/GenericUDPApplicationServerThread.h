@@ -3,7 +3,7 @@
 
 #include <omnetpp.h>
 #include "GenericUDPApplication.h"
-#include "ReaSEDefs.h"
+#include "SCADASIMDefs.h"
 
 /**
  * @brief A server thread implements the endpoint of a client/server connection.
@@ -16,7 +16,7 @@
  *
  * @class GenericUDPApplicationServerThread
  */
-class REASE_API GenericUDPApplicationServerThread : public GenericUDPApplicationThreadBase
+class SCADASIM_API GenericUDPApplicationServerThread : public GenericUDPApplicationThreadBase
 {
 private:
 	cMessage *selfMsg;
