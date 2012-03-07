@@ -5,7 +5,7 @@ import inet.linklayer.ethernet.EthernetInterface;
 import inet.linklayer.ppp.PPPInterface;
 import inet.networklayer.common.InterfaceTable;
 import inet.networklayer.ipv4.RoutingTable;
-import inet.util.NAMTraceWriter;
+
 import scadasim.applications.worm.UDPWormVictim;
 
 //
@@ -23,11 +23,6 @@ module WormHost
         inout pppg[];
         inout ethg[];
     submodules:
-        namTrace: NAMTraceWriter {
-            parameters:
-                namid = namid;
-                @display("p=60,310;i=block/sink");
-        }
         notificationBoard: NotificationBoard {
             parameters:
                 @display("p=60,70;i=block/control");

@@ -27,14 +27,14 @@ UDPSocketVector::~UDPSocketVector()
  */
 UDPSocket *UDPSocketVector::findSocketFor(cMessage *msg)
 {
-	UDPControlInfo *ctrl = dynamic_cast<UDPControlInfo *> (msg->getControlInfo());
+	UDPBindCommand *ctrl = dynamic_cast<UDPBindCommand *> (msg->getControlInfo());
 	if (!ctrl)
 		opp_error("UDPSocketVector: findSocketFor(): no UDPControl info in message (not from UDP?)");
 	SocketVector::iterator i = socketVector.begin();
 	while (i != socketVector.end())
 	{
-		if ((*i)->remoteAddr == ctrl->getSrcAddr())
-			if ((*i)->remotePort == ctrl->getSrcPort())
+		if ((*i)->remoteAddr == ctrl->getLocalAddr())
+			if ((*i)->remotePort == ctrl->getLocalPort())
 				break;
 		i++;
 	}
@@ -50,19 +50,19 @@ UDPSocket *UDPSocketVector::findSocketFor(cMessage *msg)
  */
 void UDPSocketVector::addSocket(UDPSocket *socket, cMessage *init)
 {
-	UDPControlInfo *ctrl = dynamic_cast<UDPControlInfo *> (init->getControlInfo());
+    UDPBindCommand *ctrl = dynamic_cast<UDPBindCommand *> (init->getControlInfo());
 	if (!ctrl)
 		opp_error("UDPSocketVector: findSocketFor(): no UDPControl info in message (not from UDP?)");
 	SocketVector::iterator i = socketVector.begin();
 	while (i != socketVector.end())
 	{
-		if ((*i)->remoteAddr == ctrl->getSrcAddr())
-			if ((*i)->remotePort == ctrl->getSrcPort())
+		if ((*i)->remoteAddr == ctrl->getLocalAddr())
+			if ((*i)->remotePort == ctrl->getLocalPort())
 				break;
 		i++;
 	}
 	ASSERT(i == socketVector.end());
-	socketVector.push_back(new UDPSocketVectorInfo(socket, ctrl->getSrcAddr(), ctrl->getSrcPort()));
+	socketVector.push_back(new UDPSocketVectorInfo(socket, ctrl->getLocalAddr(), ctrl->getLocalPort()));
 }
 
 /**

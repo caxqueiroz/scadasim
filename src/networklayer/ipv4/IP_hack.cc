@@ -3,6 +3,7 @@
 #include "IPControlInfo_hacked_m.h"
 #include "ARPPacket_m.h"
 #include "UDPPacket.h"
+#include "IInterfaceTable.h"
 
 Define_Module( IP_hack);
 
@@ -30,7 +31,7 @@ IP_hack::~IP_hack()
 
 void IP_hack::initialize()
 {
-	IP::initialize();
+	IPv4::initialize();
 	spoofingAllowed = par("spoofingOn").boolValue();
 	tracingOn = par("tracingOn").boolValue();
 	if(spoofingAllowed)
@@ -118,7 +119,7 @@ void IP_hack::endService(cPacket *msg)
 	}
 	else if (msg->getArrivalGate()->isName("queueIn"))
 	{
-		IPDatagram *dgram = check_and_cast<IPDatagram *> (msg);
+		IPv4Datagram *dgram = check_and_cast<IPv4Datagram *> (msg);
 		handlePacketFromNetwork(dgram);
 	}
 	else
@@ -137,22 +138,22 @@ void IP_hack::endService(cPacket *msg)
  * IP packet.
  */
 
-IPDatagram *IP_hack::encapsulate(cPacket *transportPacket, InterfaceEntry *&destIE)
+IPv4Datagram *IP_hack::encapsulate(cPacket *transportPacket, InterfaceEntry *&destIE)
 {
-	IPControlInfo *controlInfo = check_and_cast<IPControlInfo*> (transportPacket->removeControlInfo());
+	IPv4ControlInfo *controlInfo = check_and_cast<IPv4ControlInfo*> (transportPacket->removeControlInfo());
 
 	IPDatagram_hacked *datagram = new IPDatagram_hacked(transportPacket->getName());
 	datagram->setByteLength(IP_HEADER_BYTES);
 	datagram->encapsulate(transportPacket);
 
 	// set source and destination address
-	IPAddress dest = controlInfo->getDestAddr();
+	IPv4Address dest = controlInfo->getDestAddr();
 	datagram->setDestAddress(dest);
 
 	// IP_MULTICAST_IF option, but allow interface selection for unicast packets as well
 	destIE = ift->getInterfaceById(controlInfo->getInterfaceId());
 
-	IPAddress src = controlInfo->getSrcAddr();
+	IPv4Address src = controlInfo->getSrcAddr();
 
 	// ReaSE: set the attackTag in case of attack packets
 	if (dynamic_cast<IPControlInfo_hacked*> (controlInfo))
@@ -176,7 +177,8 @@ IPDatagram *IP_hack::encapsulate(cPacket *transportPacket, InterfaceEntry *&dest
 		}
 
 		// set other fields
-		datagram->setDiffServCodePoint(controlInfo->getDiffServCodePoint());
+	    //TODO
+		//datagram->setDiffServCodePoint(controlInfo->getDiffServCodePoint());
 
 		datagram->setIdentification(curFragmentId++);
 		datagram->setMoreFragments(false);
@@ -216,13 +218,13 @@ void IP_hack::handleMessageFromHL(cPacket *msg)
 
 	// encapsulate and send
 	InterfaceEntry *destIE; // will be filled in by encapsulate()
-	IPDatagram *datagram = encapsulate(msg, destIE);
+	IPv4Datagram *datagram = encapsulate(msg, destIE);
 
 	// route packet
 	if (!datagram->getDestAddress().isMulticast())
-	routePacket(datagram, destIE, true);
+	    routeUnicastPacket(datagram, destIE, true);
 	else
-	routeMulticastPacket(datagram, destIE, NULL);
+	    routeMulticastPacket(datagram, destIE, NULL);
 }
 
 /**
@@ -230,7 +232,7 @@ void IP_hack::handleMessageFromHL(cPacket *msg)
  *
  * @param datagram IP packet to be traced.
  */
-void IP_hack::handlePacketFromNetwork(IPDatagram *datagram)
+void IP_hack::handlePacketFromNetwork(IPv4Datagram *datagram)
 {
 	// in case of tracing update packet count
 	if (tracingOn)
@@ -284,7 +286,7 @@ void IP_hack::handlePacketFromNetwork(IPDatagram *datagram)
  * This method is called by handleFromNetwork and does an additional check
  * for IP options before forwarding the packet.
  */
-void IP_hack::processPacket(IPDatagram *datagram, InterfaceEntry *destIE, bool fromHL, bool checkOpts)
+void IP_hack::processPacket(IPv4Datagram *datagram, InterfaceEntry *destIE, bool fromHL, bool checkOpts)
 {
 	if (checkOpts && (datagram->getOptionCode() != IPOPTION_NO_OPTION))
 	{
@@ -322,13 +324,14 @@ void IP_hack::processPacket(IPDatagram *datagram, InterfaceEntry *destIE, bool f
 				break;
 			default:
 				opp_error("unknown IP option\n");
+				break;
 		}
 	}
 
 	// process local or remote routing
 	//
 	if (!datagram->getDestAddress().isMulticast())
-		routePacket(datagram, NULL, false);
+		routeUnicastPacket(datagram, NULL, false);
 	else
 		routeMulticastPacket(datagram, NULL, getSourceInterfaceFrom(datagram));
 }

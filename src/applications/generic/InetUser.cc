@@ -1,7 +1,7 @@
 #include "InetUser.h"
 
 #include "GenericICMPPingApplication.h"
-#include "GenericUDPApplication.h"
+
 #include "GenericTCPApplication.h"
 
 /**

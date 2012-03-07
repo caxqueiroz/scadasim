@@ -96,25 +96,25 @@ void TGMNetworkConfigurator::initialize(int stage)
  */
 void TGMNetworkConfigurator::createInterASPaths()
 {
-	IPAddress netmask(NET_MASK);
+	IPv4Address netmask(NET_MASK);
 	int asIdHistory = 0;
 	unsigned int tmpAddr = 0;
 	for (int i = 0; i < asTopology.getNumNodes(); i++)
 	{
 		// calculate prefix of current core node
 		nodeInfoRL destCore(asTopology.getNode(i));
-		tmpAddr = destCore.addr.getInt() >> IP_NET_SHIFT;
+		tmpAddr = destCore.addr.get4().getInt() >> IP_NET_SHIFT;
 		tmpAddr = tmpAddr << IP_NET_SHIFT;
-		destCore.addr = IPAddress(tmpAddr);
+		destCore.addr = IPvXAddress(tmpAddr);
 		asIdHistory = -1;
 		for (int j = 0; j < asTopology.getNumNodes(); j++)
 		{
 			if (i == j)
 				continue;
 			nodeInfoRL srcCore(asTopology.getNode(j));
-			tmpAddr = srcCore.addr.getInt() >> IP_NET_SHIFT;
+			tmpAddr = srcCore.addr.get4().getInt() >> IP_NET_SHIFT;
 			tmpAddr = tmpAddr << IP_NET_SHIFT;
-			srcCore.addr = IPAddress(tmpAddr);
+			srcCore.addr = IPvXAddress(tmpAddr);
 
 			// do not calculate paths between nodes of the same AS
 			if (destCore.asId == srcCore.asId)
@@ -129,12 +129,12 @@ void TGMNetworkConfigurator::createInterASPaths()
 			}
 			// add routing entry from srcCore to destCore into routing table of srcCore
 			InterfaceEntry *ie = srcCore.ift->getInterfaceByNodeOutputGateId(srcCore.node->getPath(0)->getLocalGate()->getId());
-			IPRoute *e = new IPRoute();
-			e->setHost(destCore.addr);
+			IPv4Route *e = new IPv4Route();
+			e->setDestination(destCore.addr.get4());
 			e->setNetmask(netmask);
 			e->setInterface(ie);
-			e->setType(IPRoute::DIRECT);
-			e->setSource(IPRoute::MANUAL);
+			e->setType(IPv4Route::DIRECT);
+			e->setSource(IPv4Route::MANUAL);
 			srcCore.rt->addRoute(e);
 
 			// re-enable all stub links
@@ -218,7 +218,7 @@ void TGMNetworkConfigurator::extractTopology()
 		tmpTopo->extractFromNetwork(getRouterLevelNodes, (void *) currentAS.getNode(i)->getModule()->getName());
 		rlTopology.push_back(tmpTopo);
 		// assign unique /16 IP address prefix to each AS
-		asNodeVec.push_back(nodeInfoAS(currentAS.getNode(i), IPAddress(netIP), IPAddress(NET_MASK)));
+		asNodeVec.push_back(nodeInfoAS(currentAS.getNode(i), IPv4Address(netIP), IPv4Address(NET_MASK)));
 		netIP += 1 << IP_NET_SHIFT;
 	}
 
@@ -289,7 +289,7 @@ bool TGMNetConf::getCoreNodes(cModule *curMod, void *nullPointer)
  */
 void TGMNetworkConfigurator::assignAddressAndSetDefaultRoutes(nodeInfoAS &asInfo)
 {
-	unsigned int currentIP = asInfo.addr.getInt() + 1;
+	unsigned int currentIP = asInfo.addr.get4().getInt() + 1;
 
 	NODE_MAP::iterator mapIt = asInfo.nodeMap.begin();
 	while (mapIt != asInfo.nodeMap.end())
@@ -302,12 +302,12 @@ void TGMNetworkConfigurator::assignAddressAndSetDefaultRoutes(nodeInfoAS &asInfo
 			InterfaceEntry *ie = mapIt->second.ift->getInterface(j);
 			if (!ie->isLoopback())
 			{
-				ie->ipv4Data()->setIPAddress(IPAddress(currentIP));
-				ie->ipv4Data()->setNetmask(IPAddress::ALLONES_ADDRESS);
+				ie->ipv4Data()->setIPAddress(IPv4Address(currentIP));
+				ie->ipv4Data()->setNetmask(IPv4Address::ALLONES_ADDRESS);
 			}
 		}
 		if (mapIt->second.rt->getRouterId().isUnspecified())
-			mapIt->second.rt->setRouterId(IPAddress(currentIP));
+			mapIt->second.rt->setRouterId(IPv4Address(currentIP));
 		mapIt->second.addr.set(currentIP);
 
 		// remember core nodes of each AS in additional list for assignment
@@ -319,12 +319,12 @@ void TGMNetworkConfigurator::assignAddressAndSetDefaultRoutes(nodeInfoAS &asInfo
 			//
 			// add default route in case of gw, edge, or host
 			//
-			IPRoute *e = new IPRoute();
-			e->setHost(IPAddress());
-			e->setNetmask(IPAddress());
+			IPv4Route *e = new IPv4Route();
+			e->setDestination(IPv4Address());
+			e->setNetmask(IPv4Address());
 			e->setInterface(mapIt->second.defaultRouteIE);
-			e->setType(IPRoute::REMOTE);
-			e->setSource(IPRoute::MANUAL);
+			e->setType(IPv4Route::REMOTE);
+			e->setSource(IPv4Route::MANUAL);
 			//e->setMetric(1);
 			mapIt->second.rt->addRoute(e);
 		}
@@ -375,12 +375,12 @@ void TGMNetworkConfigurator::setIntraASRoutes(cTopology &topology, nodeInfoAS &a
 				else
 				{
 					// add specific routing entry into routing table
-					IPRoute *e = new IPRoute();
-					e->setHost(destNode.addr);
-					e->setNetmask(IPAddress(255, 255, 255, 255));
+					IPv4Route *e = new IPv4Route();
+					e->setDestination(destNode.addr.get4());
+					e->setNetmask(IPv4Address(255, 255, 255, 255));
 					e->setInterface(ie);
-					e->setType(IPRoute::DIRECT);
-					e->setSource(IPRoute::MANUAL);
+					e->setType(IPv4Route::DIRECT);
+					e->setSource(IPv4Route::MANUAL);
 					srcNode.rt->addRoute(e);
 				}
 			}

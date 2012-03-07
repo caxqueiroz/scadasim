@@ -6,7 +6,7 @@ import inet.linklayer.ppp.PPPInterface;
 import inet.networklayer.common.InterfaceTable;
 import inet.networklayer.ipv4.RoutingTable;
 import inet.nodes.inet.NetworkLayer;
-import inet.util.NAMTraceWriter;
+
 import inet.util.TCPDump;
 import scadasim.applications.pingApp.GenericICMPPingApplication;
 import scadasim.applications.tcpApp.GenericTCPApplication;
@@ -32,12 +32,6 @@ module WebServer
         inout pppg[];
         inout ethg[];
     submodules:
-        namTrace: NAMTraceWriter {
-            parameters:
-                namid = namid;
-                @display("p=60,310;i=block/sink");
-
-        }
         notificationBoard: NotificationBoard {
             parameters:
                 @display("p=60,70;i=block/control");
@@ -66,7 +60,7 @@ module WebServer
         }
         tcp: TCP {
             parameters:
-             //   maxThreadCount = maxTCPThreadCount;
+                //   maxThreadCount = maxTCPThreadCount;
                 @display("p=163,154;i=block/wheelbarrow");
 
         }
@@ -102,15 +96,15 @@ module WebServer
                 @display("p=240,350,row,90;q=txQueue;i=block/ifcard");
 
         }
-//        tcpdump: TCPDump {
-//            parameters:
-//                @display("p=336,302;i=abstract/cache_s");
-//            gates:
-//                ifIn[sizeof(pppg)+sizeof(ethg)];
-//                in2[sizeof(pppg)+sizeof(ethg)];
-//                ifOut[sizeof(pppg)+sizeof(ethg)];
-//                out2[sizeof(pppg)+sizeof(ethg)];
-//        }
+    //        tcpdump: TCPDump {
+    //            parameters:
+    //                @display("p=336,302;i=abstract/cache_s");
+    //            gates:
+    //                ifIn[sizeof(pppg)+sizeof(ethg)];
+    //                in2[sizeof(pppg)+sizeof(ethg)];
+    //                ifOut[sizeof(pppg)+sizeof(ethg)];
+    //                out2[sizeof(pppg)+sizeof(ethg)];
+    //        }
     connections allowunconnected:
         tcpApp.tcpOut --> tcp.appIn++;
         tcpApp.tcpIn <-- tcp.appOut++;

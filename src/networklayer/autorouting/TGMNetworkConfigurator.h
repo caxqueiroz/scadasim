@@ -9,11 +9,11 @@
 #include <string>
 #include <iostream>
 #include "INETDefs.h"
-#include "IPAddress.h"
+#include "IPvXAddress.h"
 #include "RoutingTable.h"
 #include "InterfaceTable.h"
-#include "IPAddressResolver.h"
-#include "NetworkConfigurator.h"
+#include "IPvXAddressResolver.h"
+//#include "NetworkConfigurator.h"
 #include "IPv4InterfaceData.h"
 #include "InterfaceEntry.h"
 #include "SCADASIMDefs.h"
@@ -51,7 +51,7 @@ struct nodeInfoRL {
 	InterfaceEntry *defaultRouteIE;
 	int asId, asType, routerType, moduleId;
 	IRoutingTable *rt;
-	IPAddress addr;
+	IPvXAddress addr;
 	bool usesDefaultRoute;
 	cModule *module;
 	cTopology::Node *node;
@@ -63,8 +63,8 @@ struct nodeInfoRL {
 		this->node = node;
 		module = node->getModule();
 		moduleId = module->getId();
-		ift = IPAddressResolver().findInterfaceTableOf(module);
-		rt = IPAddressResolver().findRoutingTableOf(module);
+		ift = IPvXAddressResolver().findInterfaceTableOf(module);
+		rt = IPvXAddressResolver().findRoutingTableOf(module);
 		isIPNode = (rt != NULL);
 		int index = 0;
 		string fullPath = module->getFullPath();
@@ -188,10 +188,10 @@ struct nodeInfoAS {
 	cModule *module;
 	NODE_MAP nodeMap;
 	NODE_INFO_RL_VEC coreNode;
-	IPAddress addr;
-	IPAddress netmask;
+	IPvXAddress addr;
+	IPvXAddress netmask;
 
-	nodeInfoAS(cTopology::Node *node, IPAddress a, IPAddress m) {
+	nodeInfoAS(cTopology::Node *node, IPvXAddress a, IPvXAddress m) {
 		this->node = node;
 		this->module = node->getModule();
 		addr = a;

@@ -9,7 +9,7 @@ import inet.linklayer.ethernet.EthernetInterface;
 import inet.linklayer.ppp.PPPInterface;
 import inet.networklayer.common.InterfaceTable;
 import inet.networklayer.ipv4.RoutingTable;
-import inet.util.NAMTraceWriter;
+
 
 
 //
@@ -27,11 +27,6 @@ module TraceRouter
         inout pppg[];
         inout ethg[];
     submodules:
-        namTrace: NAMTraceWriter {
-            parameters:
-                namid = -1; // auto
-                @display("p=330,60;i=block/sink");
-        }
         notificationBoard: NotificationBoard {
             parameters:
                 @display("p=60,60;i=block/control");

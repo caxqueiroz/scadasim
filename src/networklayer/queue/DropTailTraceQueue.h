@@ -13,25 +13,26 @@
  *
  * @class DropTailTraceQueue
  */
-class DropTailTraceQueue : public PassiveQueueBase
-{
+class DropTailTraceQueue: public PassiveQueueBase {
+private:
+    int pendingRequests;
 protected:
-	// configuration
-	int frameCapacity;
-	simtime_t intervalSize;
-	bool tracingOn;
+    // configuration
+    int frameCapacity;
+    simtime_t intervalSize;
+    bool tracingOn;
 
-	// state
-	cQueue queue;
-	int dropsInInterval;
-	int framesInInterval;
+    // state
+    cQueue queue;
+    int dropsInInterval;
+    int framesInInterval;
 
-	// statistics
-	cOutVector frameVec;
-	cOutVector dropVec;
+    // statistics
+    cOutVector frameVec;
+    cOutVector dropVec;
 
-	// periodic message to trigger interval end
-	cMessage *traceMessage;
+    // periodic message to trigger interval end
+    cMessage *traceMessage;
 
 protected:
     virtual void initialize();
@@ -39,7 +40,7 @@ protected:
     /**
      * Redefined from PassiveQueueBase.
      */
-    virtual bool enqueue(cMessage *msg);
+    virtual cMessage *enqueue(cMessage *msg);
 
     /**
      * Redefined from PassiveQueueBase.
@@ -57,6 +58,28 @@ protected:
      * Handles interval timer message.
      */
     virtual void handleMessage(cMessage *msg);
+
+    /**
+     * The queue should send a packet whenever this method is invoked.
+     * If the queue is currently empty, it should send a packet when
+     * when one becomes available.
+     */
+    virtual void requestPacket();
+
+    /**
+     * Returns number of pending requests.
+     */
+    virtual int getNumPendingRequests();
+
+    /**
+     * Return true when queue is empty, otherwise return false.
+     */
+    virtual bool isEmpty();
+
+    /**
+     * Clear all queued packets and stored requests.
+     */
+    virtual void clear();
 
 };
 

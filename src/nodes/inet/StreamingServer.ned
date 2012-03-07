@@ -7,9 +7,7 @@ import inet.networklayer.common.InterfaceTable;
 import inet.networklayer.ipv4.RoutingTable;
 import inet.nodes.inet.NetworkLayer;
 import scadasim.transport.tcp.TCP_hack;
-import inet.util.NAMTraceWriter;
 import scadasim.applications.pingApp.GenericICMPPingApplication;
-import scadasim.applications.udpApp.GenericUDPApplication;
 import scadasim.transport.udp.UDP_hack;
 import inet.transport.tcp.TCP;
 import inet.transport.udp.UDP;
@@ -30,12 +28,6 @@ module StreamingServer
         inout pppg[];
         inout ethg[];
     submodules:
-        namTrace: NAMTraceWriter {
-            parameters:
-                namid = namid;
-                @display("p=60,310;i=block/sink");
-
-        }
         notificationBoard: NotificationBoard {
             parameters:
                 @display("p=60,70;i=block/control");
@@ -56,21 +48,8 @@ module StreamingServer
         }
         tcp: TCP {
             parameters:
-		//		maxThreadCount = maxTCPThreadCount;
+                //		maxThreadCount = maxTCPThreadCount;
                 @display("p=163,154;i=block/wheelbarrow");
-        }
-        udpApp: GenericUDPApplication {
-            parameters:
-                isServer = true;
-                profileNumber = 12;
-                port = 1245;
-                @display("i=block/app;p=272,67");
-
-        }
-        udp: UDP {
-            parameters:
-                @display("p=272,154;i=block/transport");
-
         }
         pingApp: GenericICMPPingApplication {
             parameters:
@@ -102,12 +81,6 @@ module StreamingServer
     connections allowunconnected:
         tcp.ipOut --> networkLayer.tcpIn;
         tcp.ipIn <-- networkLayer.tcpOut;
-
-        udpApp.udpOut --> udp.appIn++;
-        udpApp.udpIn <-- udp.appOut++;
-
-        udp.ipOut --> networkLayer.udpIn;
-        udp.ipIn <-- networkLayer.udpOut;
 
         networkLayer.pingOut --> pingApp.pingIn;
         networkLayer.pingIn <-- pingApp.pingOut;

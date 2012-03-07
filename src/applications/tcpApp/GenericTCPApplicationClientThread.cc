@@ -166,6 +166,7 @@ void GenericTCPApplicationClientThread::socketFailure(int connId,
 		break;
 		case TCP_I_TIMED_OUT:
 		EV<<"TCP Client Error - Timed out\n";
+		break;
 	}
 
 	TransmissionStatistics s;

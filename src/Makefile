@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for scadasim
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -I/usr/local/mysql/include/ -I../../inet/src/networklayer/rsvp_te -I../../inet/src/networklayer/common -I../../inet/src/networklayer/icmpv6 -I../../inet/src/transport/tcp -I../../inet/src/networklayer/mpls -I../../inet/src/networklayer/ted -I../../inet/src/networklayer/contract -I../../inet/src/util -I../../inet/src/transport/contract -I../../inet/src/linklayer/mfcore -I../../inet/src/networklayer/ldp -I../../inet/src/networklayer/ipv4 -I../../inet/src/base -I../../inet/src/util/headerserializers -I../../inet/src/networklayer/ipv6 -I../../inet/src/transport/sctp -I../../inet/src/world -I../../inet/src/applications/pingapp -I../../inet/src/linklayer/contract -I../../inet/src/networklayer/arp -I../../inet/src/transport/udp -I../../inet/src/networklayer/autorouting -L/usr/local/mysql/lib -L../../inet/out/$(CONFIGNAME)/src -lmysqlclient -linet -KINET_PROJ=../../inet
+#  opp_makemake -f --deep -I/usr/local/mysql/include/ -I../../inet/src/linklayer/ethernet -I../../inet/src/linklayer/ieee80211/radio -I../../inet/src/networklayer/common -I../../inet/src/networklayer/icmpv6 -I../../inet/src -I../../inet/src/networklayer/queue -I../../inet/src/world/obstacles -I../../inet/src/networklayer/xmipv6 -I../../inet/src/networklayer/contract -I../../inet/src/mobility -I../../inet/src/networklayer/manetrouting/base -I../../inet/src/linklayer/ieee80211/mgmt -I../../inet/src/util -I../../inet/src/transport/contract -I../../inet/src/linklayer/radio/propagation -I../../inet/src/linklayer/ieee80211/radio/errormodel -I../../inet/src/linklayer/radio -I../../inet/src/world/powercontrol -I../../inet/src/util/headerserializers/tcp -I../../inet/src/networklayer/ipv4 -I../../inet/src/util/headerserializers/ipv4 -I../../inet/src/base -I../../inet/src/util/headerserializers -I../../inet/src/world/radio -I../../inet/src/linklayer/ieee80211/mac -I../../inet/src/transport/sctp -I../../inet/src/networklayer/ipv6 -I../../inet/src/util/headerserializers/udp -I../../inet/src/networklayer/ipv6tunneling -I../../inet/src/applications/pingapp -I../../inet/src/battery/models -I../../inet/src/util/headerserializers/sctp -I../../inet/src/linklayer/contract -I../../inet/src/networklayer/arp -I../../inet/src/transport/tcp_common -I../../inet/src/transport/udp -I../../inet/src/transport/tcp -I../../inet/src/transport/tcp/queues -L/usr/local/mysql/lib -L../../inet/out/$(CONFIGNAME)/src -lmysqlclient -linet -DINET_IMPORT -KINET_PROJ=../../inet
 #
 
 # Name of target to be created (-o option)
@@ -16,28 +16,44 @@ USERIF_LIBS = $(ALL_ENV_LIBS) # that is, $(TKENV_LIBS) $(CMDENV_LIBS)
 # C++ include paths (with -I)
 INCLUDE_PATH = \
     -I/usr/local/mysql/include/ \
-    -I../../inet/src/networklayer/rsvp_te \
+    -I../../inet/src/linklayer/ethernet \
+    -I../../inet/src/linklayer/ieee80211/radio \
     -I../../inet/src/networklayer/common \
     -I../../inet/src/networklayer/icmpv6 \
-    -I../../inet/src/transport/tcp \
-    -I../../inet/src/networklayer/mpls \
-    -I../../inet/src/networklayer/ted \
+    -I../../inet/src \
+    -I../../inet/src/networklayer/queue \
+    -I../../inet/src/world/obstacles \
+    -I../../inet/src/networklayer/xmipv6 \
     -I../../inet/src/networklayer/contract \
+    -I../../inet/src/mobility \
+    -I../../inet/src/networklayer/manetrouting/base \
+    -I../../inet/src/linklayer/ieee80211/mgmt \
     -I../../inet/src/util \
     -I../../inet/src/transport/contract \
-    -I../../inet/src/linklayer/mfcore \
-    -I../../inet/src/networklayer/ldp \
+    -I../../inet/src/linklayer/radio/propagation \
+    -I../../inet/src/linklayer/ieee80211/radio/errormodel \
+    -I../../inet/src/linklayer/radio \
+    -I../../inet/src/world/powercontrol \
+    -I../../inet/src/util/headerserializers/tcp \
     -I../../inet/src/networklayer/ipv4 \
+    -I../../inet/src/util/headerserializers/ipv4 \
     -I../../inet/src/base \
     -I../../inet/src/util/headerserializers \
-    -I../../inet/src/networklayer/ipv6 \
+    -I../../inet/src/world/radio \
+    -I../../inet/src/linklayer/ieee80211/mac \
     -I../../inet/src/transport/sctp \
-    -I../../inet/src/world \
+    -I../../inet/src/networklayer/ipv6 \
+    -I../../inet/src/util/headerserializers/udp \
+    -I../../inet/src/networklayer/ipv6tunneling \
     -I../../inet/src/applications/pingapp \
+    -I../../inet/src/battery/models \
+    -I../../inet/src/util/headerserializers/sctp \
     -I../../inet/src/linklayer/contract \
     -I../../inet/src/networklayer/arp \
+    -I../../inet/src/transport/tcp_common \
     -I../../inet/src/transport/udp \
-    -I../../inet/src/networklayer/autorouting \
+    -I../../inet/src/transport/tcp \
+    -I../../inet/src/transport/tcp/queues \
     -I. \
     -Iapplications \
     -Iapplications/ddos \
@@ -45,7 +61,6 @@ INCLUDE_PATH = \
     -Iapplications/modbusApp \
     -Iapplications/pingApp \
     -Iapplications/tcpApp \
-    -Iapplications/udpApp \
     -Iapplications/worm \
     -Ibase \
     -Iexternal \
@@ -79,16 +94,15 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 OBJS = \
     $O/applications/ddos/TribeFloodNetwork.o \
     $O/applications/generic/GenericApplication.o \
+    $O/applications/generic/IEDUser.o \
     $O/applications/generic/InetUser.o \
+    $O/applications/modbusApp/ModbusApplication.o \
     $O/applications/modbusApp/ModbusTCP.o \
+    $O/applications/modbusApp/ModbusUser.o \
     $O/applications/pingApp/GenericICMPPingApplication.o \
     $O/applications/tcpApp/GenericTCPApplication.o \
     $O/applications/tcpApp/GenericTCPApplicationClientThread.o \
     $O/applications/tcpApp/GenericTCPApplicationServerThread.o \
-    $O/applications/udpApp/GenericUDPApplication.o \
-    $O/applications/udpApp/GenericUDPApplicationClientThread.o \
-    $O/applications/udpApp/GenericUDPApplicationServerThread.o \
-    $O/applications/udpApp/GenericUDPApplicationTimeout.o \
     $O/applications/worm/UDPWormVictim.o \
     $O/base/ConnectionManager.o \
     $O/base/TrafficProfileManager.o \
@@ -107,6 +121,7 @@ OBJS = \
     $O/transport/udp/UDP_hack.o \
     $O/util/DataDump.o \
     $O/applications/generic/GenericApplicationMessage_m.o \
+    $O/applications/modbusApp/modbus_m.o \
     $O/applications/worm/UDPWormQueryMessage_m.o \
     $O/networklayer/contract/IPControlInfo_hacked_m.o \
     $O/networklayer/contract/IPv6ControlInfo_hacked_m.o \
@@ -115,6 +130,7 @@ OBJS = \
 # Message files
 MSGFILES = \
     applications/generic/GenericApplicationMessage.msg \
+    applications/modbusApp/modbus.msg \
     applications/worm/UDPWormQueryMessage.msg \
     networklayer/contract/IPControlInfo_hacked.msg \
     networklayer/contract/IPv6ControlInfo_hacked.msg \
@@ -147,7 +163,7 @@ include $(CONFIGFILE)
 OMNETPP_LIB_SUBDIR = $(OMNETPP_LIB_DIR)/$(TOOLCHAIN_NAME)
 OMNETPP_LIBS = -L"$(OMNETPP_LIB_SUBDIR)" -L"$(OMNETPP_LIB_DIR)" -loppmain$D $(USERIF_LIBS) $(KERNEL_LIBS) $(SYS_LIBS)
 
-COPTS = $(CFLAGS)  $(INCLUDE_PATH) -I$(OMNETPP_INCL_DIR)
+COPTS = $(CFLAGS) -DINET_IMPORT $(INCLUDE_PATH) -I$(OMNETPP_INCL_DIR)
 MSGCOPTS = $(INCLUDE_PATH)
 
 # we want to recompile everything if COPTS changes,
@@ -199,7 +215,6 @@ clean:
 	-rm -f applications/modbusApp/*_m.cc applications/modbusApp/*_m.h
 	-rm -f applications/pingApp/*_m.cc applications/pingApp/*_m.h
 	-rm -f applications/tcpApp/*_m.cc applications/tcpApp/*_m.h
-	-rm -f applications/udpApp/*_m.cc applications/udpApp/*_m.h
 	-rm -f applications/worm/*_m.cc applications/worm/*_m.h
 	-rm -f base/*_m.cc base/*_m.h
 	-rm -f external/*_m.cc external/*_m.h
@@ -221,43 +236,41 @@ cleanall: clean
 	-rm -rf $(PROJECT_OUTPUT_DIR)
 
 depend:
-	$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc applications/*.cc applications/ddos/*.cc applications/generic/*.cc applications/modbusApp/*.cc applications/pingApp/*.cc applications/tcpApp/*.cc applications/udpApp/*.cc applications/worm/*.cc base/*.cc external/*.cc networklayer/*.cc networklayer/autorouting/*.cc networklayer/contract/*.cc networklayer/ipv4/*.cc networklayer/queue/*.cc nodes/*.cc nodes/inet/*.cc nodes/scada/*.cc transport/*.cc transport/contract/*.cc transport/tcp/*.cc transport/udp/*.cc util/*.cc
+	$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc applications/*.cc applications/ddos/*.cc applications/generic/*.cc applications/modbusApp/*.cc applications/pingApp/*.cc applications/tcpApp/*.cc applications/worm/*.cc base/*.cc external/*.cc networklayer/*.cc networklayer/autorouting/*.cc networklayer/contract/*.cc networklayer/ipv4/*.cc networklayer/queue/*.cc nodes/*.cc nodes/inet/*.cc nodes/scada/*.cc transport/*.cc transport/contract/*.cc transport/tcp/*.cc transport/udp/*.cc util/*.cc
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 $O/applications/ddos/TribeFloodNetwork.o: applications/ddos/TribeFloodNetwork.cc \
 	$(INET_PROJ)/src/applications/pingapp/PingPayload_m.h \
+	$(INET_PROJ)/src/base/ByteArray.h \
+	$(INET_PROJ)/src/base/ByteArray_m.h \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/ModuleAccess.h \
 	$(INET_PROJ)/src/base/NotifierConsts.h \
 	$(INET_PROJ)/src/linklayer/contract/MACAddress.h \
 	$(INET_PROJ)/src/networklayer/arp/ARP.h \
-	$(INET_PROJ)/src/networklayer/arp/ARPPacket_m.h \
-	$(INET_PROJ)/src/networklayer/common/IInterfaceTable.h \
 	$(INET_PROJ)/src/networklayer/common/InterfaceEntry.h \
-	$(INET_PROJ)/src/networklayer/common/InterfaceTableAccess.h \
 	$(INET_PROJ)/src/networklayer/common/InterfaceToken.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddressResolver.h \
-	$(INET_PROJ)/src/networklayer/contract/IPControlInfo.h \
-	$(INET_PROJ)/src/networklayer/contract/IPControlInfo_m.h \
 	$(INET_PROJ)/src/networklayer/contract/IPProtocolId_m.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4ControlInfo.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4ControlInfo_m.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6ControlInfo.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6ControlInfo_m.h \
 	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
+	$(INET_PROJ)/src/networklayer/contract/IPvXAddressResolver.h \
 	$(INET_PROJ)/src/networklayer/ipv4/ICMP.h \
 	$(INET_PROJ)/src/networklayer/ipv4/ICMPMessage.h \
 	$(INET_PROJ)/src/networklayer/ipv4/ICMPMessage_m.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IPDatagram.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IPDatagram_m.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IPRoute.h \
+	$(INET_PROJ)/src/networklayer/ipv4/IPv4Route.h \
 	$(INET_PROJ)/src/networklayer/ipv4/IRoutingTable.h \
 	$(INET_PROJ)/src/networklayer/ipv4/RoutingTableAccess.h \
 	$(INET_PROJ)/src/transport/contract/UDPControlInfo_m.h \
-	$(INET_PROJ)/src/transport/tcp/TCPSegment.h \
-	$(INET_PROJ)/src/transport/tcp/TCPSegment_m.h \
+	$(INET_PROJ)/src/transport/tcp_common/TCPSegment.h \
+	$(INET_PROJ)/src/transport/tcp_common/TCPSegment_m.h \
 	$(INET_PROJ)/src/transport/udp/UDPPacket.h \
 	$(INET_PROJ)/src/transport/udp/UDPPacket_m.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	applications/ddos/TribeFloodNetwork.h \
 	base/SCADASIMDefs.h \
 	networklayer/contract/IPControlInfo_hacked_m.h \
@@ -265,10 +278,11 @@ $O/applications/ddos/TribeFloodNetwork.o: applications/ddos/TribeFloodNetwork.cc
 $O/applications/generic/GenericApplication.o: applications/generic/GenericApplication.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/ModuleAccess.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddressResolver.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
+	$(INET_PROJ)/src/networklayer/contract/IPvXAddressResolver.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	applications/generic/GenericApplication.h \
 	applications/generic/InetUser.h \
 	applications/generic/TransmissionConfig.h \
@@ -279,42 +293,64 @@ $O/applications/generic/GenericApplicationMessage_m.o: applications/generic/Gene
 	$(INET_PROJ)/src/base/INETDefs.h \
 	applications/generic/GenericApplicationMessage_m.h \
 	base/SCADASIMDefs.h
+$O/applications/generic/IEDUser.o: applications/generic/IEDUser.cc \
+	applications/generic/IEDUser.h \
+	base/SCADASIMDefs.h
 $O/applications/generic/InetUser.o: applications/generic/InetUser.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/ModuleAccess.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
 	$(INET_PROJ)/src/transport/contract/TCPCommand_m.h \
 	$(INET_PROJ)/src/transport/contract/TCPSocket.h \
 	$(INET_PROJ)/src/transport/contract/TCPSocketMap.h \
-	$(INET_PROJ)/src/transport/contract/UDPControlInfo_m.h \
-	$(INET_PROJ)/src/transport/contract/UDPSocket.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	applications/generic/GenericApplication.h \
 	applications/generic/InetUser.h \
 	applications/generic/TransmissionConfig.h \
 	applications/pingApp/GenericICMPPingApplication.h \
 	applications/tcpApp/GenericTCPApplication.h \
-	applications/udpApp/GenericUDPApplication.h \
 	base/ConnectionManager.h \
 	base/SCADASIMDefs.h \
-	base/TrafficProfileManager.h \
-	transport/contract/UDPSocketVector.h
+	base/TrafficProfileManager.h
+$O/applications/modbusApp/ModbusApplication.o: applications/modbusApp/ModbusApplication.cc \
+	applications/modbusApp/ModbusApplication.h \
+	applications/modbusApp/ModbusUser.h \
+	base/SCADASIMDefs.h
 $O/applications/modbusApp/ModbusTCP.o: applications/modbusApp/ModbusTCP.cc \
+	$(INET_PROJ)/src/base/INETDefs.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
+	$(INET_PROJ)/src/networklayer/contract/IPvXAddressResolver.h \
+	$(INET_PROJ)/src/transport/contract/TCPCommand_m.h \
+	$(INET_PROJ)/src/transport/contract/TCPSocket.h \
+	$(INET_PROJ)/src/util/uint128.h \
+	applications/modbusApp/Constants.h \
+	applications/modbusApp/DataStruct.h \
 	applications/modbusApp/ModbusTCP.h
+$O/applications/modbusApp/ModbusUser.o: applications/modbusApp/ModbusUser.cc \
+	applications/modbusApp/ModbusUser.h \
+	base/SCADASIMDefs.h
+$O/applications/modbusApp/modbus_m.o: applications/modbusApp/modbus_m.cc \
+	$(INET_PROJ)/src/base/INETDefs.h \
+	applications/modbusApp/modbus_m.h
 $O/applications/pingApp/GenericICMPPingApplication.o: applications/pingApp/GenericICMPPingApplication.cc \
 	$(INET_PROJ)/src/applications/pingapp/PingPayload_m.h \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/ModuleAccess.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddressResolver.h \
-	$(INET_PROJ)/src/networklayer/contract/IPControlInfo.h \
-	$(INET_PROJ)/src/networklayer/contract/IPControlInfo_m.h \
+	$(INET_PROJ)/src/linklayer/contract/MACAddress.h \
 	$(INET_PROJ)/src/networklayer/contract/IPProtocolId_m.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4ControlInfo.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4ControlInfo_m.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6ControlInfo.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6ControlInfo_m.h \
 	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
+	$(INET_PROJ)/src/networklayer/contract/IPvXAddressResolver.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	applications/generic/GenericApplication.h \
 	applications/generic/InetUser.h \
 	applications/generic/TransmissionConfig.h \
@@ -325,12 +361,13 @@ $O/applications/pingApp/GenericICMPPingApplication.o: applications/pingApp/Gener
 $O/applications/tcpApp/GenericTCPApplication.o: applications/tcpApp/GenericTCPApplication.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/ModuleAccess.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
 	$(INET_PROJ)/src/transport/contract/TCPCommand_m.h \
 	$(INET_PROJ)/src/transport/contract/TCPSocket.h \
 	$(INET_PROJ)/src/transport/contract/TCPSocketMap.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	applications/generic/GenericApplication.h \
 	applications/generic/InetUser.h \
 	applications/generic/TransmissionConfig.h \
@@ -343,12 +380,13 @@ $O/applications/tcpApp/GenericTCPApplication.o: applications/tcpApp/GenericTCPAp
 $O/applications/tcpApp/GenericTCPApplicationClientThread.o: applications/tcpApp/GenericTCPApplicationClientThread.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/ModuleAccess.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
 	$(INET_PROJ)/src/transport/contract/TCPCommand_m.h \
 	$(INET_PROJ)/src/transport/contract/TCPSocket.h \
 	$(INET_PROJ)/src/transport/contract/TCPSocketMap.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	applications/generic/GenericApplication.h \
 	applications/generic/GenericApplicationMessage_m.h \
 	applications/generic/InetUser.h \
@@ -361,12 +399,13 @@ $O/applications/tcpApp/GenericTCPApplicationClientThread.o: applications/tcpApp/
 $O/applications/tcpApp/GenericTCPApplicationServerThread.o: applications/tcpApp/GenericTCPApplicationServerThread.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/ModuleAccess.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
 	$(INET_PROJ)/src/transport/contract/TCPCommand_m.h \
 	$(INET_PROJ)/src/transport/contract/TCPSocket.h \
 	$(INET_PROJ)/src/transport/contract/TCPSocketMap.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	applications/generic/GenericApplication.h \
 	applications/generic/GenericApplicationMessage_m.h \
 	applications/generic/InetUser.h \
@@ -376,87 +415,16 @@ $O/applications/tcpApp/GenericTCPApplicationServerThread.o: applications/tcpApp/
 	base/ConnectionManager.h \
 	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h
-$O/applications/udpApp/GenericUDPApplication.o: applications/udpApp/GenericUDPApplication.cc \
-	$(INET_PROJ)/src/base/INETDefs.h \
-	$(INET_PROJ)/src/base/ModuleAccess.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
-	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
-	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
-	$(INET_PROJ)/src/transport/contract/UDPControlInfo_m.h \
-	$(INET_PROJ)/src/transport/contract/UDPSocket.h \
-	applications/generic/GenericApplication.h \
-	applications/generic/GenericApplicationMessage_m.h \
-	applications/generic/InetUser.h \
-	applications/generic/TransmissionConfig.h \
-	applications/udpApp/GenericUDPApplication.h \
-	applications/udpApp/GenericUDPApplicationClientThread.h \
-	applications/udpApp/GenericUDPApplicationServerThread.h \
-	base/ConnectionManager.h \
-	base/SCADASIMDefs.h \
-	base/TrafficProfileManager.h \
-	transport/contract/UDPSocketVector.h
-$O/applications/udpApp/GenericUDPApplicationClientThread.o: applications/udpApp/GenericUDPApplicationClientThread.cc \
-	$(INET_PROJ)/src/base/INETDefs.h \
-	$(INET_PROJ)/src/base/ModuleAccess.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
-	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
-	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
-	$(INET_PROJ)/src/transport/contract/UDPControlInfo_m.h \
-	$(INET_PROJ)/src/transport/contract/UDPSocket.h \
-	applications/generic/GenericApplication.h \
-	applications/generic/GenericApplicationMessage_m.h \
-	applications/generic/InetUser.h \
-	applications/generic/TransmissionConfig.h \
-	applications/udpApp/GenericUDPApplication.h \
-	applications/udpApp/GenericUDPApplicationClientThread.h \
-	base/ConnectionManager.h \
-	base/SCADASIMDefs.h \
-	base/TrafficProfileManager.h \
-	transport/contract/UDPSocketVector.h
-$O/applications/udpApp/GenericUDPApplicationServerThread.o: applications/udpApp/GenericUDPApplicationServerThread.cc \
-	$(INET_PROJ)/src/base/INETDefs.h \
-	$(INET_PROJ)/src/base/ModuleAccess.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
-	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
-	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
-	$(INET_PROJ)/src/transport/contract/UDPControlInfo_m.h \
-	$(INET_PROJ)/src/transport/contract/UDPSocket.h \
-	applications/generic/GenericApplication.h \
-	applications/generic/GenericApplicationMessage_m.h \
-	applications/generic/InetUser.h \
-	applications/generic/TransmissionConfig.h \
-	applications/udpApp/GenericUDPApplication.h \
-	applications/udpApp/GenericUDPApplicationServerThread.h \
-	base/ConnectionManager.h \
-	base/SCADASIMDefs.h \
-	base/TrafficProfileManager.h \
-	transport/contract/UDPSocketVector.h
-$O/applications/udpApp/GenericUDPApplicationTimeout.o: applications/udpApp/GenericUDPApplicationTimeout.cc \
-	$(INET_PROJ)/src/base/INETDefs.h \
-	$(INET_PROJ)/src/base/ModuleAccess.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
-	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
-	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
-	$(INET_PROJ)/src/transport/contract/UDPControlInfo_m.h \
-	$(INET_PROJ)/src/transport/contract/UDPSocket.h \
-	applications/generic/GenericApplication.h \
-	applications/generic/InetUser.h \
-	applications/generic/TransmissionConfig.h \
-	applications/udpApp/GenericUDPApplication.h \
-	applications/udpApp/GenericUDPApplicationTimeout.h \
-	base/ConnectionManager.h \
-	base/SCADASIMDefs.h \
-	base/TrafficProfileManager.h \
-	transport/contract/UDPSocketVector.h
 $O/applications/worm/UDPWormQueryMessage_m.o: applications/worm/UDPWormQueryMessage_m.cc \
 	applications/worm/UDPWormQueryMessage_m.h \
 	base/SCADASIMDefs.h
 $O/applications/worm/UDPWormVictim.o: applications/worm/UDPWormVictim.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
-	$(INET_PROJ)/src/networklayer/contract/IPControlInfo.h \
-	$(INET_PROJ)/src/networklayer/contract/IPControlInfo_m.h \
+	$(INET_PROJ)/src/linklayer/contract/MACAddress.h \
 	$(INET_PROJ)/src/networklayer/contract/IPProtocolId_m.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4ControlInfo.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4ControlInfo_m.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6ControlInfo.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6ControlInfo_m.h \
@@ -465,6 +433,7 @@ $O/applications/worm/UDPWormVictim.o: applications/worm/UDPWormVictim.cc \
 	$(INET_PROJ)/src/transport/contract/UDPSocket.h \
 	$(INET_PROJ)/src/transport/udp/UDPPacket.h \
 	$(INET_PROJ)/src/transport/udp/UDPPacket_m.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	applications/worm/UDPWormQueryMessage_m.h \
 	applications/worm/UDPWormVictim.h \
 	base/SCADASIMDefs.h \
@@ -473,9 +442,10 @@ $O/applications/worm/UDPWormVictim.o: applications/worm/UDPWormVictim.cc \
 $O/base/ConnectionManager.o: base/ConnectionManager.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/ModuleAccess.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	applications/generic/TransmissionConfig.h \
 	base/ConnectionManager.h \
 	base/SCADASIMDefs.h \
@@ -483,9 +453,10 @@ $O/base/ConnectionManager.o: base/ConnectionManager.cc \
 $O/base/TrafficProfileManager.o: base/TrafficProfileManager.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/ModuleAccess.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	applications/generic/TransmissionConfig.h \
 	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h
@@ -527,27 +498,28 @@ $O/networklayer/autorouting/TGMNetworkConfigurator.o: networklayer/autorouting/T
 	$(INET_PROJ)/src/base/NotificationBoard.h \
 	$(INET_PROJ)/src/base/NotifierConsts.h \
 	$(INET_PROJ)/src/linklayer/contract/MACAddress.h \
-	$(INET_PROJ)/src/networklayer/autorouting/NetworkConfigurator.h \
 	$(INET_PROJ)/src/networklayer/common/IInterfaceTable.h \
 	$(INET_PROJ)/src/networklayer/common/InterfaceEntry.h \
 	$(INET_PROJ)/src/networklayer/common/InterfaceTable.h \
 	$(INET_PROJ)/src/networklayer/common/InterfaceToken.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddressResolver.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IPRoute.h \
+	$(INET_PROJ)/src/networklayer/contract/IPvXAddressResolver.h \
 	$(INET_PROJ)/src/networklayer/ipv4/IPv4InterfaceData.h \
+	$(INET_PROJ)/src/networklayer/ipv4/IPv4Route.h \
 	$(INET_PROJ)/src/networklayer/ipv4/IRoutingTable.h \
 	$(INET_PROJ)/src/networklayer/ipv4/RoutingTable.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	base/SCADASIMDefs.h \
 	networklayer/autorouting/TGMNetworkConfigurator.h
 $O/networklayer/contract/IPControlInfo_hacked_m.o: networklayer/contract/IPControlInfo_hacked_m.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
-	$(INET_PROJ)/src/networklayer/contract/IPControlInfo.h \
-	$(INET_PROJ)/src/networklayer/contract/IPControlInfo_m.h \
+	$(INET_PROJ)/src/linklayer/contract/MACAddress.h \
 	$(INET_PROJ)/src/networklayer/contract/IPProtocolId_m.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4ControlInfo.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4ControlInfo_m.h \
 	base/SCADASIMDefs.h \
 	networklayer/contract/IPControlInfo_hacked_m.h
 $O/networklayer/contract/IPv6ControlInfo_hacked_m.o: networklayer/contract/IPv6ControlInfo_hacked_m.cc \
@@ -556,14 +528,14 @@ $O/networklayer/contract/IPv6ControlInfo_hacked_m.o: networklayer/contract/IPv6C
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6ControlInfo.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6ControlInfo_m.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	base/SCADASIMDefs.h \
 	networklayer/contract/IPv6ControlInfo_hacked_m.h
 $O/networklayer/ipv4/IPDatagram_hacked_m.o: networklayer/ipv4/IPDatagram_hacked_m.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
 	$(INET_PROJ)/src/networklayer/contract/IPProtocolId_m.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IPDatagram.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IPDatagram_m.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
+	$(INET_PROJ)/src/networklayer/ipv4/IPv4Datagram_m.h \
 	base/SCADASIMDefs.h \
 	networklayer/ipv4/IPDatagram_hacked_m.h
 $O/networklayer/ipv4/IP_hack.o: networklayer/ipv4/IP_hack.cc \
@@ -578,25 +550,25 @@ $O/networklayer/ipv4/IP_hack.o: networklayer/ipv4/IP_hack.cc \
 	$(INET_PROJ)/src/networklayer/arp/ARPPacket_m.h \
 	$(INET_PROJ)/src/networklayer/common/IInterfaceTable.h \
 	$(INET_PROJ)/src/networklayer/common/InterfaceEntry.h \
-	$(INET_PROJ)/src/networklayer/common/InterfaceTableAccess.h \
 	$(INET_PROJ)/src/networklayer/common/InterfaceToken.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
-	$(INET_PROJ)/src/networklayer/contract/IPControlInfo.h \
-	$(INET_PROJ)/src/networklayer/contract/IPControlInfo_m.h \
 	$(INET_PROJ)/src/networklayer/contract/IPProtocolId_m.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4ControlInfo.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4ControlInfo_m.h \
 	$(INET_PROJ)/src/networklayer/ipv4/ICMP.h \
 	$(INET_PROJ)/src/networklayer/ipv4/ICMPAccess.h \
 	$(INET_PROJ)/src/networklayer/ipv4/ICMPMessage.h \
 	$(INET_PROJ)/src/networklayer/ipv4/ICMPMessage_m.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IP.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IPDatagram.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IPDatagram_m.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IPFragBuf.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IPRoute.h \
+	$(INET_PROJ)/src/networklayer/ipv4/IPv4.h \
+	$(INET_PROJ)/src/networklayer/ipv4/IPv4Datagram_m.h \
+	$(INET_PROJ)/src/networklayer/ipv4/IPv4FragBuf.h \
+	$(INET_PROJ)/src/networklayer/ipv4/IPv4Route.h \
 	$(INET_PROJ)/src/networklayer/ipv4/IRoutingTable.h \
 	$(INET_PROJ)/src/networklayer/ipv4/RoutingTableAccess.h \
+	$(INET_PROJ)/src/networklayer/manetrouting/base/ControlManetRouting_m.h \
 	$(INET_PROJ)/src/transport/udp/UDPPacket.h \
 	$(INET_PROJ)/src/transport/udp/UDPPacket_m.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	base/SCADASIMDefs.h \
 	networklayer/contract/IPControlInfo_hacked_m.h \
 	networklayer/ipv4/IPDatagram_hacked_m.h \
@@ -608,17 +580,21 @@ $O/networklayer/queue/DropTailTraceQueue.o: networklayer/queue/DropTailTraceQueu
 	networklayer/queue/DropTailTraceQueue.h
 $O/transport/contract/UDPSocketVector.o: transport/contract/UDPSocketVector.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
+	$(INET_PROJ)/src/transport/contract/UDPControlInfo.h \
 	$(INET_PROJ)/src/transport/contract/UDPControlInfo_m.h \
 	$(INET_PROJ)/src/transport/contract/UDPSocket.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	applications/generic/TransmissionConfig.h \
 	base/SCADASIMDefs.h \
 	transport/contract/UDPSocketVector.h
 $O/transport/tcp/TCPConnection_hack.o: transport/tcp/TCPConnection_hack.cc \
+	$(INET_PROJ)/src/base/ByteArray.h \
+	$(INET_PROJ)/src/base/ByteArray_m.h \
 	$(INET_PROJ)/src/base/INETDefs.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
 	$(INET_PROJ)/src/transport/contract/TCPCommand_m.h \
@@ -627,69 +603,75 @@ $O/transport/tcp/TCPConnection_hack.o: transport/tcp/TCPConnection_hack.cc \
 	$(INET_PROJ)/src/transport/tcp/TCPConnection.h \
 	$(INET_PROJ)/src/transport/tcp/TCPReceiveQueue.h \
 	$(INET_PROJ)/src/transport/tcp/TCPSACKRexmitQueue.h \
-	$(INET_PROJ)/src/transport/tcp/TCPSegment.h \
-	$(INET_PROJ)/src/transport/tcp/TCPSegment_m.h \
 	$(INET_PROJ)/src/transport/tcp/TCPSendQueue.h \
+	$(INET_PROJ)/src/transport/tcp_common/TCPSegment.h \
+	$(INET_PROJ)/src/transport/tcp_common/TCPSegment_m.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	base/SCADASIMDefs.h \
 	transport/tcp/TCPConnection_hack.h \
 	transport/tcp/TCP_hack.h
 $O/transport/tcp/TCP_hack.o: transport/tcp/TCP_hack.cc \
+	$(INET_PROJ)/src/base/ByteArray.h \
+	$(INET_PROJ)/src/base/ByteArray_m.h \
 	$(INET_PROJ)/src/base/INETDefs.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
-	$(INET_PROJ)/src/networklayer/contract/IPControlInfo.h \
-	$(INET_PROJ)/src/networklayer/contract/IPControlInfo_m.h \
+	$(INET_PROJ)/src/linklayer/contract/MACAddress.h \
 	$(INET_PROJ)/src/networklayer/contract/IPProtocolId_m.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4ControlInfo.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4ControlInfo_m.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
 	$(INET_PROJ)/src/transport/contract/TCPCommand_m.h \
 	$(INET_PROJ)/src/transport/tcp/TCP.h \
 	$(INET_PROJ)/src/transport/tcp/TCPConnection.h \
-	$(INET_PROJ)/src/transport/tcp/TCPSegment.h \
-	$(INET_PROJ)/src/transport/tcp/TCPSegment_m.h \
+	$(INET_PROJ)/src/transport/tcp_common/TCPSegment.h \
+	$(INET_PROJ)/src/transport/tcp_common/TCPSegment_m.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	base/SCADASIMDefs.h \
 	transport/tcp/TCPConnection_hack.h \
 	transport/tcp/TCP_hack.h
 $O/transport/udp/UDP_hack.o: transport/udp/UDP_hack.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
+	$(INET_PROJ)/src/transport/contract/UDPControlInfo.h \
 	$(INET_PROJ)/src/transport/contract/UDPControlInfo_m.h \
 	$(INET_PROJ)/src/transport/udp/UDP.h \
 	$(INET_PROJ)/src/transport/udp/UDPPacket.h \
 	$(INET_PROJ)/src/transport/udp/UDPPacket_m.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	applications/generic/GenericApplicationMessage_m.h \
 	base/SCADASIMDefs.h \
 	transport/udp/UDP_hack.h
 $O/util/DataDump.o: util/DataDump.cc \
+	$(INET_PROJ)/src/base/ByteArray.h \
+	$(INET_PROJ)/src/base/ByteArray_m.h \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/ModuleAccess.h \
 	$(INET_PROJ)/src/base/NotifierConsts.h \
 	$(INET_PROJ)/src/linklayer/contract/MACAddress.h \
 	$(INET_PROJ)/src/networklayer/arp/ARP.h \
-	$(INET_PROJ)/src/networklayer/arp/ARPPacket_m.h \
-	$(INET_PROJ)/src/networklayer/common/IInterfaceTable.h \
 	$(INET_PROJ)/src/networklayer/common/InterfaceEntry.h \
-	$(INET_PROJ)/src/networklayer/common/InterfaceTableAccess.h \
 	$(INET_PROJ)/src/networklayer/common/InterfaceToken.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddressResolver.h \
-	$(INET_PROJ)/src/networklayer/contract/IPControlInfo.h \
-	$(INET_PROJ)/src/networklayer/contract/IPControlInfo_m.h \
 	$(INET_PROJ)/src/networklayer/contract/IPProtocolId_m.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4ControlInfo.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4ControlInfo_m.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
 	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IPDatagram.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IPDatagram_m.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IPRoute.h \
+	$(INET_PROJ)/src/networklayer/contract/IPvXAddressResolver.h \
+	$(INET_PROJ)/src/networklayer/ipv4/IPv4Datagram_m.h \
+	$(INET_PROJ)/src/networklayer/ipv4/IPv4Route.h \
 	$(INET_PROJ)/src/networklayer/ipv4/IRoutingTable.h \
 	$(INET_PROJ)/src/networklayer/ipv4/RoutingTableAccess.h \
 	$(INET_PROJ)/src/transport/contract/TCPCommand_m.h \
 	$(INET_PROJ)/src/transport/contract/TCPSocket.h \
 	$(INET_PROJ)/src/transport/tcp/TCP.h \
 	$(INET_PROJ)/src/transport/tcp/TCPConnection.h \
-	$(INET_PROJ)/src/transport/tcp/TCPSegment.h \
-	$(INET_PROJ)/src/transport/tcp/TCPSegment_m.h \
+	$(INET_PROJ)/src/transport/tcp_common/TCPSegment.h \
+	$(INET_PROJ)/src/transport/tcp_common/TCPSegment_m.h \
+	$(INET_PROJ)/src/util/uint128.h \
 	applications/generic/GenericApplicationMessage_m.h \
 	base/SCADASIMDefs.h \
 	transport/tcp/TCPConnection_hack.h \

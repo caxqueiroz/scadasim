@@ -14,7 +14,7 @@
 #endif
 
 // cplusplus {{
-#include "IPControlInfo.h"
+#include "IPv4ControlInfo.h"
 #include "SCADASIMDefs.h"
 // }}
 
@@ -23,14 +23,14 @@
 /**
  * Class generated from <tt>networklayer/contract/IPControlInfo_hacked.msg</tt> by opp_msgc.
  * <pre>
- * class IPControlInfo_hacked extends IPControlInfo
+ * class IPControlInfo_hacked extends IPv4ControlInfo
  * {
  * 	
  * 	short attackTag = 0;
  * }
  * </pre>
  */
-class IPControlInfo_hacked : public ::IPControlInfo
+class IPControlInfo_hacked : public ::IPv4ControlInfo
 {
   protected:
     short attackTag_var;

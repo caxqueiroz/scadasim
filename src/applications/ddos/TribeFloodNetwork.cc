@@ -11,7 +11,8 @@
 #include "RoutingTableAccess.h"
 #include "ARP.h"
 #include "TCPSegment.h"
-#include "IPAddressResolver.h"
+#include "IPvXAddressResolver.h"
+#include "InterfaceEntry.h"
 
 /**
  * @brief Simulates the real DDoS generation tool Tribe Flood Network (TFN)
@@ -116,7 +117,7 @@ void TribeFloodNetwork::initialize(int stages)
 	{
 		IPvXAddress victim;
 		//		std::cerr<<vAddress[i].data()<<std::endl;
-		victim.set(IPAddressResolver().resolve(vAddress[i].data()));
+		victim.set(IPvXAddressResolver().resolve(vAddress[i].data()));
 		victimAddr.push_back(victim);
 	}
 
@@ -186,7 +187,7 @@ void TribeFloodNetwork::setCurrentFloodingParameter(unsigned int i)
 	// set scalar output values
 	destIP = c_victimAddr;
 	std::string aAddress = getParentModule()->getFullPath();
-	sourceIP.set(IPAddressResolver().resolve(aAddress.data()));
+	sourceIP.set(IPvXAddressResolver().resolve(aAddress.data()));
 	attackIndex = index;
 	attackStart = simTime().dbl() + c_floodingDelay;
 }
@@ -207,7 +208,8 @@ void TribeFloodNetwork::printAttackPath()
 	while ((rt->getRouterId() != c_victimAddr.get4()) && (count < 20))
 	{
 		count++;
-		next = (arp->gate("nicOut", rt->getInterfaceForDestAddr(c_victimAddr.get4())->getNetworkLayerGateIndex())->getPathEndGate())->getOwnerModule()->getParentModule();
+		InterfaceEntry *ie = rt->getInterfaceForDestAddr(c_victimAddr.get4());
+		next = (arp->gate("nicOut", ie->getNetworkLayerGateIndex())->getPathEndGate())->getOwnerModule()->getParentModule();
 		next = next->gate("phys$o")->getPathEndGate()->getOwnerModule()->getParentModule();
 		path << "-->" << next->getParentModule()->getFullPath();
 		rt = check_and_cast<IRoutingTable*> (findModuleSomewhereUp("routingTable", next));

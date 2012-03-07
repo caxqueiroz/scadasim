@@ -14,7 +14,7 @@
 #endif
 
 // cplusplus {{
-#include "IPDatagram.h"
+#include "IPv4Datagram_m.h"
 #include "SCADASIMDefs.h"
 // }}
 
@@ -23,14 +23,14 @@
 /**
  * Class generated from <tt>networklayer/ipv4/IPDatagram_hacked.msg</tt> by opp_msgc.
  * <pre>
- * packet IPDatagram_hacked extends IPDatagram
+ * packet IPDatagram_hacked extends IPv4Datagram
  * {
  * 	
  * 	short attackTag = 0;
  * }
  * </pre>
  */
-class IPDatagram_hacked : public ::IPDatagram
+class IPDatagram_hacked : public ::IPv4Datagram
 {
   protected:
     short attackTag_var;

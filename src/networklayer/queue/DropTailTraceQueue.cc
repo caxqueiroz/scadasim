@@ -1,6 +1,6 @@
 #include "DropTailTraceQueue.h"
 
-Define_Module( DropTailTraceQueue);
+Define_Module(DropTailTraceQueue);
 
 /**
  * @brief Drop-tail queue with additional tracing support.
@@ -29,7 +29,7 @@ void DropTailTraceQueue::initialize()
 
 	traceMessage = new cMessage("traceMsg");
 
-	dropsInInterval = framesInInterval = 0;
+	pendingRequests = dropsInInterval = framesInInterval = 0;
 }
 
 /**
@@ -39,19 +39,24 @@ void DropTailTraceQueue::initialize()
  * @param msg Message to enqueue
  * @return True if message is enqueued, false if queue is full
  */
-bool DropTailTraceQueue::enqueue(cMessage *msg)
+cMessage * DropTailTraceQueue::enqueue(cMessage *msg)
 {
 	if (frameCapacity && queue.length() >= frameCapacity)
 	{
 		dropsInInterval++;
-		delete msg;
-		return true;
+		//delete msg;
+		return msg;
 	}
 	else
 	{
 		framesInInterval++;
 		queue.insert(msg);
-		return false;
+		if(pendingRequests>0){
+		   cMessage *pk = dequeue();
+		   sendOut(pk);
+		   pendingRequests --;
+		}
+		return NULL;
 	}
 }
 
@@ -60,7 +65,7 @@ bool DropTailTraceQueue::enqueue(cMessage *msg)
  *
  * @return Dequeued Message
  */
-cMessage *DropTailTraceQueue::dequeue()
+cMessage * DropTailTraceQueue::dequeue()
 {
 	if (queue.empty())
 		return NULL;
@@ -108,3 +113,20 @@ void DropTailTraceQueue::handleMessage(cMessage *msg)
 	}
 }
 
+void DropTailTraceQueue::requestPacket(){
+    if(isEmpty()){
+        pendingRequests ++;
+    }
+}
+
+int DropTailTraceQueue::getNumPendingRequests(){
+    return pendingRequests;
+}
+
+bool DropTailTraceQueue::isEmpty(){
+    return queue.isEmpty();
+}
+
+void DropTailTraceQueue::clear(){
+    queue.clear();
+}

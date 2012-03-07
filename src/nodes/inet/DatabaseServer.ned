@@ -6,7 +6,6 @@ import inet.linklayer.ppp.PPPInterface;
 import inet.networklayer.common.InterfaceTable;
 import inet.networklayer.ipv4.RoutingTable;
 import inet.nodes.inet.NetworkLayer;
-import inet.util.NAMTraceWriter;
 import scadasim.applications.pingApp.GenericICMPPingApplication;
 import scadasim.applications.tcpApp.GenericTCPApplication;
 import scadasim.transport.tcp.TCP_hack;
@@ -31,12 +30,6 @@ module DatabaseServer
         inout pppg[];
         inout ethg[];
     submodules:
-        namTrace: NAMTraceWriter {
-            parameters:
-                namid = namid;
-                @display("p=60,310;i=block/sink");
-
-        }
         notificationBoard: NotificationBoard {
             parameters:
                 @display("p=60,70;i=block/control");
@@ -55,17 +48,17 @@ module DatabaseServer
                 @display("p=60,230;i=block/table");
 
         }
-//                tcpApp: GenericTCPApplication {
-//                    parameters:
-//                        isServer = true;
-//                        profileNumber = 2;
-//                        port = 80;
-//                        @display("p=163,67;i=block/app");
-//        
-//                }
+        //                tcpApp: GenericTCPApplication {
+        //                    parameters:
+        //                        isServer = true;
+        //                        profileNumber = 2;
+        //                        port = 80;
+        //                        @display("p=163,67;i=block/app");
+        //        
+        //                }
         tcp: TCP {
             parameters:
-              //  maxThreadCount = maxTCPThreadCount;
+                //  maxThreadCount = maxTCPThreadCount;
                 @display("p=163,154;i=block/wheelbarrow");
 
         }

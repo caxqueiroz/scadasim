@@ -7,7 +7,8 @@
 #include "TransmissionConfig.h"
 #include "IPvXAddress.h"
 #include "SCADASIMDefs.h"
-
+#include "UDPControlInfo.h"
+#include "UDPControlInfo_m.h"
 //
 // this is just a copy of the functionality of TCPSocketMap
 //

@@ -1,11 +1,11 @@
 cplusplus {{
-#include "IPControlInfo.h"
+#include "IPv4ControlInfo.h"
 #include "SCADASIMDefs.h"
 }}
 
-class noncobject IPControlInfo;
+class noncobject IPv4ControlInfo;
 
-class IPControlInfo_hacked extends IPControlInfo
+class IPControlInfo_hacked extends IPv4ControlInfo
 {
 	// ReaSE: for attack tracing, each IP packet contains an attackTag
 	short attackTag = 0;

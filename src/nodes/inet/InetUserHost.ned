@@ -6,12 +6,11 @@ import inet.linklayer.ppp.PPPInterface;
 import inet.networklayer.common.InterfaceTable;
 import inet.networklayer.ipv4.RoutingTable;
 import inet.nodes.inet.NetworkLayer;
-import inet.util.NAMTraceWriter;
 import scadasim.transport.tcp.TCP_hack;
 import scadasim.applications.generic.InetUser;
 import scadasim.applications.pingApp.GenericICMPPingApplication;
 import scadasim.applications.tcpApp.GenericTCPApplication;
-import scadasim.applications.udpApp.GenericUDPApplication;
+
 import scadasim.transport.udp.UDP_hack;
 import inet.transport.tcp.TCP;
 import inet.transport.udp.UDP;
@@ -38,12 +37,6 @@ module InetUserHost
         inout pppg[];
         inout ethg[];
     submodules:
-        namTrace: NAMTraceWriter {
-            parameters:
-                namid = namid;
-                @display("p=60,310;i=block/sink");
-
-        }
         inetUser: InetUser {
             parameters:
                 @display("p=60,390;i=abstract/person");
@@ -81,29 +74,29 @@ module InetUserHost
                 @display("p=163,154;i=block/wheelbarrow");
 
         }
-//        udpApp: GenericUDPApplication {
-//            parameters:
-//                isServer = false;
-//                profileNumber = 13;
-//                port = 2101;
-//                noThreads = 0;
-//                @display("i=block/app;p=272,67");
-//
-//        }
-//        udp: UDP {
-//            parameters:
-//                @display("p=272,154;i=block/transport");
-//
-//        }
-//        pingApp: GenericICMPPingApplication {
-//            parameters:
-//                isServer = false;
-//                profileNumber = 21;
-//                port = 0;
-//                noThreads = 0;
-//                @display("i=block/app;p=343,200");
-//
-//        }
+        //        udpApp: GenericUDPApplication {
+        //            parameters:
+        //                isServer = false;
+        //                profileNumber = 13;
+        //                port = 2101;
+        //                noThreads = 0;
+        //                @display("i=block/app;p=272,67");
+        //
+        //        }
+        //        udp: UDP {
+        //            parameters:
+        //                @display("p=272,154;i=block/transport");
+        //
+        //        }
+        //        pingApp: GenericICMPPingApplication {
+        //            parameters:
+        //                isServer = false;
+        //                profileNumber = 21;
+        //                port = 0;
+        //                noThreads = 0;
+        //                @display("i=block/app;p=343,200");
+        //
+        //        }
         networkLayer: NetworkLayer {
             parameters:
                 proxyARP = false;

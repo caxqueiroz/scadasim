@@ -1,6 +1,6 @@
 package scadasim.networklayer.ipv4;
 
-import inet.networklayer.ipv4.IP;
+import inet.networklayer.ipv4.IPv4;
 
 //
 // An extension of inet.networklayer.ipv4.IP
@@ -8,7 +8,7 @@ import inet.networklayer.ipv4.IP;
 // packet tracing
 //
 
-simple IP_hack extends IP
+simple IP_hack extends IPv4
 {
     parameters:
         @class(IP_hack);

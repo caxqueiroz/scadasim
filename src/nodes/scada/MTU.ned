@@ -6,7 +6,6 @@ import inet.linklayer.ppp.PPPInterface;
 import inet.networklayer.common.InterfaceTable;
 import inet.networklayer.ipv4.RoutingTable;
 import inet.nodes.inet.NetworkLayer;
-import inet.util.NAMTraceWriter;
 import scadasim.applications.pingApp.GenericICMPPingApplication;
 import scadasim.applications.tcpApp.GenericTCPApplication;
 import scadasim.transport.tcp.TCP_hack;
@@ -29,17 +28,11 @@ module MTU
         @node();
         int namid;
         int maxTCPThreadCount;
-        
+
     gates:
         inout pppg[];
         inout ethg[];
     submodules:
-        namTrace: NAMTraceWriter {
-            parameters:
-                namid = namid;
-                @display("p=60,310;i=block/sink");
-
-        }
         notificationBoard: NotificationBoard {
             parameters:
                 @display("p=60,70;i=block/control");
@@ -128,8 +121,8 @@ module MTU
 //        mtuServer.tcpOut --> tcp.appIn++;
 //        mtuServer.tcpIn <-- tcp.appOut++;
 
-		mtuClient.tcpIn <-- tcp.appOut++;
-		mtuClient.tcpOut --> tcp.appIn++;
+        mtuClient.tcpIn <-- tcp.appOut++;
+        mtuClient.tcpOut --> tcp.appIn++;
 
         tcp.ipOut --> networkLayer.tcpIn;
         tcp.ipIn <-- networkLayer.tcpOut;
