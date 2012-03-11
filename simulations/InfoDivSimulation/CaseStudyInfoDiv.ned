@@ -16,6 +16,7 @@
 package InfoDivSimulation;
 
 import scadasim.base.ConnectionManager;
+import scadasim.base.SCADATrafficProfileManager;
 import scadasim.base.TrafficProfileManager;
 import scadasim.nodes.inet.InteractiveServer;
 import scadasim.nodes.inet.DatabaseServer;
@@ -285,6 +286,9 @@ network CaseStudy
 
         trafficProfileManager: TrafficProfileManager {
             @display("p=801,8;i=block/network2;is=s");
+        }
+        scadaTrafficProfileManager: SCADATrafficProfileManager {
+            @display("p=645,12;is=vs;i=abstract/table");
         }
     connections:
         f01s02.pppg++ <--> host2gateway <--> f01p09.pppg++;

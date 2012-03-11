@@ -105,6 +105,7 @@ OBJS = \
     $O/applications/tcpApp/GenericTCPApplicationServerThread.o \
     $O/applications/worm/UDPWormVictim.o \
     $O/base/ConnectionManager.o \
+    $O/base/SCADATrafficProfileManager.o \
     $O/base/TrafficProfileManager.o \
     $O/external/ModbusGate.o \
     $O/external/SSGate.o \
@@ -327,8 +328,6 @@ $O/applications/modbusApp/ModbusTCP.o: applications/modbusApp/ModbusTCP.cc \
 	$(INET_PROJ)/src/transport/contract/TCPCommand_m.h \
 	$(INET_PROJ)/src/transport/contract/TCPSocket.h \
 	$(INET_PROJ)/src/util/uint128.h \
-	applications/modbusApp/Constants.h \
-	applications/modbusApp/DataStruct.h \
 	applications/modbusApp/ModbusTCP.h
 $O/applications/modbusApp/ModbusUser.o: applications/modbusApp/ModbusUser.cc \
 	applications/modbusApp/ModbusUser.h \
@@ -450,6 +449,8 @@ $O/base/ConnectionManager.o: base/ConnectionManager.cc \
 	base/ConnectionManager.h \
 	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h
+$O/base/SCADATrafficProfileManager.o: base/SCADATrafficProfileManager.cc \
+	base/SCADATrafficProfileManager.h
 $O/base/TrafficProfileManager.o: base/TrafficProfileManager.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/ModuleAccess.h \
