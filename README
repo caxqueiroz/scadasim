@@ -1,1 +1,3 @@
 scadasim is licensed under GPLv2 (http://www.gnu.org/licenses/gpl.html). It uses part of Rease simulator (https://svn.tm.kit.edu/trac/ReaSE), therefore retains the same license type. 
+
+It also uses an adapted version of the libmodbus library. Libmodbus uses LGPLv2.1 license. 
