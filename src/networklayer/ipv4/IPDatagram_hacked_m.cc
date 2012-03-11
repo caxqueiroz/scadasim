@@ -32,12 +32,12 @@ void doUnpacking(cCommBuffer *, T& t) {
 
 Register_Class(IPDatagram_hacked);
 
-IPDatagram_hacked::IPDatagram_hacked(const char *name, int kind) : IPv4Datagram(name,kind)
+IPDatagram_hacked::IPDatagram_hacked(const char *name, int kind) : IPDatagram(name,kind)
 {
     this->attackTag_var = 0;
 }
 
-IPDatagram_hacked::IPDatagram_hacked(const IPDatagram_hacked& other) : IPv4Datagram(other)
+IPDatagram_hacked::IPDatagram_hacked(const IPDatagram_hacked& other) : IPDatagram(other)
 {
     copy(other);
 }
@@ -49,7 +49,7 @@ IPDatagram_hacked::~IPDatagram_hacked()
 IPDatagram_hacked& IPDatagram_hacked::operator=(const IPDatagram_hacked& other)
 {
     if (this==&other) return *this;
-    IPv4Datagram::operator=(other);
+    IPDatagram::operator=(other);
     copy(other);
     return *this;
 }
@@ -61,13 +61,13 @@ void IPDatagram_hacked::copy(const IPDatagram_hacked& other)
 
 void IPDatagram_hacked::parsimPack(cCommBuffer *b)
 {
-    IPv4Datagram::parsimPack(b);
+    IPDatagram::parsimPack(b);
     doPacking(b,this->attackTag_var);
 }
 
 void IPDatagram_hacked::parsimUnpack(cCommBuffer *b)
 {
-    IPv4Datagram::parsimUnpack(b);
+    IPDatagram::parsimUnpack(b);
     doUnpacking(b,this->attackTag_var);
 }
 
@@ -106,7 +106,7 @@ class IPDatagram_hackedDescriptor : public cClassDescriptor
 
 Register_ClassDescriptor(IPDatagram_hackedDescriptor);
 
-IPDatagram_hackedDescriptor::IPDatagram_hackedDescriptor() : cClassDescriptor("IPDatagram_hacked", "IPv4Datagram")
+IPDatagram_hackedDescriptor::IPDatagram_hackedDescriptor() : cClassDescriptor("IPDatagram_hacked", "IPDatagram")
 {
 }
 

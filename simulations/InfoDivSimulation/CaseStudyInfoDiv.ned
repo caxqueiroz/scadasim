@@ -27,7 +27,7 @@ import scadasim.nodes.scada.PLC;
 import scadasim.nodes.scada.IED;
 import scadasim.nodes.inet.WebServer;
 import scadasim.networklayer.autorouting.TGMNetworkConfigurator;
-import inet.networklayer.autorouting.ipv4.FlatNetworkConfigurator;
+import inet.networklayer.autorouting.FlatNetworkConfigurator;
 import scadasim.nodes.inet.InetUserHost;
 import scadasim.nodes.scada.RemoteUserHost;
 import inet.nodes.inet.Router;

@@ -1,7 +1,7 @@
 #include "TCP_hack.h"
 #include "TCPConnection_hack.h"
 #include "TCPSegment.h"
-#include "IPv4ControlInfo.h"
+#include "IPControlInfo.h"
 #include "TCPCommand_m.h"
 //#include "DataDump.h"
 Define_Module( TCP_hack);

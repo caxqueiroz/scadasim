@@ -11,7 +11,7 @@
 #include "RoutingTableAccess.h"
 #include "ARP.h"
 #include "TCPSegment.h"
-#include "IPvXAddressResolver.h"
+#include "IPAddressResolver.h"
 #include "InterfaceEntry.h"
 
 /**
@@ -117,7 +117,7 @@ void TribeFloodNetwork::initialize(int stages)
 	{
 		IPvXAddress victim;
 		//		std::cerr<<vAddress[i].data()<<std::endl;
-		victim.set(IPvXAddressResolver().resolve(vAddress[i].data()));
+		victim.set(IPAddressResolver().resolve(vAddress[i].data()));
 		victimAddr.push_back(victim);
 	}
 
@@ -187,7 +187,7 @@ void TribeFloodNetwork::setCurrentFloodingParameter(unsigned int i)
 	// set scalar output values
 	destIP = c_victimAddr;
 	std::string aAddress = getParentModule()->getFullPath();
-	sourceIP.set(IPvXAddressResolver().resolve(aAddress.data()));
+	sourceIP.set(IPAddressResolver().resolve(aAddress.data()));
 	attackIndex = index;
 	attackStart = simTime().dbl() + c_floodingDelay;
 }

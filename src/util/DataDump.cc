@@ -16,18 +16,18 @@
 #include "DataDump.h"
 //#include "ModbusPkt_m.h"
 #include "TCPSegment.h"
-#include "IPv4Datagram_m.h"
+#include "IPDatagram_m.h"
 #include <stdio.h>
 #include "GenericApplicationMessage_m.h"
 #include "TCPSocket.h"
 #include "TCPCommand_m.h"
 #include "TCP_hack.h"
 #include "TCPConnection_hack.h"
-#include "IPv4ControlInfo.h"
+#include "IPControlInfo.h"
 #include "RoutingTableAccess.h"
 #include "ARP.h"
 #include "TCPSegment.h"
-#include "IPvXAddressResolver.h"
+#include "IPAddressResolver.h"
 #include "InterfaceEntry.h"
 
 using namespace std;

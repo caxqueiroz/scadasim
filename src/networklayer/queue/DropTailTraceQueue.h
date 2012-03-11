@@ -40,7 +40,7 @@ protected:
     /**
      * Redefined from PassiveQueueBase.
      */
-    virtual cMessage *enqueue(cMessage *msg);
+    virtual bool enqueue(cMessage *msg);
 
     /**
      * Redefined from PassiveQueueBase.

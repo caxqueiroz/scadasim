@@ -131,8 +131,7 @@ void InetUser::transmissionDone() {
 		noTCPProfile++;
 		if (curTargetInfo.port > 0) {
 //			    std::cout << curTargetInfo.address.str() << ": starting tcp communication for profile " << curTrafficProfile.profileID << " on port " << curTargetInfo.port << std::endl;
-			applications[TCP_APP]->transmissionStart(curTrafficProfile,
-					curTargetInfo);
+			applications[TCP_APP]->transmissionStart(curTrafficProfile,	curTargetInfo);
 		}
 //			else 
 //			    std::cout << curTargetInfo.address.str() << ": trying to start tcp communication for profile " << curTrafficProfile.profileID << " on port " << curTargetInfo.port << std::endl;

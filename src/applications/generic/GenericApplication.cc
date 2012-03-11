@@ -1,6 +1,6 @@
 #include "GenericApplication.h"
 #include "ConnectionManager.h"
-#include "IPvXAddressResolver.h"
+#include "IPAddressResolver.h"
 #include "IPvXAddress.h"
 #include <cassert>
 
@@ -56,7 +56,7 @@ void GenericApplication::initialize(int stages)
 
 		// register servers at ConnectionManager
 		if (isServer)
-			cm->registerServer(IPvXAddressResolver().resolve(getParentModule()->getFullPath().data()), port, profileNumber);
+			cm->registerServer(IPAddressResolver().resolve(getParentModule()->getFullPath().data()), port, profileNumber);
 		// if i'am not a server - this means a client, i have to
 		// register myself to the current InetUser
 		else

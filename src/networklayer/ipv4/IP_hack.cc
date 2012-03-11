@@ -31,7 +31,7 @@ IP_hack::~IP_hack()
 
 void IP_hack::initialize()
 {
-	IPv4::initialize();
+	IP::initialize();
 	spoofingAllowed = par("spoofingOn").boolValue();
 	tracingOn = par("tracingOn").boolValue();
 	if(spoofingAllowed)
@@ -119,7 +119,7 @@ void IP_hack::endService(cPacket *msg)
 	}
 	else if (msg->getArrivalGate()->isName("queueIn"))
 	{
-		IPv4Datagram *dgram = check_and_cast<IPv4Datagram *> (msg);
+		IPDatagram *dgram = check_and_cast<IPDatagram *> (msg);
 		handlePacketFromNetwork(dgram);
 	}
 	else
@@ -138,22 +138,22 @@ void IP_hack::endService(cPacket *msg)
  * IP packet.
  */
 
-IPv4Datagram *IP_hack::encapsulate(cPacket *transportPacket, InterfaceEntry *&destIE)
+IPDatagram *IP_hack::encapsulate(cPacket *transportPacket, InterfaceEntry *&destIE)
 {
-	IPv4ControlInfo *controlInfo = check_and_cast<IPv4ControlInfo*> (transportPacket->removeControlInfo());
+	IPControlInfo *controlInfo = check_and_cast<IPControlInfo*> (transportPacket->removeControlInfo());
 
 	IPDatagram_hacked *datagram = new IPDatagram_hacked(transportPacket->getName());
 	datagram->setByteLength(IP_HEADER_BYTES);
 	datagram->encapsulate(transportPacket);
 
 	// set source and destination address
-	IPv4Address dest = controlInfo->getDestAddr();
+	IPAddress dest = controlInfo->getDestAddr();
 	datagram->setDestAddress(dest);
 
 	// IP_MULTICAST_IF option, but allow interface selection for unicast packets as well
 	destIE = ift->getInterfaceById(controlInfo->getInterfaceId());
 
-	IPv4Address src = controlInfo->getSrcAddr();
+	IPAddress src = controlInfo->getSrcAddr();
 
 	// ReaSE: set the attackTag in case of attack packets
 	if (dynamic_cast<IPControlInfo_hacked*> (controlInfo))
@@ -218,11 +218,11 @@ void IP_hack::handleMessageFromHL(cPacket *msg)
 
 	// encapsulate and send
 	InterfaceEntry *destIE; // will be filled in by encapsulate()
-	IPv4Datagram *datagram = encapsulate(msg, destIE);
+	IPDatagram *datagram = encapsulate(msg, destIE);
 
 	// route packet
 	if (!datagram->getDestAddress().isMulticast())
-	    routeUnicastPacket(datagram, destIE, true);
+	    routePacket(datagram, destIE, true);
 	else
 	    routeMulticastPacket(datagram, destIE, NULL);
 }
@@ -232,7 +232,7 @@ void IP_hack::handleMessageFromHL(cPacket *msg)
  *
  * @param datagram IP packet to be traced.
  */
-void IP_hack::handlePacketFromNetwork(IPv4Datagram *datagram)
+void IP_hack::handlePacketFromNetwork(IPDatagram *datagram)
 {
 	// in case of tracing update packet count
 	if (tracingOn)
@@ -286,7 +286,7 @@ void IP_hack::handlePacketFromNetwork(IPv4Datagram *datagram)
  * This method is called by handleFromNetwork and does an additional check
  * for IP options before forwarding the packet.
  */
-void IP_hack::processPacket(IPv4Datagram *datagram, InterfaceEntry *destIE, bool fromHL, bool checkOpts)
+void IP_hack::processPacket(IPDatagram *datagram, InterfaceEntry *destIE, bool fromHL, bool checkOpts)
 {
 	if (checkOpts && (datagram->getOptionCode() != IPOPTION_NO_OPTION))
 	{
@@ -331,7 +331,7 @@ void IP_hack::processPacket(IPv4Datagram *datagram, InterfaceEntry *destIE, bool
 	// process local or remote routing
 	//
 	if (!datagram->getDestAddress().isMulticast())
-		routeUnicastPacket(datagram, NULL, false);
+	    routePacket(datagram, NULL, false);
 	else
 		routeMulticastPacket(datagram, NULL, getSourceInterfaceFrom(datagram));
 }

@@ -41,8 +41,8 @@ void ModbusApplicationMasterThread::socketDataArrived(int connId, void* yourPtr,
 
 void ModbusApplicationMasterThread::sendRequest() {
     noRequestsToSend--;
-//    if (noRequestsToSend <= 0)
-//        threadState = DISCONNECTED;
+    if (noRequestsToSend <= 0)
+        threadState = DISCONNECTED;
 
     noPacketSend++;
 
@@ -52,7 +52,7 @@ void ModbusApplicationMasterThread::sendRequest() {
     stringstream ss;
     srand((unsigned) time(0));
     int random_integer = rand();
-    //ss << SIMTIME_STR(simTime());
+    ss << SIMTIME_STR(simTime());
     unsigned long id = ev.getUniqueNumber() + random_integer;
     ss << id;
 

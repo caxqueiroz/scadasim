@@ -29,8 +29,11 @@ class SCADASIM_API ModbusTCPApplication : public GenericTCPApplication
 
   protected:
     ModbusUser mbu;
-    virtual void initialize();
-    virtual void handleMessage(cMessage *msg);
+    void initialize(int stages);
+    void handleMessage(cMessage *msg);
+
+  public:
+    void transmissionStart(TrafficProfile &p, TargetInfo &i);
 };
 
 #endif

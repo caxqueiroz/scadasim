@@ -12,7 +12,7 @@
 #include "IPvXAddress.h"
 #include "RoutingTable.h"
 #include "InterfaceTable.h"
-#include "IPvXAddressResolver.h"
+#include "IPAddressResolver.h"
 //#include "NetworkConfigurator.h"
 #include "IPv4InterfaceData.h"
 #include "InterfaceEntry.h"
@@ -63,8 +63,8 @@ struct nodeInfoRL {
 		this->node = node;
 		module = node->getModule();
 		moduleId = module->getId();
-		ift = IPvXAddressResolver().findInterfaceTableOf(module);
-		rt = IPvXAddressResolver().findRoutingTableOf(module);
+		ift = IPAddressResolver().findInterfaceTableOf(module);
+		rt = IPAddressResolver().findRoutingTableOf(module);
 		isIPNode = (rt != NULL);
 		int index = 0;
 		string fullPath = module->getFullPath();

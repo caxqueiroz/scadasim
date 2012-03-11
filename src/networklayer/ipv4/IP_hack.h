@@ -2,7 +2,7 @@
 #define IP_HACK_H_
 
 #include <omnetpp.h>
-#include "IPv4.h"
+#include "IP.h"
 #include "IPDatagram_hacked_m.h"
 #include "SCADASIMDefs.h"
 
@@ -13,7 +13,7 @@
  * packet tracing.
  * These tasks are necessary for simulation of attacks
  */
-class SCADASIM_API IP_hack : public IPv4
+class SCADASIM_API IP_hack : public IP
 {
 protected:
 	// service flags
@@ -38,15 +38,15 @@ public:
 protected:
 	virtual void initialize();
 	/// Includes new feature: Address spoofing
-	IPv4Datagram *encapsulate(cPacket *transportPacket, InterfaceEntry *&destIE);
+	IPDatagram *encapsulate(cPacket *transportPacket, InterfaceEntry *&destIE);
 	/// Outputs packet counts into vector file
 	virtual void handleMessage(cMessage *msg);
 	/// Handle messages from higher layers
 	virtual void handleMessageFromHL(cPacket *msg);
 	/// Handle messages from lower layers
-	virtual void handlePacketFromNetwork(IPv4Datagram *datagram);
+	virtual void handlePacketFromNetwork(IPDatagram *datagram);
 	/// Processing of IP options
-	virtual void processPacket(IPv4Datagram *datagram, InterfaceEntry *destIE, bool fromHL, bool checkOpts);
+	virtual void processPacket(IPDatagram *datagram, InterfaceEntry *destIE, bool fromHL, bool checkOpts);
 };
 
 #endif /*IP_HACK_H_*/

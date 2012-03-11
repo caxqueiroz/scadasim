@@ -13,7 +13,7 @@ import scadasim.transport.udp.UDP_hack;
 import inet.transport.tcp.TCP;
 import scadasim.applications.modbusApp.ModbusTCPApplication;
 //
-// WebServer: Server system for web traffic profile using TCP as 
+// PLC: Server system for web traffic profile using TCP as 
 // transport protocol.
 // This profile generates small client requests and many large
 // server replies.
@@ -58,7 +58,7 @@ module PLC
         }
         tcp: TCP {
             parameters:
-                //maxThreadCount = maxTCPThreadCount;
+                
                 @display("p=163,154;i=block/wheelbarrow");
 
         }

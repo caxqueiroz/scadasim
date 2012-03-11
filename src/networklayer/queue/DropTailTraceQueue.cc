@@ -39,13 +39,13 @@ void DropTailTraceQueue::initialize()
  * @param msg Message to enqueue
  * @return True if message is enqueued, false if queue is full
  */
-cMessage * DropTailTraceQueue::enqueue(cMessage *msg)
+bool DropTailTraceQueue::enqueue(cMessage *msg)
 {
 	if (frameCapacity && queue.length() >= frameCapacity)
 	{
 		dropsInInterval++;
 		//delete msg;
-		return msg;
+		return false;
 	}
 	else
 	{
@@ -56,7 +56,7 @@ cMessage * DropTailTraceQueue::enqueue(cMessage *msg)
 		   sendOut(pk);
 		   pendingRequests --;
 		}
-		return NULL;
+		return true;
 	}
 }
 

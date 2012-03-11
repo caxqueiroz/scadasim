@@ -1,8 +1,8 @@
 #include "GenericICMPPingApplication.h"
 #include "PingPayload_m.h"
-#include "IPv4ControlInfo.h"
+#include "IPControlInfo.h"
 #include "IPv6ControlInfo.h"
-#include "IPvXAddressResolver.h"
+#include "IPAddressResolver.h"
 
 Define_Module( GenericICMPPingApplication);
 
@@ -41,7 +41,7 @@ void GenericICMPPingApplication::initialize(int stages)
 		return;
 
 	GenericApplication::initialize(stages);
-	myAddr = IPvXAddressResolver().resolve(getParentModule()->getFullPath().data());
+	myAddr = IPAddressResolver().resolve(getParentModule()->getFullPath().data());
 	selfMsg = new cMessage("icmp ping");
 }
 
@@ -113,7 +113,7 @@ void GenericICMPPingApplication::sendPing()
 	if (!curTarget.address.isIPv6())
 	{
 		// send to IPv4
-		IPv4ControlInfo *ctrl = new IPv4ControlInfo();
+		IPControlInfo *ctrl = new IPControlInfo();
 		ctrl->setSrcAddr(myAddr.get4());
 		ctrl->setDestAddr(curTarget.address.get4());
 		ctrl->setTimeToLive(curProfile.hopLimit);

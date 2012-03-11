@@ -1,11 +1,11 @@
 cplusplus {{
-#include "IPv4Datagram_m.h"
+#include "IPDatagram_m.h"
 #include "SCADASIMDefs.h"
 }}
 
-packet IPv4Datagram;
+packet IPDatagram;
 
-packet IPDatagram_hacked extends IPv4Datagram
+packet IPDatagram_hacked extends IPDatagram
 {
 	// ReaSE: for attack tracing each IP packet contains an attackTag
 	short attackTag = 0;

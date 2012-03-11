@@ -30,12 +30,12 @@ void doUnpacking(cCommBuffer *, T& t) {
 
 
 
-IPControlInfo_hacked::IPControlInfo_hacked() : IPv4ControlInfo()
+IPControlInfo_hacked::IPControlInfo_hacked() : IPControlInfo()
 {
     this->attackTag_var = 0;
 }
 
-IPControlInfo_hacked::IPControlInfo_hacked(const IPControlInfo_hacked& other) : IPv4ControlInfo(other)
+IPControlInfo_hacked::IPControlInfo_hacked(const IPControlInfo_hacked& other) : IPControlInfo(other)
 {
     copy(other);
 }
@@ -47,7 +47,7 @@ IPControlInfo_hacked::~IPControlInfo_hacked()
 IPControlInfo_hacked& IPControlInfo_hacked::operator=(const IPControlInfo_hacked& other)
 {
     if (this==&other) return *this;
-    IPv4ControlInfo::operator=(other);
+    IPControlInfo::operator=(other);
     copy(other);
     return *this;
 }
@@ -59,13 +59,13 @@ void IPControlInfo_hacked::copy(const IPControlInfo_hacked& other)
 
 void IPControlInfo_hacked::parsimPack(cCommBuffer *b)
 {
-    doPacking(b,(IPv4ControlInfo&)*this);
+    doPacking(b,(IPControlInfo&)*this);
     doPacking(b,this->attackTag_var);
 }
 
 void IPControlInfo_hacked::parsimUnpack(cCommBuffer *b)
 {
-    doUnpacking(b,(IPv4ControlInfo&)*this);
+    doUnpacking(b,(IPControlInfo&)*this);
     doUnpacking(b,this->attackTag_var);
 }
 
@@ -104,7 +104,7 @@ class IPControlInfo_hackedDescriptor : public cClassDescriptor
 
 Register_ClassDescriptor(IPControlInfo_hackedDescriptor);
 
-IPControlInfo_hackedDescriptor::IPControlInfo_hackedDescriptor() : cClassDescriptor("IPControlInfo_hacked", "IPv4ControlInfo")
+IPControlInfo_hackedDescriptor::IPControlInfo_hackedDescriptor() : cClassDescriptor("IPControlInfo_hacked", "IPControlInfo")
 {
 }
 

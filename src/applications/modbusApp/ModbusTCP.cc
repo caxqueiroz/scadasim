@@ -20,7 +20,7 @@
 #include "ModbusTCP.h"
 //#include "modbus_m.h"
 #include "TCPSocket.h"
-#include "IPvXAddressResolver.h"
+#include "IPAddressResolver.h"
 
 //Define_Module(ModbusTCP)
 //;
