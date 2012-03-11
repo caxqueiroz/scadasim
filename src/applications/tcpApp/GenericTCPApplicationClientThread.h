@@ -15,9 +15,20 @@
  *
  * @class GenericTCPApplicationClientThread
  */
+
+/// Thread States
+/// @{
+#define NOT_SET 0
+#define WAITING 1
+#define CONNECTED 2
+#define DISCONNECTED 3
+#define FINISH 4
+/// @}
+
+
 class SCADASIM_API GenericTCPApplicationClientThread : public GenericTCPApplicationThreadBase
 {
-private:
+protected:
 	/// Traffic profile used by this thread
 	TrafficProfile curProfile;
 	/// Communication partner of this thread

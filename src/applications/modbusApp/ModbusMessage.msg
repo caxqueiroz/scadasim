@@ -13,32 +13,13 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include "IEDUser.h"
+cplusplus {{
+#include "INETDefs.h"
+}}
 
-using namespace std;
 
-#define MSGKIND_IEDSTART 333
-
-Define_Module(IEDUser);
-
-void IEDUser::initialize() {
-
-    cMessage *startMessage = new cMessage("IEDUser wakeup");
-    startMessage->setKind(MSGKIND_IEDSTART);
-    scheduleAt((simtime_t) par("startTime"), startMessage);
-
-    string peer = par("peer");
-
-}
-
-void IEDUser::handleMessage(cMessage *msg) {
-    if(msg->isSelfMessage()){
-        scheduleAt((simtime_t) par("startTime"), msg);
-    }else{
-        delete msg;
-    }
-}
-
-void IEDUser::finish() {
-    // TODO - Generated method body
+packet ModbusMessage {
+    uint8_t pdu[];
+    double replyDelay;
+    bool closeConn;
 }

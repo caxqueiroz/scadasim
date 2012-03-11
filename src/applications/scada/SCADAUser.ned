@@ -13,12 +13,12 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package scadasim.applications.generic;
+package scadasim.applications.scada;
 
 //
 // TODO auto-generated module
 //
-simple IEDUser
+simple SCADAUser
 {
     parameters:
         //

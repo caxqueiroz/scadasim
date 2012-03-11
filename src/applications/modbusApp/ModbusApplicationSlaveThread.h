@@ -13,14 +13,18 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-cplusplus {{
-#include "INETDefs.h"
-}}
+#ifndef SCADATCPAPPLICATIONSLAVETHREAD_H_
+#define SCADATCPAPPLICATIONSLAVETHREAD_H_
 
+#include "GenericTCPApplicationServerThread.h"
 
-packet Modbus {
-    int length;
-    uint8_t pdu[];;
-    double reply_delay;
-    bool close_conn;
-}
+class SCADASIM_API ModbusApplicationSlaveThread: public GenericTCPApplicationServerThread {
+public:
+    ModbusApplicationSlaveThread();
+    virtual ~ModbusApplicationSlaveThread();
+
+protected:
+    void socketDataArrived(int connId, void *youtPtr, cPacket *msg, bool urgent);
+};
+
+#endif /* SCADATCPAPPLICATIONSLAVETHREAD_H_ */

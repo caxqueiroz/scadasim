@@ -16,25 +16,30 @@
 package scadasim.applications.modbusApp;
 
 //
-// ABSTRACT application
 //
-simple ModbusApplication
+simple ModbusTCPApplication
 {
     parameters:
         //
         // should this application act as a slave (true) or a master (false)
         //
-        bool isSlave;
+        bool isServer;
         //
         // if it acts as a slave, the slave must know his traffic profile number.
         // If it acts as a master, the master can specify a profileNumber not equal -1
         // to register as a receiver for the specific profile
         //
-        
+		int port;
         //
         // at least a udp or tcp server has to specify how many concurrently running
         // threads he will create. A Value of 0 say, that theres no limit for the
         // number of thread. (This value is ignored for the ICMP Application)
         //
         int noThreads;
+
+        int profileNumber;
+
+    gates:
+        input tcpIn;
+        output tcpOut;
 }

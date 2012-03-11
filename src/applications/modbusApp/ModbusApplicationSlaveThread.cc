@@ -13,14 +13,21 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package scadasim.base;
+#include "ModbusApplicationSlaveThread.h"
+#include "ModbusMessage_m.h"
 
-//
-// Handles all traffic profile for SCADA components. 
-//
-simple SCADATrafficProfileManager
-{
-    parameters:
-		// name of the config file containing availabe traffic profiles
-		string configFileName;
+ModbusApplicationSlaveThread::ModbusApplicationSlaveThread() {
+    // TODO Auto-generated constructor stub
+
+}
+
+ModbusApplicationSlaveThread::~ModbusApplicationSlaveThread() {
+    // TODO Auto-generated destructor stub
+}
+
+
+void ModbusApplicationSlaveThread::socketDataArrived(int connId, void *youtPtr, cPacket *msg, bool urgent){
+    ModbusMessage *mbmsg = dynamic_cast<ModbusMessage *> (msg);
+        if (!mbmsg)
+            opp_error("Message (%s) %s is not a ModbusMessage", msg->getClassName(), msg->getName());
 }

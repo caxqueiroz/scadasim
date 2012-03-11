@@ -24,7 +24,7 @@ using std::pow;
 #define TCP_MODBUS 5
 
 
-#define ICMP_PING 21
+//#define ICMP_PING 21
 /// @}
 
 // ConstValues for the TrafficProfile
@@ -229,13 +229,15 @@ struct TransmissionStatistics
  * Structure for storing information about all communication
  * of a single user: based on bytes, packets, and sessions.
  */
-struct UserCommunicationStatistics
+struct SCADAUserCommunicationStatistics
 {
-    TransmissionStatistics total, tcp, udp, icmp;
-        unsigned long totalSessions, tcpSessions, udpSessions, icmpSessions;
+    TransmissionStatistics total, tcp;//, udp, icmp;
+        unsigned long totalSessions, tcpSessions;
+//        , udpSessions, icmpSessions;
 
-    UserCommunicationStatistics()
-        : totalSessions(0), tcpSessions(0), udpSessions(0), icmpSessions(0)
+        SCADAUserCommunicationStatistics()
+        : totalSessions(0), tcpSessions(0)
+//        , udpSessions(0), icmpSessions(0)
     {
 
     }
@@ -258,23 +260,23 @@ struct UserCommunicationStatistics
         this->tcpSessions++;
     }
 
-    void updateUdpStatistics(TransmissionStatistics stat)
-    {
-        this->udp.bytesSent += stat.bytesSent;
-        this->udp.bytesReceived += stat.bytesReceived;
-        this->udp.packetSent += stat.packetSent;
-        this->udp.packetReceived += stat.packetReceived;
-        this->udpSessions++;
-    }
-
-    void updateIcmpStatistics(TransmissionStatistics stat)
-    {
-        this->icmp.bytesSent += stat.bytesSent;
-        this->icmp.bytesReceived += stat.bytesReceived;
-        this->icmp.packetSent += stat.packetSent;
-        this->icmp.packetReceived += stat.packetReceived;
-        this->icmpSessions++;
-    }
+//    void updateUdpStatistics(TransmissionStatistics stat)
+//    {
+//        this->udp.bytesSent += stat.bytesSent;
+//        this->udp.bytesReceived += stat.bytesReceived;
+//        this->udp.packetSent += stat.packetSent;
+//        this->udp.packetReceived += stat.packetReceived;
+//        this->udpSessions++;
+//    }
+//
+//    void updateIcmpStatistics(TransmissionStatistics stat)
+//    {
+//        this->icmp.bytesSent += stat.bytesSent;
+//        this->icmp.bytesReceived += stat.bytesReceived;
+//        this->icmp.packetSent += stat.packetSent;
+//        this->icmp.packetReceived += stat.packetReceived;
+//        this->icmpSessions++;
+//    }
 };
 
 #endif /* SCADATRANSMISSIONCONFIG_H_ */

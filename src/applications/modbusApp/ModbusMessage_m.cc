@@ -1,5 +1,5 @@
 //
-// Generated file, do not edit! Created by opp_msgc 4.2 from applications/modbusApp/modbus.msg.
+// Generated file, do not edit! Created by opp_msgc 4.2 from applications/modbusApp/ModbusMessage.msg.
 //
 
 // Disable warnings about unused variables, empty switch stmts, etc:
@@ -10,7 +10,7 @@
 
 #include <iostream>
 #include <sstream>
-#include "modbus_m.h"
+#include "ModbusMessage_m.h"
 
 // Template rule which fires if a struct or class doesn't have operator<<
 template<typename T>
@@ -30,30 +30,29 @@ void doUnpacking(cCommBuffer *, T& t) {
 
 
 
-Register_Class(Modbus);
+Register_Class(ModbusMessage);
 
-Modbus::Modbus(const char *name, int kind) : cPacket(name,kind)
+ModbusMessage::ModbusMessage(const char *name, int kind) : cPacket(name,kind)
 {
-    this->length_var = 0;
     pdu_arraysize = 0;
     this->pdu_var = 0;
-    this->reply_delay_var = 0;
-    this->close_conn_var = 0;
+    this->replyDelay_var = 0;
+    this->closeConn_var = 0;
 }
 
-Modbus::Modbus(const Modbus& other) : cPacket(other)
+ModbusMessage::ModbusMessage(const ModbusMessage& other) : cPacket(other)
 {
     pdu_arraysize = 0;
     this->pdu_var = 0;
     copy(other);
 }
 
-Modbus::~Modbus()
+ModbusMessage::~ModbusMessage()
 {
     delete [] pdu_var;
 }
 
-Modbus& Modbus::operator=(const Modbus& other)
+ModbusMessage& ModbusMessage::operator=(const ModbusMessage& other)
 {
     if (this==&other) return *this;
     cPacket::operator=(other);
@@ -61,32 +60,29 @@ Modbus& Modbus::operator=(const Modbus& other)
     return *this;
 }
 
-void Modbus::copy(const Modbus& other)
+void ModbusMessage::copy(const ModbusMessage& other)
 {
-    this->length_var = other.length_var;
     delete [] this->pdu_var;
     this->pdu_var = (other.pdu_arraysize==0) ? NULL : new uint8_t[other.pdu_arraysize];
     pdu_arraysize = other.pdu_arraysize;
     for (unsigned int i=0; i<pdu_arraysize; i++)
         this->pdu_var[i] = other.pdu_var[i];
-    this->reply_delay_var = other.reply_delay_var;
-    this->close_conn_var = other.close_conn_var;
+    this->replyDelay_var = other.replyDelay_var;
+    this->closeConn_var = other.closeConn_var;
 }
 
-void Modbus::parsimPack(cCommBuffer *b)
+void ModbusMessage::parsimPack(cCommBuffer *b)
 {
     cPacket::parsimPack(b);
-    doPacking(b,this->length_var);
     b->pack(pdu_arraysize);
     doPacking(b,this->pdu_var,pdu_arraysize);
-    doPacking(b,this->reply_delay_var);
-    doPacking(b,this->close_conn_var);
+    doPacking(b,this->replyDelay_var);
+    doPacking(b,this->closeConn_var);
 }
 
-void Modbus::parsimUnpack(cCommBuffer *b)
+void ModbusMessage::parsimUnpack(cCommBuffer *b)
 {
     cPacket::parsimUnpack(b);
-    doUnpacking(b,this->length_var);
     delete [] this->pdu_var;
     b->unpack(pdu_arraysize);
     if (pdu_arraysize==0) {
@@ -95,21 +91,11 @@ void Modbus::parsimUnpack(cCommBuffer *b)
         this->pdu_var = new uint8_t[pdu_arraysize];
         doUnpacking(b,this->pdu_var,pdu_arraysize);
     }
-    doUnpacking(b,this->reply_delay_var);
-    doUnpacking(b,this->close_conn_var);
+    doUnpacking(b,this->replyDelay_var);
+    doUnpacking(b,this->closeConn_var);
 }
 
-int Modbus::getLength() const
-{
-    return length_var;
-}
-
-void Modbus::setLength(int length)
-{
-    this->length_var = length;
-}
-
-void Modbus::setPduArraySize(unsigned int size)
+void ModbusMessage::setPduArraySize(unsigned int size)
 {
     uint8_t *pdu_var2 = (size==0) ? NULL : new uint8_t[size];
     unsigned int sz = pdu_arraysize < size ? pdu_arraysize : size;
@@ -122,48 +108,48 @@ void Modbus::setPduArraySize(unsigned int size)
     this->pdu_var = pdu_var2;
 }
 
-unsigned int Modbus::getPduArraySize() const
+unsigned int ModbusMessage::getPduArraySize() const
 {
     return pdu_arraysize;
 }
 
-uint8_t Modbus::getPdu(unsigned int k) const
+uint8_t ModbusMessage::getPdu(unsigned int k) const
 {
     if (k>=pdu_arraysize) throw cRuntimeError("Array of size %d indexed by %d", pdu_arraysize, k);
     return pdu_var[k];
 }
 
-void Modbus::setPdu(unsigned int k, uint8_t pdu)
+void ModbusMessage::setPdu(unsigned int k, uint8_t pdu)
 {
     if (k>=pdu_arraysize) throw cRuntimeError("Array of size %d indexed by %d", pdu_arraysize, k);
     this->pdu_var[k] = pdu;
 }
 
-double Modbus::getReply_delay() const
+double ModbusMessage::getReplyDelay() const
 {
-    return reply_delay_var;
+    return replyDelay_var;
 }
 
-void Modbus::setReply_delay(double reply_delay)
+void ModbusMessage::setReplyDelay(double replyDelay)
 {
-    this->reply_delay_var = reply_delay;
+    this->replyDelay_var = replyDelay;
 }
 
-bool Modbus::getClose_conn() const
+bool ModbusMessage::getCloseConn() const
 {
-    return close_conn_var;
+    return closeConn_var;
 }
 
-void Modbus::setClose_conn(bool close_conn)
+void ModbusMessage::setCloseConn(bool closeConn)
 {
-    this->close_conn_var = close_conn;
+    this->closeConn_var = closeConn;
 }
 
-class ModbusDescriptor : public cClassDescriptor
+class ModbusMessageDescriptor : public cClassDescriptor
 {
   public:
-    ModbusDescriptor();
-    virtual ~ModbusDescriptor();
+    ModbusMessageDescriptor();
+    virtual ~ModbusMessageDescriptor();
 
     virtual bool doesSupport(cObject *obj) const;
     virtual const char *getProperty(const char *propertyname) const;
@@ -182,34 +168,34 @@ class ModbusDescriptor : public cClassDescriptor
     virtual void *getFieldStructPointer(void *object, int field, int i) const;
 };
 
-Register_ClassDescriptor(ModbusDescriptor);
+Register_ClassDescriptor(ModbusMessageDescriptor);
 
-ModbusDescriptor::ModbusDescriptor() : cClassDescriptor("Modbus", "cPacket")
+ModbusMessageDescriptor::ModbusMessageDescriptor() : cClassDescriptor("ModbusMessage", "cPacket")
 {
 }
 
-ModbusDescriptor::~ModbusDescriptor()
+ModbusMessageDescriptor::~ModbusMessageDescriptor()
 {
 }
 
-bool ModbusDescriptor::doesSupport(cObject *obj) const
+bool ModbusMessageDescriptor::doesSupport(cObject *obj) const
 {
-    return dynamic_cast<Modbus *>(obj)!=NULL;
+    return dynamic_cast<ModbusMessage *>(obj)!=NULL;
 }
 
-const char *ModbusDescriptor::getProperty(const char *propertyname) const
+const char *ModbusMessageDescriptor::getProperty(const char *propertyname) const
 {
     cClassDescriptor *basedesc = getBaseClassDescriptor();
     return basedesc ? basedesc->getProperty(propertyname) : NULL;
 }
 
-int ModbusDescriptor::getFieldCount(void *object) const
+int ModbusMessageDescriptor::getFieldCount(void *object) const
 {
     cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 4+basedesc->getFieldCount(object) : 4;
+    return basedesc ? 3+basedesc->getFieldCount(object) : 3;
 }
 
-unsigned int ModbusDescriptor::getFieldTypeFlags(void *object, int field) const
+unsigned int ModbusMessageDescriptor::getFieldTypeFlags(void *object, int field) const
 {
     cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -218,15 +204,14 @@ unsigned int ModbusDescriptor::getFieldTypeFlags(void *object, int field) const
         field -= basedesc->getFieldCount(object);
     }
     static unsigned int fieldTypeFlags[] = {
-        FD_ISEDITABLE,
         FD_ISARRAY | FD_ISEDITABLE,
         FD_ISEDITABLE,
         FD_ISEDITABLE,
     };
-    return (field>=0 && field<4) ? fieldTypeFlags[field] : 0;
+    return (field>=0 && field<3) ? fieldTypeFlags[field] : 0;
 }
 
-const char *ModbusDescriptor::getFieldName(void *object, int field) const
+const char *ModbusMessageDescriptor::getFieldName(void *object, int field) const
 {
     cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -235,26 +220,24 @@ const char *ModbusDescriptor::getFieldName(void *object, int field) const
         field -= basedesc->getFieldCount(object);
     }
     static const char *fieldNames[] = {
-        "length",
         "pdu",
-        "reply_delay",
-        "close_conn",
+        "replyDelay",
+        "closeConn",
     };
-    return (field>=0 && field<4) ? fieldNames[field] : NULL;
+    return (field>=0 && field<3) ? fieldNames[field] : NULL;
 }
 
-int ModbusDescriptor::findField(void *object, const char *fieldName) const
+int ModbusMessageDescriptor::findField(void *object, const char *fieldName) const
 {
     cClassDescriptor *basedesc = getBaseClassDescriptor();
     int base = basedesc ? basedesc->getFieldCount(object) : 0;
-    if (fieldName[0]=='l' && strcmp(fieldName, "length")==0) return base+0;
-    if (fieldName[0]=='p' && strcmp(fieldName, "pdu")==0) return base+1;
-    if (fieldName[0]=='r' && strcmp(fieldName, "reply_delay")==0) return base+2;
-    if (fieldName[0]=='c' && strcmp(fieldName, "close_conn")==0) return base+3;
+    if (fieldName[0]=='p' && strcmp(fieldName, "pdu")==0) return base+0;
+    if (fieldName[0]=='r' && strcmp(fieldName, "replyDelay")==0) return base+1;
+    if (fieldName[0]=='c' && strcmp(fieldName, "closeConn")==0) return base+2;
     return basedesc ? basedesc->findField(object, fieldName) : -1;
 }
 
-const char *ModbusDescriptor::getFieldTypeString(void *object, int field) const
+const char *ModbusMessageDescriptor::getFieldTypeString(void *object, int field) const
 {
     cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -263,15 +246,14 @@ const char *ModbusDescriptor::getFieldTypeString(void *object, int field) const
         field -= basedesc->getFieldCount(object);
     }
     static const char *fieldTypeStrings[] = {
-        "int",
         "uint8_t",
         "double",
         "bool",
     };
-    return (field>=0 && field<4) ? fieldTypeStrings[field] : NULL;
+    return (field>=0 && field<3) ? fieldTypeStrings[field] : NULL;
 }
 
-const char *ModbusDescriptor::getFieldProperty(void *object, int field, const char *propertyname) const
+const char *ModbusMessageDescriptor::getFieldProperty(void *object, int field, const char *propertyname) const
 {
     cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -284,7 +266,7 @@ const char *ModbusDescriptor::getFieldProperty(void *object, int field, const ch
     }
 }
 
-int ModbusDescriptor::getArraySize(void *object, int field) const
+int ModbusMessageDescriptor::getArraySize(void *object, int field) const
 {
     cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -292,14 +274,14 @@ int ModbusDescriptor::getArraySize(void *object, int field) const
             return basedesc->getArraySize(object, field);
         field -= basedesc->getFieldCount(object);
     }
-    Modbus *pp = (Modbus *)object; (void)pp;
+    ModbusMessage *pp = (ModbusMessage *)object; (void)pp;
     switch (field) {
-        case 1: return pp->getPduArraySize();
+        case 0: return pp->getPduArraySize();
         default: return 0;
     }
 }
 
-std::string ModbusDescriptor::getFieldAsString(void *object, int field, int i) const
+std::string ModbusMessageDescriptor::getFieldAsString(void *object, int field, int i) const
 {
     cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -307,17 +289,16 @@ std::string ModbusDescriptor::getFieldAsString(void *object, int field, int i) c
             return basedesc->getFieldAsString(object,field,i);
         field -= basedesc->getFieldCount(object);
     }
-    Modbus *pp = (Modbus *)object; (void)pp;
+    ModbusMessage *pp = (ModbusMessage *)object; (void)pp;
     switch (field) {
-        case 0: return long2string(pp->getLength());
-        case 1: return ulong2string(pp->getPdu(i));
-        case 2: return double2string(pp->getReply_delay());
-        case 3: return bool2string(pp->getClose_conn());
+        case 0: return ulong2string(pp->getPdu(i));
+        case 1: return double2string(pp->getReplyDelay());
+        case 2: return bool2string(pp->getCloseConn());
         default: return "";
     }
 }
 
-bool ModbusDescriptor::setFieldAsString(void *object, int field, int i, const char *value) const
+bool ModbusMessageDescriptor::setFieldAsString(void *object, int field, int i, const char *value) const
 {
     cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -325,17 +306,16 @@ bool ModbusDescriptor::setFieldAsString(void *object, int field, int i, const ch
             return basedesc->setFieldAsString(object,field,i,value);
         field -= basedesc->getFieldCount(object);
     }
-    Modbus *pp = (Modbus *)object; (void)pp;
+    ModbusMessage *pp = (ModbusMessage *)object; (void)pp;
     switch (field) {
-        case 0: pp->setLength(string2long(value)); return true;
-        case 1: pp->setPdu(i,string2ulong(value)); return true;
-        case 2: pp->setReply_delay(string2double(value)); return true;
-        case 3: pp->setClose_conn(string2bool(value)); return true;
+        case 0: pp->setPdu(i,string2ulong(value)); return true;
+        case 1: pp->setReplyDelay(string2double(value)); return true;
+        case 2: pp->setCloseConn(string2bool(value)); return true;
         default: return false;
     }
 }
 
-const char *ModbusDescriptor::getFieldStructName(void *object, int field) const
+const char *ModbusMessageDescriptor::getFieldStructName(void *object, int field) const
 {
     cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -347,12 +327,11 @@ const char *ModbusDescriptor::getFieldStructName(void *object, int field) const
         NULL,
         NULL,
         NULL,
-        NULL,
     };
-    return (field>=0 && field<4) ? fieldStructNames[field] : NULL;
+    return (field>=0 && field<3) ? fieldStructNames[field] : NULL;
 }
 
-void *ModbusDescriptor::getFieldStructPointer(void *object, int field, int i) const
+void *ModbusMessageDescriptor::getFieldStructPointer(void *object, int field, int i) const
 {
     cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -360,7 +339,7 @@ void *ModbusDescriptor::getFieldStructPointer(void *object, int field, int i) co
             return basedesc->getFieldStructPointer(object, field, i);
         field -= basedesc->getFieldCount(object);
     }
-    Modbus *pp = (Modbus *)object; (void)pp;
+    ModbusMessage *pp = (ModbusMessage *)object; (void)pp;
     switch (field) {
         default: return NULL;
     }

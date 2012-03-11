@@ -6,13 +6,12 @@ import inet.linklayer.ppp.PPPInterface;
 import inet.networklayer.common.InterfaceTable;
 import inet.networklayer.ipv4.RoutingTable;
 import inet.nodes.inet.NetworkLayer;
-
 import scadasim.applications.pingApp.GenericICMPPingApplication;
 import scadasim.applications.tcpApp.GenericTCPApplication;
 import scadasim.transport.tcp.TCP_hack;
 import scadasim.transport.udp.UDP_hack;
 import inet.transport.tcp.TCP;
-import scadasim.applications.generic.IEDUser;
+
 //
 // WebServer: Server system for web traffic profile using TCP as 
 // transport protocol.
@@ -26,6 +25,7 @@ module IED
     parameters:
         @node();
         int namid;
+        int maxTCPThreadCount;
     gates:
         inout pppg[];
         inout ethg[];
@@ -48,18 +48,33 @@ module IED
                 @display("p=60,230;i=block/table");
 
         }
-
-        user: IEDUser {
+        plcServer: GenericTCPApplication {
             parameters:
-                @display("p=287,154;i=abstract/person");
-        }
+                isServer = true;
+                profileNumber = 5;
+                port = 502;
+                @display("p=163,67;i=block/app");
 
+        }
         tcp: TCP {
             parameters:
+                //maxThreadCount = maxTCPThreadCount;
                 @display("p=163,154;i=block/wheelbarrow");
 
         }
-
+        //        udp: UDP_hack {
+        //            parameters:
+        //                @display("p=272,154;i=block/transport");
+        //
+        //        }
+        //        pingApp: GenericICMPPingApplication {
+        //            parameters:
+        //                isServer = true;
+        //                profileNumber = 21;
+        //                port = 0;
+        //                @display("i=block/app;p=343,200");
+        //
+        //        }
         networkLayer: NetworkLayer {
             parameters:
                 proxyARP = false;
@@ -80,9 +95,17 @@ module IED
 
         }
     connections allowunconnected:
+        plcServer.tcpOut --> tcp.appIn++;
+        plcServer.tcpIn <-- tcp.appOut++;
 
         tcp.ipOut --> networkLayer.tcpIn;
         tcp.ipIn <-- networkLayer.tcpOut;
+
+//        udp.ipOut --> networkLayer.udpIn;
+//        udp.ipIn <-- networkLayer.udpOut;
+
+//        networkLayer.pingOut --> pingApp.pingIn;
+//        networkLayer.pingIn <-- pingApp.pingOut;
 
         // connections to network outside
         for i=0..sizeof(pppg)-1 {

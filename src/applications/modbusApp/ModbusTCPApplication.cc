@@ -13,22 +13,16 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#ifndef __SCADASIM_IEDUSER_H_
-#define __SCADASIM_IEDUSER_H_
+#include "ModbusTCPApplication.h"
 
-#include <omnetpp.h>
-#include "SCADASIMDefs.h"
-#include <string>
+Define_Module(ModbusTCPApplication);
 
-/**
- * TODO - Generated class
- */
-class SCADASIM_API IEDUser : public cSimpleModule
+void ModbusTCPApplication::initialize()
 {
-  protected:
-    virtual void initialize();
-    virtual void handleMessage(cMessage *msg);
-    virtual void finish();
-};
+    // TODO - Generated method body
+}
 
-#endif
+void ModbusTCPApplication::handleMessage(cMessage *msg)
+{
+    // TODO - Generated method body
+}

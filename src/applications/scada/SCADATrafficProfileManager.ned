@@ -13,16 +13,14 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include "ModbusApplication.h"
+package scadasim.applications.scada;
 
-Define_Module(ModbusApplication);
-
-void ModbusApplication::initialize()
+//
+// Handles all traffic profile for SCADA components. 
+//
+simple SCADATrafficProfileManager
 {
-    // TODO - Generated method body
-}
-
-void ModbusApplication::handleMessage(cMessage *msg)
-{
-    // TODO - Generated method body
+    parameters:
+		// name of the config file containing availabe traffic profiles
+		string configFileName;
 }

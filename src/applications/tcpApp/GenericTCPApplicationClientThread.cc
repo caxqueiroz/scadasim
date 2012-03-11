@@ -14,23 +14,14 @@
  * @class GenericTCPApplicationClientThread
  */
 
-/// Thread States
-/// @{
-#define NOT_SET 0
-#define WAITING 1
-#define CONNECTED 2
-#define DISCONNECTED 3
-#define FINISH 4
-/// @}
 
 
-GenericTCPApplicationClientThread::GenericTCPApplicationClientThread(
-		TrafficProfile &p, TargetInfo &i) {
+GenericTCPApplicationClientThread::GenericTCPApplicationClientThread(TrafficProfile &p, TargetInfo &i) {
 	curProfile = p;
 	curTarget = i;
 
 	// maximum number of requests per session
-	noRequestsToSend = curProfile.getRequestsPerSession(true);
+	noRequestsToSend = curProfile.getRequestsPerSession(false);
 	selfMsg = NULL;
 }
 

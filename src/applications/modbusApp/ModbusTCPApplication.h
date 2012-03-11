@@ -19,11 +19,12 @@
 #include <omnetpp.h>
 #include "SCADASIMDefs.h"
 #include "ModbusUser.h"
+#include "GenericTCPApplication.h"
 
 /**
  * Modbus application.
  */
-class SCADASIM_API ModbusApplication : public cSimpleModule
+class SCADASIM_API ModbusTCPApplication : public GenericTCPApplication
 {
 
   protected:

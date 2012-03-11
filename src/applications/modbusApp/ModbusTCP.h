@@ -38,11 +38,11 @@
 #include <string>
 #include <iostream>
 #include <stdlib.h>
-#include <errno.h>
-//#include <limits.h>
-//#include <fcntl.h>
+//#include <errno.h>
 
 #include "INETDefs.h"
+#include "modbus.h"
+
 
 #define MODBUS_TCP_DEFAULT_PORT 502
 
@@ -228,15 +228,6 @@ const uint16_t UT_INPUT_REGISTERS_TAB[] = { 0x000A };
 const short START_SIM = 100;
 
 
-typedef enum
-{
-    RTU, TCP
-} type_com_t;
-typedef enum
-{
-    FLUSH_OR_RECONNECT_ON_ERROR, NOP_ON_ERROR
-} error_handling_t;
-
 /* This structure reduces the number of params in functions and so
  * optimizes the speed of execution (~ 37%). */
 typedef struct
@@ -245,18 +236,6 @@ typedef struct
         int function;
         int t_id;
 } sft_t;
-
-typedef struct
-{
-        int nb_coil_status;
-        int nb_input_status;
-        int nb_input_registers;
-        int nb_holding_registers;
-        uint8_t *tab_coil_status;
-        uint8_t *tab_input_status;
-        uint16_t *tab_input_registers;
-        uint16_t *tab_holding_registers;
-} modbus_mapping_t;
 
 typedef struct
 {

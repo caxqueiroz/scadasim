@@ -20,7 +20,7 @@
 #define __SCADASIM_SCADASIMDEFS_H
 
 #if OMNETPP_VERSION < 0x0402
-#  error At least OMNeT++/OMNEST version 4.0 required
+#  error At least OMNeT++/OMNEST version 402 required
 #endif
 
 #if defined(REASE_EXPORT)

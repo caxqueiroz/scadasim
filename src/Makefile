@@ -60,6 +60,7 @@ INCLUDE_PATH = \
     -Iapplications/generic \
     -Iapplications/modbusApp \
     -Iapplications/pingApp \
+    -Iapplications/scada \
     -Iapplications/tcpApp \
     -Iapplications/worm \
     -Ibase \
@@ -94,18 +95,20 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 OBJS = \
     $O/applications/ddos/TribeFloodNetwork.o \
     $O/applications/generic/GenericApplication.o \
-    $O/applications/generic/IEDUser.o \
     $O/applications/generic/InetUser.o \
-    $O/applications/modbusApp/ModbusApplication.o \
+    $O/applications/modbusApp/ModbusApplicationMasterThread.o \
+    $O/applications/modbusApp/ModbusApplicationSlaveThread.o \
     $O/applications/modbusApp/ModbusTCP.o \
+    $O/applications/modbusApp/ModbusTCPApplication.o \
     $O/applications/modbusApp/ModbusUser.o \
     $O/applications/pingApp/GenericICMPPingApplication.o \
+    $O/applications/scada/SCADATrafficProfileManager.o \
+    $O/applications/scada/SCADAUser.o \
     $O/applications/tcpApp/GenericTCPApplication.o \
     $O/applications/tcpApp/GenericTCPApplicationClientThread.o \
     $O/applications/tcpApp/GenericTCPApplicationServerThread.o \
     $O/applications/worm/UDPWormVictim.o \
     $O/base/ConnectionManager.o \
-    $O/base/SCADATrafficProfileManager.o \
     $O/base/TrafficProfileManager.o \
     $O/external/ModbusGate.o \
     $O/external/SSGate.o \
@@ -122,7 +125,8 @@ OBJS = \
     $O/transport/udp/UDP_hack.o \
     $O/util/DataDump.o \
     $O/applications/generic/GenericApplicationMessage_m.o \
-    $O/applications/modbusApp/modbus_m.o \
+    $O/applications/modbusApp/ModbusMessage_m.o \
+    $O/applications/scada/scadamessage_m.o \
     $O/applications/worm/UDPWormQueryMessage_m.o \
     $O/networklayer/contract/IPControlInfo_hacked_m.o \
     $O/networklayer/contract/IPv6ControlInfo_hacked_m.o \
@@ -131,7 +135,8 @@ OBJS = \
 # Message files
 MSGFILES = \
     applications/generic/GenericApplicationMessage.msg \
-    applications/modbusApp/modbus.msg \
+    applications/modbusApp/ModbusMessage.msg \
+    applications/scada/scadamessage.msg \
     applications/worm/UDPWormQueryMessage.msg \
     networklayer/contract/IPControlInfo_hacked.msg \
     networklayer/contract/IPv6ControlInfo_hacked.msg \
@@ -215,6 +220,7 @@ clean:
 	-rm -f applications/generic/*_m.cc applications/generic/*_m.h
 	-rm -f applications/modbusApp/*_m.cc applications/modbusApp/*_m.h
 	-rm -f applications/pingApp/*_m.cc applications/pingApp/*_m.h
+	-rm -f applications/scada/*_m.cc applications/scada/*_m.h
 	-rm -f applications/tcpApp/*_m.cc applications/tcpApp/*_m.h
 	-rm -f applications/worm/*_m.cc applications/worm/*_m.h
 	-rm -f base/*_m.cc base/*_m.h
@@ -237,7 +243,7 @@ cleanall: clean
 	-rm -rf $(PROJECT_OUTPUT_DIR)
 
 depend:
-	$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc applications/*.cc applications/ddos/*.cc applications/generic/*.cc applications/modbusApp/*.cc applications/pingApp/*.cc applications/tcpApp/*.cc applications/worm/*.cc base/*.cc external/*.cc networklayer/*.cc networklayer/autorouting/*.cc networklayer/contract/*.cc networklayer/ipv4/*.cc networklayer/queue/*.cc nodes/*.cc nodes/inet/*.cc nodes/scada/*.cc transport/*.cc transport/contract/*.cc transport/tcp/*.cc transport/udp/*.cc util/*.cc
+	$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc applications/*.cc applications/ddos/*.cc applications/generic/*.cc applications/modbusApp/*.cc applications/pingApp/*.cc applications/scada/*.cc applications/tcpApp/*.cc applications/worm/*.cc base/*.cc external/*.cc networklayer/*.cc networklayer/autorouting/*.cc networklayer/contract/*.cc networklayer/ipv4/*.cc networklayer/queue/*.cc nodes/*.cc nodes/inet/*.cc nodes/scada/*.cc transport/*.cc transport/contract/*.cc transport/tcp/*.cc transport/udp/*.cc util/*.cc
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 $O/applications/ddos/TribeFloodNetwork.o: applications/ddos/TribeFloodNetwork.cc \
@@ -294,9 +300,6 @@ $O/applications/generic/GenericApplicationMessage_m.o: applications/generic/Gene
 	$(INET_PROJ)/src/base/INETDefs.h \
 	applications/generic/GenericApplicationMessage_m.h \
 	base/SCADASIMDefs.h
-$O/applications/generic/IEDUser.o: applications/generic/IEDUser.cc \
-	applications/generic/IEDUser.h \
-	base/SCADASIMDefs.h
 $O/applications/generic/InetUser.o: applications/generic/InetUser.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/ModuleAccess.h \
@@ -315,10 +318,51 @@ $O/applications/generic/InetUser.o: applications/generic/InetUser.cc \
 	base/ConnectionManager.h \
 	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h
-$O/applications/modbusApp/ModbusApplication.o: applications/modbusApp/ModbusApplication.cc \
-	applications/modbusApp/ModbusApplication.h \
-	applications/modbusApp/ModbusUser.h \
-	base/SCADASIMDefs.h
+$O/applications/modbusApp/ModbusApplicationMasterThread.o: applications/modbusApp/ModbusApplicationMasterThread.cc \
+	$(INET_PROJ)/src/base/INETDefs.h \
+	$(INET_PROJ)/src/base/ModuleAccess.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
+	$(INET_PROJ)/src/transport/contract/TCPCommand_m.h \
+	$(INET_PROJ)/src/transport/contract/TCPSocket.h \
+	$(INET_PROJ)/src/transport/contract/TCPSocketMap.h \
+	$(INET_PROJ)/src/util/uint128.h \
+	applications/generic/GenericApplication.h \
+	applications/generic/InetUser.h \
+	applications/generic/TransmissionConfig.h \
+	applications/modbusApp/ModbusApplicationMasterThread.h \
+	applications/modbusApp/ModbusMessage_m.h \
+	applications/modbusApp/ModbusTCP.h \
+	applications/tcpApp/GenericTCPApplication.h \
+	applications/tcpApp/GenericTCPApplicationClientThread.h \
+	base/ConnectionManager.h \
+	base/SCADASIMDefs.h \
+	base/TrafficProfileManager.h \
+	external/modbus.h
+$O/applications/modbusApp/ModbusApplicationSlaveThread.o: applications/modbusApp/ModbusApplicationSlaveThread.cc \
+	$(INET_PROJ)/src/base/INETDefs.h \
+	$(INET_PROJ)/src/base/ModuleAccess.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
+	$(INET_PROJ)/src/transport/contract/TCPCommand_m.h \
+	$(INET_PROJ)/src/transport/contract/TCPSocket.h \
+	$(INET_PROJ)/src/transport/contract/TCPSocketMap.h \
+	$(INET_PROJ)/src/util/uint128.h \
+	applications/generic/GenericApplication.h \
+	applications/generic/InetUser.h \
+	applications/generic/TransmissionConfig.h \
+	applications/modbusApp/ModbusApplicationSlaveThread.h \
+	applications/modbusApp/ModbusMessage_m.h \
+	applications/tcpApp/GenericTCPApplication.h \
+	applications/tcpApp/GenericTCPApplicationServerThread.h \
+	base/ConnectionManager.h \
+	base/SCADASIMDefs.h \
+	base/TrafficProfileManager.h
+$O/applications/modbusApp/ModbusMessage_m.o: applications/modbusApp/ModbusMessage_m.cc \
+	$(INET_PROJ)/src/base/INETDefs.h \
+	applications/modbusApp/ModbusMessage_m.h
 $O/applications/modbusApp/ModbusTCP.o: applications/modbusApp/ModbusTCP.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
@@ -328,13 +372,30 @@ $O/applications/modbusApp/ModbusTCP.o: applications/modbusApp/ModbusTCP.cc \
 	$(INET_PROJ)/src/transport/contract/TCPCommand_m.h \
 	$(INET_PROJ)/src/transport/contract/TCPSocket.h \
 	$(INET_PROJ)/src/util/uint128.h \
-	applications/modbusApp/ModbusTCP.h
+	applications/modbusApp/ModbusTCP.h \
+	external/modbus.h
+$O/applications/modbusApp/ModbusTCPApplication.o: applications/modbusApp/ModbusTCPApplication.cc \
+	$(INET_PROJ)/src/base/INETDefs.h \
+	$(INET_PROJ)/src/base/ModuleAccess.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
+	$(INET_PROJ)/src/transport/contract/TCPCommand_m.h \
+	$(INET_PROJ)/src/transport/contract/TCPSocket.h \
+	$(INET_PROJ)/src/transport/contract/TCPSocketMap.h \
+	$(INET_PROJ)/src/util/uint128.h \
+	applications/generic/GenericApplication.h \
+	applications/generic/InetUser.h \
+	applications/generic/TransmissionConfig.h \
+	applications/modbusApp/ModbusTCPApplication.h \
+	applications/modbusApp/ModbusUser.h \
+	applications/tcpApp/GenericTCPApplication.h \
+	base/ConnectionManager.h \
+	base/SCADASIMDefs.h \
+	base/TrafficProfileManager.h
 $O/applications/modbusApp/ModbusUser.o: applications/modbusApp/ModbusUser.cc \
 	applications/modbusApp/ModbusUser.h \
 	base/SCADASIMDefs.h
-$O/applications/modbusApp/modbus_m.o: applications/modbusApp/modbus_m.cc \
-	$(INET_PROJ)/src/base/INETDefs.h \
-	applications/modbusApp/modbus_m.h
 $O/applications/pingApp/GenericICMPPingApplication.o: applications/pingApp/GenericICMPPingApplication.cc \
 	$(INET_PROJ)/src/applications/pingapp/PingPayload_m.h \
 	$(INET_PROJ)/src/base/INETDefs.h \
@@ -357,6 +418,19 @@ $O/applications/pingApp/GenericICMPPingApplication.o: applications/pingApp/Gener
 	base/ConnectionManager.h \
 	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h
+$O/applications/scada/SCADATrafficProfileManager.o: applications/scada/SCADATrafficProfileManager.cc \
+	applications/scada/SCADATrafficProfileManager.h
+$O/applications/scada/SCADAUser.o: applications/scada/SCADAUser.cc \
+	$(INET_PROJ)/src/base/INETDefs.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv4Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
+	$(INET_PROJ)/src/util/uint128.h \
+	applications/scada/SCADATransmissionConfig.h \
+	applications/scada/SCADAUser.h \
+	base/SCADASIMDefs.h
+$O/applications/scada/scadamessage_m.o: applications/scada/scadamessage_m.cc \
+	applications/scada/scadamessage_m.h
 $O/applications/tcpApp/GenericTCPApplication.o: applications/tcpApp/GenericTCPApplication.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/ModuleAccess.h \
@@ -449,8 +523,6 @@ $O/base/ConnectionManager.o: base/ConnectionManager.cc \
 	base/ConnectionManager.h \
 	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h
-$O/base/SCADATrafficProfileManager.o: base/SCADATrafficProfileManager.cc \
-	base/SCADATrafficProfileManager.h
 $O/base/TrafficProfileManager.o: base/TrafficProfileManager.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/ModuleAccess.h \

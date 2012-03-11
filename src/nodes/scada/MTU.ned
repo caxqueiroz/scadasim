@@ -12,7 +12,7 @@ import scadasim.transport.tcp.TCP_hack;
 import scadasim.transport.udp.UDP_hack;
 import inet.transport.tcp.TCP;
 import scadasim.applications.generic.InetUser;
-
+import scadasim.applications.modbusApp.ModbusTCPApplication;
 
 //
 // WebServer: Server system for web traffic profile using TCP as 
@@ -69,7 +69,7 @@ module MTU
 //
 //        }
 
-        mtuClient: GenericTCPApplication {
+        mtuClient: ModbusTCPApplication {
             parameters:
                 isServer = false;
                 profileNumber = 5;

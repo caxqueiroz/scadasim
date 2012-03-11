@@ -16,7 +16,7 @@
 package InfoDivSimulation;
 
 import scadasim.base.ConnectionManager;
-import scadasim.base.SCADATrafficProfileManager;
+import scadasim.applications.scada.SCADATrafficProfileManager;
 import scadasim.base.TrafficProfileManager;
 import scadasim.nodes.inet.InteractiveServer;
 import scadasim.nodes.inet.DatabaseServer;

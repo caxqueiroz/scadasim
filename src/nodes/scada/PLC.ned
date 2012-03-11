@@ -11,7 +11,7 @@ import scadasim.applications.tcpApp.GenericTCPApplication;
 import scadasim.transport.tcp.TCP_hack;
 import scadasim.transport.udp.UDP_hack;
 import inet.transport.tcp.TCP;
-
+import scadasim.applications.modbusApp.ModbusTCPApplication;
 //
 // WebServer: Server system for web traffic profile using TCP as 
 // transport protocol.
@@ -48,7 +48,7 @@ module PLC
                 @display("p=60,230;i=block/table");
 
         }
-        plcServer: GenericTCPApplication {
+        plcServer: ModbusTCPApplication {
             parameters:
                 isServer = true;
                 profileNumber = 5;
