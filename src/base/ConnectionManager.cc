@@ -204,6 +204,11 @@ void ConnectionManager::getServer(TargetInfo &ti, TrafficProfile &tp, int module
 
 }
 
+bool ConnectionManager::getServerForProfile(TargetInfo &ti, TrafficProfile &tp, int moduleId){
+    return haveProfile(ti,tp.profileID,moduleId);
+}
+
+
 /**
  * Request server of other AS for current traffic profile
  *

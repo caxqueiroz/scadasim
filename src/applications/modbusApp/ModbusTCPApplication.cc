@@ -21,6 +21,19 @@
 
 Define_Module(ModbusTCPApplication);
 
+ModbusTCPApplication::ModbusTCPApplication(){
+    modbus.initMemory();
+}
+
+ModbusTCPApplication::~ModbusTCPApplication(){
+    modbus.freeAllocatedMemory();
+}
+
+ModbusTCP ModbusTCPApplication::getModbusTCPStack(){
+    return modbus;
+}
+
+
 void ModbusTCPApplication::initialize(int stages){
 
     if (stages != INITIALIZATION_STAGE_NECESSARY)
@@ -47,8 +60,8 @@ void ModbusTCPApplication::initialize(int stages){
                 // register servers at ConnectionManager
                 if (isServer)
                     cm->registerServer(IPAddressResolver().resolve(getParentModule()->getFullPath().data()), port, profileNumber);
-                // if i'am not a server - this means a client, i have to
-                // register myself to the current InetUser
+                // if i'am not a slave - this means a master, i have to
+                // register myself to the current ModbusUser
                 else
                 {
                     ModbusUserAccess mua;
@@ -69,8 +82,6 @@ void ModbusTCPApplication::initialize(int stages){
                 }
             }
 
-
-
         if (isServer)
         {
             // open the ServerSocket and start listening
@@ -83,6 +94,7 @@ void ModbusTCPApplication::initialize(int stages){
             // a server may have a limited number of concurrently running threads
 
         }
+
 
         if (maxThreadCount == 0)
             maxThreadCount = INT_MAX;
@@ -166,4 +178,9 @@ void ModbusTCPApplication::transmissionStart(TrafficProfile &p, TargetInfo &i)
     threadList.push_back(t);
 
     updateDisplay();
+}
+
+void ModbusTCPApplication::transmissionDone(TransmissionStatistics s){
+    if(mbu)
+        mbu->transmissionDone(s);
 }

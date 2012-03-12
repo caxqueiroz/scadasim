@@ -317,6 +317,8 @@ $O/applications/modbusApp/ModbusApplicationMasterThread.o: applications/modbusAp
 	applications/modbusApp/ModbusApplicationMasterThread.h \
 	applications/modbusApp/ModbusMessage_m.h \
 	applications/modbusApp/ModbusTCP.h \
+	applications/modbusApp/ModbusTCPApplication.h \
+	applications/modbusApp/ModbusUser.h \
 	applications/tcpApp/GenericTCPApplication.h \
 	applications/tcpApp/GenericTCPApplicationClientThread.h \
 	base/ConnectionManager.h \
@@ -337,11 +339,15 @@ $O/applications/modbusApp/ModbusApplicationSlaveThread.o: applications/modbusApp
 	applications/generic/TransmissionConfig.h \
 	applications/modbusApp/ModbusApplicationSlaveThread.h \
 	applications/modbusApp/ModbusMessage_m.h \
+	applications/modbusApp/ModbusTCP.h \
+	applications/modbusApp/ModbusTCPApplication.h \
+	applications/modbusApp/ModbusUser.h \
 	applications/tcpApp/GenericTCPApplication.h \
 	applications/tcpApp/GenericTCPApplicationServerThread.h \
 	base/ConnectionManager.h \
 	base/SCADASIMDefs.h \
-	base/TrafficProfileManager.h
+	base/TrafficProfileManager.h \
+	external/modbus.h
 $O/applications/modbusApp/ModbusMessage_m.o: applications/modbusApp/ModbusMessage_m.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	applications/modbusApp/ModbusMessage_m.h
@@ -370,6 +376,7 @@ $O/applications/modbusApp/ModbusTCPApplication.o: applications/modbusApp/ModbusT
 	applications/generic/TransmissionConfig.h \
 	applications/modbusApp/ModbusApplicationMasterThread.h \
 	applications/modbusApp/ModbusApplicationSlaveThread.h \
+	applications/modbusApp/ModbusTCP.h \
 	applications/modbusApp/ModbusTCPApplication.h \
 	applications/modbusApp/ModbusUser.h \
 	applications/tcpApp/GenericTCPApplication.h \
@@ -377,7 +384,8 @@ $O/applications/modbusApp/ModbusTCPApplication.o: applications/modbusApp/ModbusT
 	applications/tcpApp/GenericTCPApplicationServerThread.h \
 	base/ConnectionManager.h \
 	base/SCADASIMDefs.h \
-	base/TrafficProfileManager.h
+	base/TrafficProfileManager.h \
+	external/modbus.h
 $O/applications/modbusApp/ModbusUser.o: applications/modbusApp/ModbusUser.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/ModuleAccess.h \

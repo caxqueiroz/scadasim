@@ -18,7 +18,40 @@
 Define_Module(ModbusUser);
 
 void ModbusUser::initialize() {
-    // TODO - Generated method body
+
+    ConnectionManagerAccess cma;
+
+    cm = cma.get();
+    if (cm == NULL)
+        opp_error("couldn't get ConnectionManager");
+
+    // set read/write watches for current traffic profile
+    WATCH(curTrafficProfile.label);
+    WATCH(curTrafficProfile.profileID);
+    WATCH_RW(curTrafficProfile.requestLength);
+    WATCH_RW(curTrafficProfile.requestsPerSession);
+    WATCH_RW(curTrafficProfile.replyLength);
+    WATCH_RW(curTrafficProfile.replyPerRequest);
+    WATCH_RW(curTrafficProfile.timeBetweenRequests);
+    WATCH_RW(curTrafficProfile.timeToRespond);
+    WATCH_RW(curTrafficProfile.timeBetweenSessions);
+    WATCH_RW(curTrafficProfile.probability);
+    WATCH_RW(curTrafficProfile.WANprob);
+    WATCH_RW(curTrafficProfile.ownPort);
+    WATCH_RW(curTrafficProfile.hopLimit);
+
+    //Set read watches for communication destination
+    WATCH(curTargetInfo.address);
+    WATCH(curTargetInfo.port);
+
+    //Misc watches
+    WATCH_PTRMAP(applications);
+    WATCH(noTCPProfile);
+
+    // activate the InetUser at startTime
+    cMessage *startMessage = new cMessage("ModbusUser wakeup");
+    startMessage->setKind(MSGKIND_START);
+    scheduleAt((simtime_t) par("startTime"), startMessage);
 }
 
 void ModbusUser::handleMessage(cMessage *msg) {
@@ -39,10 +72,17 @@ void ModbusUser::transmissionDone(TransmissionStatistics t) {
 }
 
 void ModbusUser::transmissionDone() {
-    applications[TCP_APP]->transmissionStart(curTrafficProfile, curTargetInfo);
+
+    if(cm->getServerForProfile(curTargetInfo,curTrafficProfile,getId())){
+        applications[TCP_APP]->transmissionStart(curTrafficProfile, curTargetInfo);
+    }else
+        opp_error("No valid server could be requested for selected traffic profiles (tried 100 times)");
+
+
 }
 
-void ModbusUser::setApplication(int applicationType, GenericApplication *a, int attachedProfileNumber) {
+void ModbusUser::setApplication(int applicationType, GenericApplication *a,
+        int attachedProfileNumber) {
     applications[applicationType] = a;
     if (attachedProfileNumber > 0) {
         attachedProfileId = attachedProfileNumber;

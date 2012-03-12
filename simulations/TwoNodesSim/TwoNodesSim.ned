@@ -76,35 +76,35 @@ network TwoNodesSim
         }
 
         Internet: Router {
-            @display("i=systems/cloud;p=445,127;is=s");
+            @display("i=misc/cloud;p=445,127;is=s");
             @AS();
         }
         brf00: Router {
-            @display("p=288,164;i=systems/router;is=vs");
+            @display("p=288,164;is=vs");
             @AS();
         }
         f00s01: Router {
-            @display("p=122,247;i=systems/switch;is=vs");
+            @display("p=122,247;i=abstract/switch;is=vs");
         }
         brc: Router {
-            @display("p=601,298;i=systems/router;is=vs");
+            @display("p=601,298;is=vs");
             @AS();
         }
         cs02: Router {
-            @display("p=686,380;i=systems/switch;is=vs");
+            @display("p=686,380;i=abstract/switch;is=vs");
         }
         f00p01: PLC {
-            @display("p=77,374;i=systems/rtu;is=vs");
+            @display("p=77,374;i=device/device;is=vs");
         }
         css01: MTU {
-            @display("p=785,496;i=systems/server;is=vs");
+            @display("p=785,496;i=device/pc3;is=vs");
         }
         trafficProfileManager: TrafficProfileManager {
             @display("p=801,8;i=block/network2;is=s");
         }
-        scadaTrafficProfileManager: SCADATrafficProfileManager {
-            @display("p=645,12;is=vs;i=abstract/table");
-        }
+    //        scadaTrafficProfileManager: SCADATrafficProfileManager {
+    //            @display("p=645,12;is=vs;i=abstract/table");
+    //        }
     connections:
         Internet.pppg++ <--> edge2edge <--> brf00.pppg++;
         Internet.pppg++ <--> edge2edge <--> brc.pppg++;

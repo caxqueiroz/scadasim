@@ -18,7 +18,7 @@
  */
 class SCADASIM_API GenericTCPApplicationServerThread : public GenericTCPApplicationThreadBase
 {
-private:
+protected:
 	/// Indicates that the socket should be closed due to end of the transmission
 	bool doClose;
 	/// Triggers sending of replies after waiting time specified by the profile

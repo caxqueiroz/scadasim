@@ -143,6 +143,8 @@ public:
     bool haveProfile(TargetInfo &ti, int profileId, int moduleId = -1);
 
     void getServer(TargetInfo &ti, TrafficProfile &tp, int moduleId);
+    /// @brief selects a server for given profile.
+    bool getServerForProfile(TargetInfo &ti, TrafficProfile &tp, int moduleId);
 
 protected:
     virtual void initialize();

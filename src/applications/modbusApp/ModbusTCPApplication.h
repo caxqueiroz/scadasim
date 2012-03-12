@@ -20,7 +20,7 @@
 #include "SCADASIMDefs.h"
 #include "ModbusUser.h"
 #include "GenericTCPApplication.h"
-
+#include "ModbusTCP.h"
 /**
  * Modbus application.
  */
@@ -28,12 +28,18 @@ class SCADASIM_API ModbusTCPApplication : public GenericTCPApplication
 {
 
   protected:
+    ModbusTCP modbus;
     ModbusUser *mbu;
     void initialize(int stages);
     void handleMessage(cMessage *msg);
+    void transmissionDone(TransmissionStatistics s);
 
   public:
+    ModbusTCPApplication();
+    virtual ~ModbusTCPApplication();
     void transmissionStart(TrafficProfile &p, TargetInfo &i);
+    ModbusTCP getModbusTCPStack();
+
 };
 
 #endif

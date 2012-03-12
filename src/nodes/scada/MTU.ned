@@ -73,7 +73,7 @@ module MTU
             parameters:
                 isServer = false;
                 profileNumber = 5;
-                port = 4000;
+                port = 0;
                 @display("p=267,67;i=block/app");
 
         }

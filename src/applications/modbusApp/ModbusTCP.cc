@@ -184,6 +184,10 @@ int ModbusTCP::computeQueryLengthData(uint8_t *msg) {
     return length;
 }
 
+int ModbusTCP::receive(uint8_t *query, uint8_t *response){
+    return receiveMessage(query,response,0);
+}
+
 int ModbusTCP::receiveMessage(uint8_t *query, uint8_t *response, int ret) {
 
     int response_length;
@@ -367,16 +371,14 @@ bool ModbusTCP::memoryAllocation(int nb_coil_status, int nb_input_status,
         int nb_holding_registers, int nb_input_registers) {
     /* 0X */
     mb_mapping->nb_coil_status = nb_coil_status;
-    mb_mapping->tab_coil_status = (uint8_t *) malloc(
-            nb_coil_status * sizeof(uint8_t));
+    mb_mapping->tab_coil_status = (uint8_t *) malloc(nb_coil_status * sizeof(uint8_t));
     memset(mb_mapping->tab_coil_status, 0, nb_coil_status * sizeof(uint8_t));
     if (mb_mapping->tab_coil_status == NULL)
         return false;
 
     /* 1X */
     mb_mapping->nb_input_status = nb_input_status;
-    mb_mapping->tab_input_status = (uint8_t *) malloc(
-            nb_input_status * sizeof(uint8_t));
+    mb_mapping->tab_input_status = (uint8_t *) malloc(nb_input_status * sizeof(uint8_t));
     memset(mb_mapping->tab_input_status, 0, nb_input_status * sizeof(uint8_t));
     if (mb_mapping->tab_input_status == NULL) {
         free(mb_mapping->tab_coil_status);
@@ -385,8 +387,7 @@ bool ModbusTCP::memoryAllocation(int nb_coil_status, int nb_input_status,
 
     /* 4X */
     mb_mapping->nb_holding_registers = nb_holding_registers;
-    mb_mapping->tab_holding_registers = (uint16_t *) malloc(
-            nb_holding_registers * sizeof(uint16_t));
+    mb_mapping->tab_holding_registers = (uint16_t *) malloc(nb_holding_registers * sizeof(uint16_t));
     memset(mb_mapping->tab_holding_registers, 0,
             nb_holding_registers * sizeof(uint16_t));
     if (mb_mapping->tab_holding_registers == NULL) {
@@ -397,8 +398,7 @@ bool ModbusTCP::memoryAllocation(int nb_coil_status, int nb_input_status,
 
     /* 3X */
     mb_mapping->nb_input_registers = nb_input_registers;
-    mb_mapping->tab_input_registers = (uint16_t *) malloc(
-            nb_input_registers * sizeof(uint16_t));
+    mb_mapping->tab_input_registers = (uint16_t *) malloc( nb_input_registers * sizeof(uint16_t));
     memset(mb_mapping->tab_input_registers, 0,
             nb_input_registers * sizeof(uint16_t));
     if (mb_mapping->tab_input_registers == NULL) {
@@ -413,6 +413,7 @@ bool ModbusTCP::memoryAllocation(int nb_coil_status, int nb_input_status,
 
 /* Frees the 4 arrays */
 void ModbusTCP::freeAllocatedMemory() {
+
     free(mb_mapping->tab_coil_status);
     free(mb_mapping->tab_input_status);
     free(mb_mapping->tab_holding_registers);
@@ -433,8 +434,7 @@ void ModbusTCP::initMemory() {
 
         /** INPUT REGISTERS **/
         for (int i = 0; i < UT_INPUT_REGISTERS_NB_POINTS; i++) {
-            mb_mapping->tab_input_registers[UT_INPUT_REGISTERS_ADDRESS + i] =
-                    UT_INPUT_REGISTERS_TAB[i];
+            mb_mapping->tab_input_registers[UT_INPUT_REGISTERS_ADDRESS + i] =  UT_INPUT_REGISTERS_TAB[i];
         }
 
     } else {
