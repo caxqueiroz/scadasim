@@ -413,7 +413,6 @@ bool ModbusTCP::memoryAllocation(int nb_coil_status, int nb_input_status,
 
 /* Frees the 4 arrays */
 void ModbusTCP::freeAllocatedMemory() {
-
     free(mb_mapping->tab_coil_status);
     free(mb_mapping->tab_input_status);
     free(mb_mapping->tab_holding_registers);

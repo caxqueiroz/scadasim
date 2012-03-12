@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for scadasim
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -I/usr/local/mysql/include/ -I../../inet/src/networklayer/rsvp_te -I../../inet/src/networklayer/common -I../../inet/src/networklayer/icmpv6 -I../../inet/src/transport/tcp -I../../inet/src/networklayer/mpls -I../../inet/src/networklayer/ted -I../../inet/src/networklayer/contract -I../../inet/obsolete/rsvp_te -I../../inet/src/util -I../../inet/src/transport/contract -I../../inet/src/linklayer/mfcore -I../../inet/src/networklayer/ldp -I../../inet/src/networklayer/ipv4 -I../../inet/src/base -I../../inet/src/util/headerserializers -I../../inet/src/networklayer/ipv6 -I../../inet/src/transport/sctp -I../../inet/src/world -I../../inet/src/applications/pingapp -I../../inet/src/linklayer/contract -I../../inet/src/networklayer/arp -I../../inet/src/transport/udp -L/usr/local/mysql/lib -L../../inet/out/$(CONFIGNAME)/src -lmysqlclient -linet -KINET_PROJ=../../inet
+#  opp_makemake -f --deep -I/usr/local/mysql/include/ -I../../inet/src/networklayer/rsvp_te -I../../inet/src/networklayer/common -I../../inet/src/networklayer/icmpv6 -I../../inet/src/transport/tcp -I../../inet/src/networklayer/mpls -I../../inet/src/networklayer/ted -I../../inet/src/networklayer/contract -I../../inet/obsolete/rsvp_te -I../../inet/src/util -I../../inet/src/transport/contract -I../../inet/src/linklayer/mfcore -I../../inet/src/networklayer/ldp -I../../inet/src/networklayer/ipv4 -I../../inet/src/base -I../../inet/src/util/headerserializers -I../../inet/src/networklayer/ipv6 -I../../inet/src/transport/sctp -I../../inet/src/world -I../../inet/src/applications/pingapp -I../../inet/src/linklayer/contract -I../../inet/src/networklayer/arp -I../../inet/src/transport/udp -L../../inet/out/$(CONFIGNAME)/src -linet -KINET_PROJ=../../inet
 #
 
 # Name of target to be created (-o option)
@@ -67,8 +67,8 @@ INCLUDE_PATH = \
 EXTRA_OBJS =
 
 # Additional libraries (-L, -l options)
-LIBS = -L/usr/local/mysql/lib -L../../inet/out/$(CONFIGNAME)/src  -lmysqlclient -linet
-LIBS += -Wl,-rpath,`abspath /usr/local/mysql/lib` -Wl,-rpath,`abspath ../../inet/out/$(CONFIGNAME)/src`
+LIBS = -L../../inet/out/$(CONFIGNAME)/src  -linet
+LIBS += -Wl,-rpath,`abspath ../../inet/out/$(CONFIGNAME)/src`
 
 # Output directory
 PROJECT_OUTPUT_DIR = ../out
@@ -107,7 +107,6 @@ OBJS = \
     $O/transport/tcp/TCPConnection_hack.o \
     $O/transport/tcp/TCP_hack.o \
     $O/transport/udp/UDP_hack.o \
-    $O/util/DataDump.o \
     $O/applications/generic/GenericApplicationMessage_m.o \
     $O/applications/modbusApp/ModbusMessage_m.o \
     $O/applications/scada/scadamessage_m.o \
@@ -696,38 +695,4 @@ $O/transport/udp/UDP_hack.o: transport/udp/UDP_hack.cc \
 	applications/generic/GenericApplicationMessage_m.h \
 	base/SCADASIMDefs.h \
 	transport/udp/UDP_hack.h
-$O/util/DataDump.o: util/DataDump.cc \
-	$(INET_PROJ)/src/base/INETDefs.h \
-	$(INET_PROJ)/src/base/ModuleAccess.h \
-	$(INET_PROJ)/src/base/NotifierConsts.h \
-	$(INET_PROJ)/src/linklayer/contract/MACAddress.h \
-	$(INET_PROJ)/src/networklayer/arp/ARP.h \
-	$(INET_PROJ)/src/networklayer/arp/ARPPacket_m.h \
-	$(INET_PROJ)/src/networklayer/common/IInterfaceTable.h \
-	$(INET_PROJ)/src/networklayer/common/InterfaceEntry.h \
-	$(INET_PROJ)/src/networklayer/common/InterfaceTableAccess.h \
-	$(INET_PROJ)/src/networklayer/common/InterfaceToken.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddressResolver.h \
-	$(INET_PROJ)/src/networklayer/contract/IPControlInfo.h \
-	$(INET_PROJ)/src/networklayer/contract/IPControlInfo_m.h \
-	$(INET_PROJ)/src/networklayer/contract/IPProtocolId_m.h \
-	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
-	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IPDatagram.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IPDatagram_m.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IPRoute.h \
-	$(INET_PROJ)/src/networklayer/ipv4/IRoutingTable.h \
-	$(INET_PROJ)/src/networklayer/ipv4/RoutingTableAccess.h \
-	$(INET_PROJ)/src/transport/contract/TCPCommand_m.h \
-	$(INET_PROJ)/src/transport/contract/TCPSocket.h \
-	$(INET_PROJ)/src/transport/tcp/TCP.h \
-	$(INET_PROJ)/src/transport/tcp/TCPConnection.h \
-	$(INET_PROJ)/src/transport/tcp/TCPSegment.h \
-	$(INET_PROJ)/src/transport/tcp/TCPSegment_m.h \
-	applications/generic/GenericApplicationMessage_m.h \
-	base/SCADASIMDefs.h \
-	transport/tcp/TCPConnection_hack.h \
-	transport/tcp/TCP_hack.h \
-	util/DataDump.h
 
