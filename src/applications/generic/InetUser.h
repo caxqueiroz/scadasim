@@ -14,6 +14,8 @@
 #include "ConnectionManager.h"
 #include "SCADASIMDefs.h"
 
+#define MSGKIND_START 133
+
 class GenericApplication;
 
 /**
@@ -55,9 +57,9 @@ public:
 	InetUser();
 	virtual ~InetUser();
 	/// @brief Collects some statistics of the previous transmission and starts a new one 
-	void transmissionDone(TransmissionStatistics t);
+	virtual void transmissionDone(TransmissionStatistics t);
 	/// @brief Sets application type to the given value
-	void setApplication(int applicationType, GenericApplication *a, int attachedProfileNumber);
+	virtual void setApplication(int applicationType, GenericApplication *a, int attachedProfileNumber);
   
   
 protected:
@@ -65,7 +67,7 @@ protected:
 	/// @brief Actually starts the client at startTime
 	virtual void handleMessage(cMessage *msg);
 	/// @brief Actually starts a new transmission
-	void transmissionDone();
+	virtual void transmissionDone();
 	/// @brief Updates the information displayed in the GUI
 	void updateDisplay();
 	/// @brief Currently, nothing is done here

@@ -28,7 +28,7 @@ class SCADASIM_API ModbusTCPApplication : public GenericTCPApplication
 {
 
   protected:
-    ModbusUser mbu;
+    ModbusUser *mbu;
     void initialize(int stages);
     void handleMessage(cMessage *msg);
 

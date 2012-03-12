@@ -379,8 +379,18 @@ $O/applications/modbusApp/ModbusTCPApplication.o: applications/modbusApp/ModbusT
 	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h
 $O/applications/modbusApp/ModbusUser.o: applications/modbusApp/ModbusUser.cc \
+	$(INET_PROJ)/src/base/INETDefs.h \
+	$(INET_PROJ)/src/base/ModuleAccess.h \
+	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
+	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
+	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
+	applications/generic/GenericApplication.h \
+	applications/generic/InetUser.h \
+	applications/generic/TransmissionConfig.h \
 	applications/modbusApp/ModbusUser.h \
-	base/SCADASIMDefs.h
+	base/ConnectionManager.h \
+	base/SCADASIMDefs.h \
+	base/TrafficProfileManager.h
 $O/applications/pingApp/GenericICMPPingApplication.o: applications/pingApp/GenericICMPPingApplication.cc \
 	$(INET_PROJ)/src/applications/pingapp/PingPayload_m.h \
 	$(INET_PROJ)/src/base/INETDefs.h \

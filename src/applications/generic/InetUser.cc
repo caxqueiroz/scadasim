@@ -17,7 +17,7 @@
 
 using namespace std;
 
-#define MSGKIND_START 133
+
 #define GET_APP_TYPE(x) \
 		(x < 0)?NOTSET: \
 		(x < 11)?TCP_APP: \
@@ -116,8 +116,7 @@ void InetUser::transmissionDone() {
 		noUDPProfile++;
 		if (curTargetInfo.port > 0) {
 //			    std::cout << curTargetInfo.address.str() << ": starting udp communication for profile " << curTrafficProfile.profileID << " on port " << curTargetInfo.port << std::endl;
-			applications[UDP_APP]->transmissionStart(curTrafficProfile,
-					curTargetInfo);
+			applications[UDP_APP]->transmissionStart(curTrafficProfile,	curTargetInfo);
 		}
 //			else 
 //			    std::cout << curTargetInfo.address.str() << ": trying to start udp communication for profile " << curTrafficProfile.profileID << " on port " << curTargetInfo.port << std::endl;

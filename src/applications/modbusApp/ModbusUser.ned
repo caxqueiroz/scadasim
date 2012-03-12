@@ -20,4 +20,6 @@ package scadasim.applications.modbusApp;
 //
 simple ModbusUser
 {
+    parameters:
+        double startTime @unit(s);
 }

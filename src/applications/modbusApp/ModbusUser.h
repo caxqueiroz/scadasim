@@ -18,15 +18,34 @@
 
 #include <omnetpp.h>
 #include "SCADASIMDefs.h"
+#include "InetUser.h"
+
 
 /**
  * Handles modbus protocol communication.
  */
-class SCADASIM_API ModbusUser : public cSimpleModule
+class SCADASIM_API ModbusUser : public InetUser
 {
+public:
+    void transmissionDone(TransmissionStatistics t);
+    void setApplication(int applicationType, GenericApplication *a, int attachedProfileNumber);
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
+    virtual void finish();
+    virtual void transmissionDone();
+
+};
+
+/**
+ * @brief Gives access to the ModbusUser instance within the host (client/server).
+ *
+ * @class ModbusUserAccess
+ */
+class SCADASIM_API ModbusUserAccess : public ModuleAccess<ModbusUser>
+{
+  public:
+    ModbusUserAccess() : ModuleAccess<ModbusUser>("modbusUser"){}
 };
 
 #endif

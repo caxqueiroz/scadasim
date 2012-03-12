@@ -17,6 +17,7 @@
 #include "ModbusApplicationSlaveThread.h"
 #include "ModbusApplicationMasterThread.h"
 #include "IPAddressResolver.h"
+#include "ModbusUser.h"
 
 Define_Module(ModbusTCPApplication);
 
@@ -50,9 +51,9 @@ void ModbusTCPApplication::initialize(int stages){
                 // register myself to the current InetUser
                 else
                 {
-                    InetUserAccess uac;
-                    user = uac.get();
-                    user->setApplication(applicationType, this,profileNumber);
+                    ModbusUserAccess mua;
+                    mbu = mua.get();
+                    mbu->setApplication(applicationType, this,profileNumber);
                     // for client - create a TrafficProfile
                     // and set necessary watches
                     WATCH(curProfile.requestLength);

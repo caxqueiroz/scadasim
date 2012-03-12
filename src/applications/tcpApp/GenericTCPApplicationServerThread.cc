@@ -49,9 +49,10 @@ void GenericTCPApplicationServerThread::timerExpired(cMessage *msg)
  */
 void GenericTCPApplicationServerThread::socketDataArrived(int connId, void* yourPtr, cPacket *msg, bool urgent)
 {
+
 	GenericApplicationMessage *appmsg = dynamic_cast<GenericApplicationMessage *> (msg);
 	if (!appmsg)
-		opp_error("Message (%s) %s is not a GenericApplicationMessage", msg->getClassName(), msg->getName());
+		opp_error("Message (%s) %s is not a GenericApplicationMessage: size %d", msg->getClassName(), msg->getFullName(),msg->getBitLength());
 
 	int replyLength = appmsg->getReplyLength();
 

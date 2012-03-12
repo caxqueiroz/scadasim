@@ -186,17 +186,15 @@ void GenericTCPApplicationClientThread::sendRequest() {
 	int packetSize = curProfile.getRequestLength(true);
 	noBytesSend += packetSize;
 
-	stringstream ss;
-	srand((unsigned) time(0));
-	int random_integer = rand();
-	//ss << SIMTIME_STR(simTime());
-	unsigned long id = ev.getUniqueNumber() + random_integer;
-	ss << id;
+//	stringstream ss;
+//	srand((unsigned) time(0));
+//	int random_integer = rand();
+//	//ss << SIMTIME_STR(simTime());
+//	unsigned long id = ev.getUniqueNumber() + random_integer;
+//	ss << id;
 
-	GenericApplicationMessage *appmsg = new GenericApplicationMessage(
-			ss.str().c_str());
+	GenericApplicationMessage *appmsg = new GenericApplicationMessage("data-app");
 
-	//GenericApplicationMessage *appmsg = new GenericApplicationMessage("data");
 	appmsg->setByteLength(packetSize);
 	appmsg->setReplyLength(curProfile.getReplyLength(true));
 	double timeToRespond = curProfile.getTimeToRespond(false);

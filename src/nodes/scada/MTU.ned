@@ -11,7 +11,7 @@ import scadasim.applications.tcpApp.GenericTCPApplication;
 import scadasim.transport.tcp.TCP_hack;
 import scadasim.transport.udp.UDP_hack;
 import inet.transport.tcp.TCP;
-import scadasim.applications.generic.InetUser;
+import scadasim.applications.modbusApp.ModbusUser;
 import scadasim.applications.modbusApp.ModbusTCPApplication;
 
 //
@@ -52,7 +52,7 @@ module MTU
 
         }
 
-        inetUser: InetUser {
+        modbusUser: ModbusUser {
             parameters:
                 @display("p=60,390;i=abstract/person");
 
@@ -73,7 +73,7 @@ module MTU
             parameters:
                 isServer = false;
                 profileNumber = 5;
-                port = 0;
+                port = 4000;
                 @display("p=267,67;i=block/app");
 
         }
