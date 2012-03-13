@@ -37,13 +37,13 @@ void ModbusApplicationSlaveThread::socketDataArrived(int connId, void *youtPtr,
     delete mbmsg->removeControlInfo();
 
     ModbusTCPApplication *app = (ModbusTCPApplication *) this->ownerModule;
-    ModbusTCP modbusApp = app->getModbusTCPStack();
+    ModbusTCP * modbusApp = app->getModbusTCPStack();
     int querySize = mbmsg->getPduArraySize();
     uint8_t query[querySize];
-    int len = modbusApp.computeResponseLength(query);
+    int len = modbusApp->computeResponseLength(query);
 
     uint8_t response[len];
-    modbusApp.receive(query, response);
+    modbusApp->receive(query, response);
 
     mbmsg->setPduArraySize(len);
     for (int i = 0; i < len; i++)

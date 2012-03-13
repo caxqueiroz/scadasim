@@ -22,14 +22,16 @@
 Define_Module(ModbusTCPApplication);
 
 ModbusTCPApplication::ModbusTCPApplication(){
-    modbus.initMemory();
+    modbus = new ModbusTCP();
+    modbus->initMemory();
 }
 
 ModbusTCPApplication::~ModbusTCPApplication(){
-    modbus.freeAllocatedMemory();
+    modbus->freeAllocatedMemory();
+    delete modbus;
 }
 
-ModbusTCP ModbusTCPApplication::getModbusTCPStack(){
+ModbusTCP* ModbusTCPApplication::getModbusTCPStack(){
     return modbus;
 }
 

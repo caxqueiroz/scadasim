@@ -1,10 +1,10 @@
 <Profile>
 	<Id><5>
 	<Label><MODBUS>
-	<RequestLength><250>
-	<RequestsPerSession><100>
+	<RequestLength><1250>
+	<RequestsPerSession><1>
 	<ReplyLength><100>
-	<ReplyPerRequest><17>
+	<ReplyPerRequest><1>
 	<TimeBetweenRequests><1.0>
 	<TimeToRespond><0.5>
 	<TimeBetweenSessions><5.0>

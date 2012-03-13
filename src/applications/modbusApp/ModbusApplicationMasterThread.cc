@@ -33,8 +33,9 @@ void ModbusApplicationMasterThread::socketDataArrived(int connId, void* yourPtr,
 
     delete msg;
 
-    if (noRequestsToSend <= 0)
+    if (noRequestsToSend <= 0){
         scheduleAt(simTime() + SELF_CALL_DELAY, selfMsg);
+    }
     else
         scheduleAt(simTime() + curProfile.getTimeBetweenRequests(false),
                 selfMsg);
@@ -48,10 +49,10 @@ void ModbusApplicationMasterThread::sendRequest() {
     noPacketSend++;
 
     ModbusTCPApplication *app = (ModbusTCPApplication *) this->ownerModule;
-    ModbusTCP modbusApp = app->getModbusTCPStack();
+    ModbusTCP *modbusApp = app->getModbusTCPStack();
 //    uint8_t query;
     uint8_t query[MIN_QUERY_LENGTH];
-    int len = modbusApp.buildQueryBasis(0,FC_FORCE_SINGLE_COIL,0,0,query);
+    int len = modbusApp->buildQueryBasis(0,FC_FORCE_SINGLE_COIL,0,0,query);
     noBytesSend +=len;
 
     ModbusMessage *mbmsg = new ModbusMessage(this->socket->getLocalAddress().str().c_str());
@@ -66,4 +67,5 @@ void ModbusApplicationMasterThread::sendRequest() {
     mbmsg->setCloseConn(threadState == DISCONNECTED);
 
     socket->send(mbmsg);
+
 }

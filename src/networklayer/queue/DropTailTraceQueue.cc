@@ -44,7 +44,7 @@ bool DropTailTraceQueue::enqueue(cMessage *msg)
 	if (frameCapacity && queue.length() >= frameCapacity)
 	{
 		dropsInInterval++;
-		//delete msg;
+		delete msg;
 		return false;
 	}
 	else

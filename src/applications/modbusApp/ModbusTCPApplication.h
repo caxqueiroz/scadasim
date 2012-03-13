@@ -28,7 +28,7 @@ class SCADASIM_API ModbusTCPApplication : public GenericTCPApplication
 {
 
   protected:
-    ModbusTCP modbus;
+    ModbusTCP *modbus;
     ModbusUser *mbu;
     void initialize(int stages);
     void handleMessage(cMessage *msg);
@@ -38,7 +38,7 @@ class SCADASIM_API ModbusTCPApplication : public GenericTCPApplication
     ModbusTCPApplication();
     virtual ~ModbusTCPApplication();
     void transmissionStart(TrafficProfile &p, TargetInfo &i);
-    ModbusTCP getModbusTCPStack();
+    ModbusTCP * getModbusTCPStack();
 
 };
 

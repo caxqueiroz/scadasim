@@ -96,7 +96,7 @@ network TwoNodesSim
         f00p01: PLC {
             @display("p=77,374;i=device/device;is=vs");
         }
-        css01: MTU {
+        css01:MTU {
             @display("p=785,496;i=device/pc3;is=vs");
         }
         trafficProfileManager: TrafficProfileManager {
