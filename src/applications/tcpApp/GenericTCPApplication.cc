@@ -184,12 +184,12 @@ void GenericTCPApplication::handleMessage(cMessage *msg)
 				// the overload situation of the server. This, however, does not
 				// work correctly with the INET framework. Thus, connection is
 				// excepted and killed immediately.
-				socket = new TCPSocket(msg);
-				socket->setOutputGate(gate("tcpOut"));
-
-				if (socket->getState() != TCPSocket::CLOSED)
-					socket->close();
-				delete socket;
+//				socket = new TCPSocket(msg);
+//				socket->setOutputGate(gate("tcpOut"));
+//
+//				if (socket->getState() != TCPSocket::CLOSED)
+//					socket->close();
+//				delete socket;
 				delete msg;
 				return;
 			}
