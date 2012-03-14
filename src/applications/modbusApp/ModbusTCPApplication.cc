@@ -21,106 +21,103 @@
 
 Define_Module(ModbusTCPApplication);
 
-ModbusTCPApplication::ModbusTCPApplication(){
-    modbus = new ModbusTCP();
-    modbus->initMemory();
+ModbusTCPApplication::ModbusTCPApplication() {
+
 }
 
-ModbusTCPApplication::~ModbusTCPApplication(){
-    modbus->freeAllocatedMemory();
-    delete modbus;
+ModbusTCPApplication::~ModbusTCPApplication() {
+    delete mfh;
 }
 
-ModbusTCP* ModbusTCPApplication::getModbusTCPStack(){
-    return modbus;
+ModbusFunctionHandler* ModbusTCPApplication::getModbusMessageHandler() {
+    return mfh;
 }
 
-
-void ModbusTCPApplication::initialize(int stages){
+void ModbusTCPApplication::initialize(int stages) {
 
     if (stages != INITIALIZATION_STAGE_NECESSARY)
-            return;
+        return;
 
-        // registers to InetUser and ConnectionManager
-        if (stages == INITIALIZATION_STAGE_NECESSARY)
-            {
-                // checks if application was set correctly by sub-classes
-                if (!applicationType)
-                    opp_error("invalid application type: did you forget to set a proper application type in constructor?");
+    // registers to InetUser and ConnectionManager
+    if (stages == INITIALIZATION_STAGE_NECESSARY) {
 
-                isServer = par("isServer").boolValue();
-                profileNumber = par("profileNumber").longValue();
-                port = par("port").longValue();
-                // get the connectionManager
-                cm = NULL;
-                ConnectionManagerAccess cac;
-                cm = cac.get();
+        const char *modbusFCClass = par("modbusFCClass");
+        mfh = check_and_cast<ModbusFunctionHandler *>(createOne(modbusFCClass));
+        mfh->init();
+        // checks if application was set correctly by sub-classes
+        if (!applicationType)
+            opp_error(
+                    "invalid application type: did you forget to set a proper application type in constructor?");
 
-                if (cm == NULL)
-                    opp_error("couldn't get ConnectionManager");
+        isServer = par("isServer").boolValue();
+        profileNumber = par("profileNumber").longValue();
+        port = par("port").longValue();
+        // get the connectionManager
+        cm = NULL;
+        ConnectionManagerAccess cac;
+        cm = cac.get();
 
-                // register servers at ConnectionManager
-                if (isServer)
-                    cm->registerServer(IPAddressResolver().resolve(getParentModule()->getFullPath().data()), port, profileNumber);
-                // if i'am not a slave - this means a master, i have to
-                // register myself to the current ModbusUser
-                else
-                {
-                    ModbusUserAccess mua;
-                    mbu = mua.get();
-                    mbu->setApplication(applicationType, this,profileNumber);
-                    // for client - create a TrafficProfile
-                    // and set necessary watches
-                    WATCH(curProfile.requestLength);
-                    WATCH(curProfile.requestsPerSession);
-                    WATCH(curProfile.replyLength);
-                    WATCH(curProfile.replyPerRequest);
-                    WATCH(curProfile.timeBetweenRequests);
-                    WATCH(curProfile.timeToRespond);
-                    WATCH(curProfile.timeBetweenSessions);
-                    WATCH(curProfile.probability);
-                    WATCH(curProfile.WANprob);
-                    WATCH(curProfile.profileID);
-                }
-            }
+        if (cm == NULL)
+            opp_error("couldn't get ConnectionManager");
 
+        // register servers at ConnectionManager
         if (isServer)
-        {
-            // open the ServerSocket and start listening
-            serverSocket = new TCPSocket();
-            serverSocket->setOutputGate(gate("tcpOut"));
-            serverSocket->bind(IPvXAddress(), port);
-            serverSocket->listen();
-            maxThreadCount = par("noThreads");
-            cout << "Server Listening to new connections: " << this->getFullPath() << " threads: " << maxThreadCount << endl;
-            // a server may have a limited number of concurrently running threads
-
+            cm->registerServer(
+                    IPAddressResolver().resolve(
+                            getParentModule()->getFullPath().data()), port,
+                    profileNumber);
+        // if i'am not a slave - this means a master, i have to
+        // register myself to the current ModbusUser
+        else {
+            ModbusUserAccess mua;
+            mbu = mua.get();
+            mbu->setApplication(applicationType, this, profileNumber);
+            // for client - create a TrafficProfile
+            // and set necessary watches
+            WATCH(curProfile.requestLength);
+            WATCH(curProfile.requestsPerSession);
+            WATCH(curProfile.replyLength);
+            WATCH(curProfile.replyPerRequest);
+            WATCH(curProfile.timeBetweenRequests);
+            WATCH(curProfile.timeToRespond);
+            WATCH(curProfile.timeBetweenSessions);
+            WATCH(curProfile.probability);
+            WATCH(curProfile.WANprob);
+            WATCH(curProfile.profileID);
         }
+    }
 
+    if (isServer) {
+        // open the ServerSocket and start listening
+        serverSocket = new TCPSocket();
+        serverSocket->setOutputGate(gate("tcpOut"));
+        serverSocket->bind(IPvXAddress(), port);
+        serverSocket->listen();
+        maxThreadCount = par("noThreads");
+        cout << "Server Listening to new connections: " << this->getFullPath()
+                << " threads: " << maxThreadCount << endl;
+        // a server may have a limited number of concurrently running threads
 
-        if (maxThreadCount == 0)
-            maxThreadCount = INT_MAX;
+    }
+
+    if (maxThreadCount == 0)
+        maxThreadCount = INT_MAX;
 }
 
-void ModbusTCPApplication::handleMessage(cMessage *msg)
-{
-    if (msg->isSelfMessage())
-    {
-        GenericTCPApplicationThreadBase *thread = (GenericTCPApplicationThreadBase *) msg->getContextPointer();
+void ModbusTCPApplication::handleMessage(cMessage *msg) {
+    if (msg->isSelfMessage()) {
+        GenericTCPApplicationThreadBase *thread =
+                (GenericTCPApplicationThreadBase *) msg->getContextPointer();
         thread->timerExpired(msg);
-    }
-    else
-    {
+    } else {
         // a new connection attempt so create new thread for this communication
         TCPSocket *socket = socketMap.findSocketFor(msg);
-        if (!socket)
-        {
+        if (!socket) {
 
-            if (!isServer){
+            if (!isServer) {
                 opp_error("received client message to unknown socket\n");
             }
-            if (threadCount >= maxThreadCount)
-            {
+            if (threadCount >= maxThreadCount) {
                 // if thread limit is hit - kill all incoming connection attempts
                 // TODO: to do it correct the socket should be closed to indicate
                 // the overload situation of the server. This, however, does not
@@ -139,7 +136,8 @@ void ModbusTCPApplication::handleMessage(cMessage *msg)
             // valid connection attempts get their own server thread
             socket = new TCPSocket(msg);
             socket->setOutputGate(gate("tcpOut"));
-            GenericTCPApplicationThreadBase *thread = new ModbusApplicationSlaveThread();
+            GenericTCPApplicationThreadBase *thread =
+                    new ModbusApplicationSlaveThread();
             socket->setCallbackObject(thread);
             thread->init(this, socket);
             socketMap.addSocket(socket);
@@ -154,8 +152,7 @@ void ModbusTCPApplication::handleMessage(cMessage *msg)
     }
 }
 
-void ModbusTCPApplication::transmissionStart(TrafficProfile &p, TargetInfo &i)
-{
+void ModbusTCPApplication::transmissionStart(TrafficProfile &p, TargetInfo &i) {
     Enter_Method_Silent();
     //
     // this methode is only called for a client
@@ -174,7 +171,8 @@ void ModbusTCPApplication::transmissionStart(TrafficProfile &p, TargetInfo &i)
     //
     // create an active ClientThread
     //
-    GenericTCPApplicationThreadBase *t = new ModbusApplicationMasterThread(curProfile, i);
+    GenericTCPApplicationThreadBase *t = new ModbusApplicationMasterThread(
+            curProfile, i);
     socket->setCallbackObject(t);
     t->init(this, socket);
     socketMap.addSocket(socket);
@@ -184,7 +182,7 @@ void ModbusTCPApplication::transmissionStart(TrafficProfile &p, TargetInfo &i)
     updateDisplay();
 }
 
-void ModbusTCPApplication::transmissionDone(TransmissionStatistics s){
-    if(mbu)
+void ModbusTCPApplication::transmissionDone(TransmissionStatistics s) {
+    if (mbu)
         mbu->transmissionDone(s);
 }

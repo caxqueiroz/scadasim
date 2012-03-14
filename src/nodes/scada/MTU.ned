@@ -55,6 +55,7 @@ module MTU
         modbusUser: ModbusUser {
             parameters:
                 @display("p=60,390;i=abstract/person");
+                
 
         }
 
@@ -74,6 +75,7 @@ module MTU
                 isServer = false;
                 profileNumber = 5;
                 port = 0;
+              
                 @display("p=267,67;i=block/app");
 
         }

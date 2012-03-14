@@ -38,6 +38,8 @@ simple ModbusTCPApplication
         int noThreads;
 
         int profileNumber;
+        
+        string modbusFCClass; // class name of "modbus function"
 
     gates:
         input tcpIn;

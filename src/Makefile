@@ -81,6 +81,8 @@ OBJS = \
     $O/applications/modbusApp/ModbusUser.o \
     $O/applications/modbusApp/ModbusTCP.o \
     $O/applications/modbusApp/ModbusTCPApplication.o \
+    $O/applications/modbusApp/CoilModbusFunctionHandler.o \
+    $O/applications/modbusApp/ModbusFunctionHandler.o \
     $O/applications/modbusApp/ModbusApplicationMasterThread.o \
     $O/applications/pingApp/GenericICMPPingApplication.o \
     $O/applications/scada/SCADATrafficProfileManager.o \
@@ -297,6 +299,13 @@ $O/applications/generic/InetUser.o: applications/generic/InetUser.cc \
 	base/ConnectionManager.h \
 	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h
+$O/applications/modbusApp/CoilModbusFunctionHandler.o: applications/modbusApp/CoilModbusFunctionHandler.cc \
+	$(INET_PROJ)/src/base/INETDefs.h \
+	applications/modbusApp/CoilModbusFunctionHandler.h \
+	applications/modbusApp/ModbusFunctionHandler.h \
+	applications/modbusApp/ModbusMessage_m.h \
+	applications/modbusApp/ModbusTCP.h \
+	external/modbus.h
 $O/applications/modbusApp/ModbusApplicationMasterThread.o: applications/modbusApp/ModbusApplicationMasterThread.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	$(INET_PROJ)/src/base/ModuleAccess.h \
@@ -310,6 +319,7 @@ $O/applications/modbusApp/ModbusApplicationMasterThread.o: applications/modbusAp
 	applications/generic/InetUser.h \
 	applications/generic/TransmissionConfig.h \
 	applications/modbusApp/ModbusApplicationMasterThread.h \
+	applications/modbusApp/ModbusFunctionHandler.h \
 	applications/modbusApp/ModbusMessage_m.h \
 	applications/modbusApp/ModbusTCP.h \
 	applications/modbusApp/ModbusTCPApplication.h \
@@ -333,6 +343,7 @@ $O/applications/modbusApp/ModbusApplicationSlaveThread.o: applications/modbusApp
 	applications/generic/InetUser.h \
 	applications/generic/TransmissionConfig.h \
 	applications/modbusApp/ModbusApplicationSlaveThread.h \
+	applications/modbusApp/ModbusFunctionHandler.h \
 	applications/modbusApp/ModbusMessage_m.h \
 	applications/modbusApp/ModbusTCP.h \
 	applications/modbusApp/ModbusTCPApplication.h \
@@ -342,6 +353,11 @@ $O/applications/modbusApp/ModbusApplicationSlaveThread.o: applications/modbusApp
 	base/ConnectionManager.h \
 	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h \
+	external/modbus.h
+$O/applications/modbusApp/ModbusFunctionHandler.o: applications/modbusApp/ModbusFunctionHandler.cc \
+	$(INET_PROJ)/src/base/INETDefs.h \
+	applications/modbusApp/ModbusFunctionHandler.h \
+	applications/modbusApp/ModbusTCP.h \
 	external/modbus.h
 $O/applications/modbusApp/ModbusMessage_m.o: applications/modbusApp/ModbusMessage_m.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
@@ -371,6 +387,7 @@ $O/applications/modbusApp/ModbusTCPApplication.o: applications/modbusApp/ModbusT
 	applications/generic/TransmissionConfig.h \
 	applications/modbusApp/ModbusApplicationMasterThread.h \
 	applications/modbusApp/ModbusApplicationSlaveThread.h \
+	applications/modbusApp/ModbusFunctionHandler.h \
 	applications/modbusApp/ModbusTCP.h \
 	applications/modbusApp/ModbusTCPApplication.h \
 	applications/modbusApp/ModbusUser.h \

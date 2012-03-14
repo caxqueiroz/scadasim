@@ -13,35 +13,20 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#ifndef __SCADASIM_MODBUSAPPLICATION_H_
-#define __SCADASIM_MODBUSAPPLICATION_H_
+#ifndef COILMODBUSFUNCTIONHANDLER_H_
+#define COILMODBUSFUNCTIONHANDLER_H_
 
-#include <omnetpp.h>
-#include "SCADASIMDefs.h"
-#include "ModbusUser.h"
-#include "GenericTCPApplication.h"
 #include "ModbusFunctionHandler.h"
+#include "ModbusMessage_m.h"
+#include <omnetpp.h>
 
-/**
- * Modbus application.
- */
-class SCADASIM_API ModbusTCPApplication : public GenericTCPApplication
-{
-
-  protected:
-
-    ModbusUser *mbu;
-    ModbusFunctionHandler *mfh;
-    void initialize(int stages);
-    void handleMessage(cMessage *msg);
-    void transmissionDone(TransmissionStatistics s);
-
-  public:
-    ModbusTCPApplication();
-    virtual ~ModbusTCPApplication();
-    void transmissionStart(TrafficProfile &p, TargetInfo &i);
-    ModbusFunctionHandler * getModbusMessageHandler();
-
+class CoilModbusFunctionHandler: public ModbusFunctionHandler {
+public:
+    CoilModbusFunctionHandler();
+    virtual ~CoilModbusFunctionHandler();
+    cMessage * createRandomMessage();
+    void init();
+    void processMessage(cMessage * message);
 };
 
-#endif
+#endif /* COILMODBUSFUNCTIONHANDLER_H_ */

@@ -16,7 +16,7 @@
 #include "ModbusApplicationSlaveThread.h"
 #include "ModbusMessage_m.h"
 #include "ModbusTCPApplication.h"
-#include "ModbusTCP.h"
+#include "ModbusFunctionHandler.h"
 
 ModbusApplicationSlaveThread::ModbusApplicationSlaveThread() {
     // TODO Auto-generated constructor stub
@@ -37,18 +37,8 @@ void ModbusApplicationSlaveThread::socketDataArrived(int connId, void *youtPtr,
     delete mbmsg->removeControlInfo();
 
     ModbusTCPApplication *app = (ModbusTCPApplication *) this->ownerModule;
-    ModbusTCP * modbusApp = app->getModbusTCPStack();
-    int querySize = mbmsg->getPduArraySize();
-    uint8_t query[querySize];
-    int len = modbusApp->computeResponseLength(query);
-
-    uint8_t response[len];
-    modbusApp->receive(query, response);
-
-    mbmsg->setPduArraySize(len);
-    for (int i = 0; i < len; i++)
-        mbmsg->setPdu(i, response[i]);
-
+    ModbusFunctionHandler *mfh = app->getModbusMessageHandler();
+    mfh->processMessage(mbmsg);
     doClose = mbmsg->getCloseConn();
 
     // delay the reply if required by the profile

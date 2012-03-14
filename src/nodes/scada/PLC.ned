@@ -53,6 +53,7 @@ module PLC
                 isServer = true;
                 profileNumber = 5;
                 port = 502;
+                
                 @display("p=163,67;i=block/app");
 
         }

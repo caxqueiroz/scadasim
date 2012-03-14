@@ -17,6 +17,7 @@
 #include "ModbusTCP.h"
 #include "ModbusMessage_m.h"
 #include "ModbusTCPApplication.h"
+#include "ModbusFunctionHandler.h"
 
 ModbusApplicationMasterThread::ModbusApplicationMasterThread(TrafficProfile &p,
         TargetInfo &i) :
@@ -37,6 +38,10 @@ void ModbusApplicationMasterThread::socketDataArrived(int connId, void* yourPtr,
         cPacket *msg, bool urgent) {
     noBytesReceived += msg->getByteLength();
     noPacketReceived++;
+
+    ModbusTCPApplication *app = (ModbusTCPApplication *) this->ownerModule;
+    ModbusFunctionHandler *mfh = app->getModbusMessageHandler();
+    mfh->processMessage(msg);
 
     delete msg;
 
@@ -61,18 +66,9 @@ void ModbusApplicationMasterThread::sendRequest() {
     noPacketSend++;
 
     ModbusTCPApplication *app = (ModbusTCPApplication *) this->ownerModule;
-    ModbusTCP *modbusApp = app->getModbusTCPStack();
-
-    uint8_t query[MIN_QUERY_LENGTH];
-    int len = modbusApp->buildQueryBasis(0, FC_FORCE_SINGLE_COIL, 0, 0, query);
-    noBytesSend += len;
-
-    ModbusMessage *mbmsg = new ModbusMessage(
-            this->socket->getLocalAddress().str().c_str());
-    mbmsg->setByteLength(len);
-    mbmsg->setPduArraySize(len);
-    for (int i = 0; i < len; i++)
-        mbmsg->setPdu(i, query[i]);
+    ModbusFunctionHandler *mfh = app->getModbusMessageHandler();
+    ModbusMessage *mbmsg = dynamic_cast<ModbusMessage *> (mfh->createRandomMessage());
+    noBytesSend += mbmsg->getByteLength();
 
     double timeToRespond = curProfile.getTimeToRespond(false);
     mbmsg->setReplyDelay(timeToRespond);
