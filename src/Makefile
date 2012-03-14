@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for scadasim
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -I/usr/local/mysql/include/ -I../../inet/src/networklayer/rsvp_te -I../../inet/src/networklayer/common -I../../inet/src/networklayer/icmpv6 -I../../inet/src/transport/tcp -I../../inet/src/networklayer/mpls -I../../inet/src/networklayer/ted -I../../inet/src/networklayer/contract -I../../inet/obsolete/rsvp_te -I../../inet/src/util -I../../inet/src/transport/contract -I../../inet/src/linklayer/mfcore -I../../inet/src/networklayer/ldp -I../../inet/src/networklayer/ipv4 -I../../inet/src/base -I../../inet/src/util/headerserializers -I../../inet/src/networklayer/ipv6 -I../../inet/src/transport/sctp -I../../inet/src/world -I../../inet/src/applications/pingapp -I../../inet/src/linklayer/contract -I../../inet/src/networklayer/arp -I../../inet/src/transport/udp -L/usr/local/mysql/lib -L../../inet/out/$(CONFIGNAME)/src -linet -KINET_PROJ=../../inet
+#  opp_makemake -f --deep -I../../inet/src/networklayer/rsvp_te -I../../inet/src/networklayer/common -I../../inet/src/networklayer/icmpv6 -I../../inet/src/transport/tcp -I../../inet/src/networklayer/mpls -I../../inet/src/networklayer/ted -I../../inet/src/networklayer/contract -I../../inet/src/util -I../../inet/src/transport/contract -I../../inet/src/linklayer/mfcore -I../../inet/src/networklayer/ldp -I../../inet/src/networklayer/ipv4 -I../../inet/src/base -I../../inet/src/util/headerserializers -I../../inet/src/networklayer/ipv6 -I../../inet/src/transport/sctp -I../../inet/src/world -I../../inet/src/applications/pingapp -I../../inet/src/linklayer/contract -I../../inet/src/networklayer/arp -I../../inet/src/transport/udp -L../../inet/out/$(CONFIGNAME)/src -linet -KINET_PROJ=../../inet
 #
 
 # Name of target to be created (-o option)
@@ -15,7 +15,6 @@ USERIF_LIBS = $(ALL_ENV_LIBS) # that is, $(TKENV_LIBS) $(CMDENV_LIBS)
 
 # C++ include paths (with -I)
 INCLUDE_PATH = \
-    -I/usr/local/mysql/include/ \
     -I../../inet/src/networklayer/rsvp_te \
     -I../../inet/src/networklayer/common \
     -I../../inet/src/networklayer/icmpv6 \
@@ -23,7 +22,6 @@ INCLUDE_PATH = \
     -I../../inet/src/networklayer/mpls \
     -I../../inet/src/networklayer/ted \
     -I../../inet/src/networklayer/contract \
-    -I../../inet/obsolete/rsvp_te \
     -I../../inet/src/util \
     -I../../inet/src/transport/contract \
     -I../../inet/src/linklayer/mfcore \
@@ -60,15 +58,14 @@ INCLUDE_PATH = \
     -Itransport \
     -Itransport/contract \
     -Itransport/tcp \
-    -Itransport/udp \
-    -Iutil
+    -Itransport/udp
 
 # Additional object and library files to link with
 EXTRA_OBJS =
 
 # Additional libraries (-L, -l options)
-LIBS = -L/usr/local/mysql/lib -L../../inet/out/$(CONFIGNAME)/src  -linet
-LIBS += -Wl,-rpath,`abspath /usr/local/mysql/lib` -Wl,-rpath,`abspath ../../inet/out/$(CONFIGNAME)/src`
+LIBS = -L../../inet/out/$(CONFIGNAME)/src  -linet
+LIBS += -Wl,-rpath,`abspath ../../inet/out/$(CONFIGNAME)/src`
 
 # Output directory
 PROJECT_OUTPUT_DIR = ../out
@@ -78,34 +75,34 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 # Object files for local .cc and .msg files
 OBJS = \
     $O/applications/ddos/TribeFloodNetwork.o \
-    $O/applications/generic/GenericApplication.o \
     $O/applications/generic/InetUser.o \
-    $O/applications/modbusApp/ModbusApplicationMasterThread.o \
+    $O/applications/generic/GenericApplication.o \
     $O/applications/modbusApp/ModbusApplicationSlaveThread.o \
+    $O/applications/modbusApp/ModbusUser.o \
     $O/applications/modbusApp/ModbusTCP.o \
     $O/applications/modbusApp/ModbusTCPApplication.o \
-    $O/applications/modbusApp/ModbusUser.o \
+    $O/applications/modbusApp/ModbusApplicationMasterThread.o \
     $O/applications/pingApp/GenericICMPPingApplication.o \
     $O/applications/scada/SCADATrafficProfileManager.o \
     $O/applications/scada/SCADAUser.o \
-    $O/applications/tcpApp/GenericTCPApplication.o \
     $O/applications/tcpApp/GenericTCPApplicationClientThread.o \
+    $O/applications/tcpApp/GenericTCPApplication.o \
     $O/applications/tcpApp/GenericTCPApplicationServerThread.o \
     $O/applications/worm/UDPWormVictim.o \
-    $O/base/ConnectionManager.o \
     $O/base/TrafficProfileManager.o \
-    $O/external/ModbusGate.o \
-    $O/external/SSGate.o \
-    $O/external/SSProxy.o \
+    $O/base/ConnectionManager.o \
     $O/external/SSScheduler.o \
+    $O/external/ModbusGate.o \
     $O/external/SSThread.o \
+    $O/external/SSGate.o \
     $O/external/modbus.o \
+    $O/external/SSProxy.o \
     $O/networklayer/autorouting/TGMNetworkConfigurator.o \
     $O/networklayer/ipv4/IP_hack.o \
     $O/networklayer/queue/DropTailTraceQueue.o \
     $O/transport/contract/UDPSocketVector.o \
-    $O/transport/tcp/TCPConnection_hack.o \
     $O/transport/tcp/TCP_hack.o \
+    $O/transport/tcp/TCPConnection_hack.o \
     $O/transport/udp/UDP_hack.o \
     $O/applications/generic/GenericApplicationMessage_m.o \
     $O/applications/modbusApp/ModbusMessage_m.o \
@@ -220,13 +217,12 @@ clean:
 	-rm -f transport/contract/*_m.cc transport/contract/*_m.h
 	-rm -f transport/tcp/*_m.cc transport/tcp/*_m.h
 	-rm -f transport/udp/*_m.cc transport/udp/*_m.h
-	-rm -f util/*_m.cc util/*_m.h
 
 cleanall: clean
 	-rm -rf $(PROJECT_OUTPUT_DIR)
 
 depend:
-	$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc applications/*.cc applications/ddos/*.cc applications/generic/*.cc applications/modbusApp/*.cc applications/pingApp/*.cc applications/scada/*.cc applications/tcpApp/*.cc applications/worm/*.cc base/*.cc external/*.cc networklayer/*.cc networklayer/autorouting/*.cc networklayer/contract/*.cc networklayer/ipv4/*.cc networklayer/queue/*.cc nodes/*.cc nodes/inet/*.cc nodes/scada/*.cc transport/*.cc transport/contract/*.cc transport/tcp/*.cc transport/udp/*.cc util/*.cc
+	$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc applications/*.cc applications/ddos/*.cc applications/generic/*.cc applications/modbusApp/*.cc applications/pingApp/*.cc applications/scada/*.cc applications/tcpApp/*.cc applications/worm/*.cc base/*.cc external/*.cc networklayer/*.cc networklayer/autorouting/*.cc networklayer/contract/*.cc networklayer/ipv4/*.cc networklayer/queue/*.cc nodes/*.cc nodes/inet/*.cc nodes/scada/*.cc transport/*.cc transport/contract/*.cc transport/tcp/*.cc transport/udp/*.cc
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 $O/applications/ddos/TribeFloodNetwork.o: applications/ddos/TribeFloodNetwork.cc \

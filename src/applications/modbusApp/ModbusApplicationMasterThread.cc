@@ -18,7 +18,9 @@
 #include "ModbusMessage_m.h"
 #include "ModbusTCPApplication.h"
 
-ModbusApplicationMasterThread::ModbusApplicationMasterThread(TrafficProfile &p, TargetInfo &i):GenericTCPApplicationClientThread(p, i) {
+ModbusApplicationMasterThread::ModbusApplicationMasterThread(TrafficProfile &p,
+        TargetInfo &i) :
+        GenericTCPApplicationClientThread(p, i) {
     // TODO Auto-generated constructor stub
 
 }
@@ -27,16 +29,26 @@ ModbusApplicationMasterThread::~ModbusApplicationMasterThread() {
     // TODO Auto-generated destructor stub
 }
 
-void ModbusApplicationMasterThread::socketDataArrived(int connId, void* yourPtr, cPacket *msg, bool urgent) {
+/**
+ * Process data received from server.
+ * In case no more requests must be sent, wait timeBetweenRequests and close the socket.
+ */
+void ModbusApplicationMasterThread::socketDataArrived(int connId, void* yourPtr,
+        cPacket *msg, bool urgent) {
     noBytesReceived += msg->getByteLength();
     noPacketReceived++;
 
     delete msg;
 
-    if (noRequestsToSend <= 0){
+    if (noRequestsToSend <= 0) {
+//        if (socket->getState() == TCPSocket::PEER_CLOSED) {
+//            socket->close();
+//            threadState = FINISH;
+//            EV << "remote TCP closed, closing here as well\n";
+//        }
         scheduleAt(simTime() + SELF_CALL_DELAY, selfMsg);
-    }
-    else
+
+    } else
         scheduleAt(simTime() + curProfile.getTimeBetweenRequests(false),
                 selfMsg);
 }
@@ -50,16 +62,17 @@ void ModbusApplicationMasterThread::sendRequest() {
 
     ModbusTCPApplication *app = (ModbusTCPApplication *) this->ownerModule;
     ModbusTCP *modbusApp = app->getModbusTCPStack();
-//    uint8_t query;
-    uint8_t query[MIN_QUERY_LENGTH];
-    int len = modbusApp->buildQueryBasis(0,FC_FORCE_SINGLE_COIL,0,0,query);
-    noBytesSend +=len;
 
-    ModbusMessage *mbmsg = new ModbusMessage(this->socket->getLocalAddress().str().c_str());
+    uint8_t query[MIN_QUERY_LENGTH];
+    int len = modbusApp->buildQueryBasis(0, FC_FORCE_SINGLE_COIL, 0, 0, query);
+    noBytesSend += len;
+
+    ModbusMessage *mbmsg = new ModbusMessage(
+            this->socket->getLocalAddress().str().c_str());
     mbmsg->setByteLength(len);
     mbmsg->setPduArraySize(len);
-    for(int i = 0; i < len ;i++)
-        mbmsg->setPdu(i,query[i]);
+    for (int i = 0; i < len; i++)
+        mbmsg->setPdu(i, query[i]);
 
     double timeToRespond = curProfile.getTimeToRespond(false);
     mbmsg->setReplyDelay(timeToRespond);

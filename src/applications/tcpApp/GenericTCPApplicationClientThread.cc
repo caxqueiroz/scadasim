@@ -121,11 +121,8 @@ void GenericTCPApplicationClientThread::socketPeerClosed(int connId,
     // if the server closed his connection, i can still send him data
     //
 
-//    if (socket->getState() == TCPSocket::PEER_CLOSED) {
-//        socket->close();
-//        threadState = FINISH;
-//        EV << "remote TCP closed, closing here as well\n";
-//    }
+
+
 }
 
 /**
@@ -189,13 +186,6 @@ void GenericTCPApplicationClientThread::sendRequest() {
 
     int packetSize = curProfile.getRequestLength(true);
     noBytesSend += packetSize;
-
-//	stringstream ss;
-//	srand((unsigned) time(0));
-//	int random_integer = rand();
-//	//ss << SIMTIME_STR(simTime());
-//	unsigned long id = ev.getUniqueNumber() + random_integer;
-//	ss << id;
 
     GenericApplicationMessage *appmsg = new GenericApplicationMessage(
             "data-app");

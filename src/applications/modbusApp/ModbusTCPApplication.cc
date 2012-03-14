@@ -115,8 +115,10 @@ void ModbusTCPApplication::handleMessage(cMessage *msg)
         TCPSocket *socket = socketMap.findSocketFor(msg);
         if (!socket)
         {
-            if (!isServer)
+
+            if (!isServer){
                 opp_error("received client message to unknown socket\n");
+            }
             if (threadCount >= maxThreadCount)
             {
                 // if thread limit is hit - kill all incoming connection attempts
@@ -124,12 +126,12 @@ void ModbusTCPApplication::handleMessage(cMessage *msg)
                 // the overload situation of the server. This, however, does not
                 // work correctly with the INET framework. Thus, connection is
                 // excepted and killed immediately.
-                socket = new TCPSocket(msg);
-                socket->setOutputGate(gate("tcpOut"));
-
-                if (socket->getState() != TCPSocket::CLOSED)
-                    socket->close();
-                delete socket;
+//                socket = new TCPSocket(msg);
+//                socket->setOutputGate(gate("tcpOut"));
+//
+//                if (socket->getState() != TCPSocket::LOCALLY_CLOSED)
+//                    socket->close();
+//                delete socket;
                 delete msg;
                 return;
             }
