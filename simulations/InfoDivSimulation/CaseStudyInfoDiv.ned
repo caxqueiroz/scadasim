@@ -76,211 +76,211 @@ network CaseStudy
         }
 
         brf01: Router {
-            @display("p=324,213;i=systems/router;is=vs");
+            @display("p=324,213;is=vs");
             @AS();
         }
         Internet: Router {
-            @display("i=systems/cloud;p=438,266;is=s");
+            @display("p=438,266;is=s");
             @AS();
         }
         brf00: Router {
-            @display("p=411,367;i=systems/router;is=vs");
+            @display("p=411,367;is=vs");
             @AS();
         }
         brf02: Router {
-            @display("p=590,252;i=systems/router;is=vs");
+            @display("p=590,252;is=vs");
             @AS();
         }
         f00s01: Router {
-            @display("p=292,367;i=systems/switch;is=vs");
+            @display("p=292,367;i=abstract/switch;is=vs");
         }
         brc: Router {
-            @display("p=611,367;i=systems/router;is=vs");
+            @display("p=611,367;is=vs");
             @AS();
         }
         f01s02: Router {
-            @display("p=181,184;i=systems/switch;is=vs");
+            @display("p=181,184;i=abstract/switch;is=vs");
         }
         f02s01: Router {
-            @display("p=657,213;i=systems/switch;is=vs");
+            @display("p=657,213;i=abstract/switch;is=vs");
         }
         f00s02: Router {
-            @display("p=324,436;i=systems/switch;is=vs");
+            @display("p=324,436;i=abstract/switch;is=vs");
         }
         rc04: InetUserHost {
-            @display("p=549,171;i=systems/laptop;is=vs");
+            @display("p=549,171;i=device/laptop;is=vs");
         }
         f01p10: PLC {
-            @display("p=233,287;i=systems/rtu;is=vs");
+            @display("p=233,287;i=abstract/table2;is=vs");
         }
         crs01: InteractiveServer {
-            @display("p=810,383;i=systems/server;is=vs");
+            @display("p=810,383;i=device/server2;is=vs");
         }
         f01p04: PLC {
-            @display("p=65,115;i=systems/rtu;is=vs");
+            @display("p=65,115;i=abstract/table2;is=vs");
         }
         cs02: Router {
-            @display("p=642,489;i=systems/switch;is=vs");
+            @display("p=642,489;i=abstract/switch;is=vs");
         }
         chs01: WebServer {
-            @display("p=577,545;i=systems/web_server;is=vs");
+            @display("p=577,545;i=device/server;is=vs");
         }
         f02r03: RTU {
-            @display("p=758,199;i=systems/plc;is=vs");
+            @display("p=758,199;i=device/hub;is=vs");
         }
         f01p05: PLC {
-            @display("p=71,156;i=systems/rtu;is=vs");
+            @display("p=71,156;i=abstract/table2;is=vs");
         }
         cs03: Router {
-            @display("p=505,545;i=systems/switch;is=vs");
+            @display("p=505,545;i=abstract/switch;is=vs");
         }
         c02: InetUserHost {
-            @display("p=438,541;i=systems/pc;is=vs");
+            @display("p=438,541;i=device/pc3;is=vs");
         }
         f01p11: PLC {
-            @display("p=277,266;i=systems/rtu;is=vs");
+            @display("p=277,266;i=abstract/table2;is=vs");
         }
         f01s01: Router {
-            @display("p=347,128;i=systems/switch;is=vs");
+            @display("p=347,128;i=abstract/switch;is=vs");
         }
         f01p15: PLC {
-            @display("p=439,87;i=systems/rtu;is=vs");
+            @display("p=439,87;i=abstract/table2;is=vs");
         }
         f00r02: RTU {
-            @display("p=233,463;i=systems/plc;is=vs");
+            @display("p=233,463;i=device/hub;is=vs");
         }
         f02sr03: IED {
-            @display("p=808,184;i=systems/ied;is=vs");
+            @display("p=808,184;i=device/smallrouter;is=vs");
         }
         f02r02: RTU {
-            @display("p=708,127;i=systems/plc;is=vs");
+            @display("p=708,127;i=device/hub;is=vs");
         }
         f00r01: RTU {
-            @display("p=183,453;i=systems/plc;is=vs");
+            @display("p=183,453;i=device/hub;is=vs");
         }
         f00r06: RTU {
-            @display("p=274,540;i=systems/plc;is=vs");
+            @display("p=274,540;i=device/hub;is=vs");
         }
         f00sr01: RTU {
-            @display("p=109,488;i=systems/ied;is=vs");
+            @display("p=109,488;i=device/smallrouter;is=vs");
         }
         f00r03: RTU {
-            @display("p=339,513;i=systems/plc;is=vs");
+            @display("p=339,513;i=device/hub;is=vs");
         }
         f02sr02: IED {
-            @display("p=723,87;i=systems/ied;is=vs");
+            @display("p=723,87;i=device/smallrouter;is=vs");
         }
         c04: InetUserHost {
-            @display("p=562,606;i=systems/pc;is=vs");
+            @display("p=562,606;i=device/pc3;is=vs");
         }
         f02r01: RTU {
-            @display("p=686,297;i=systems/plc;is=vs");
+            @display("p=686,297;i=device/hub;is=vs");
         }
         rc03: InetUserHost {
-            @display("p=521,138;i=systems/laptop;is=vs");
+            @display("p=521,138;i=device/laptop;is=vs");
         }
         f02p04: PLC {
-            @display("p=645,124;i=systems/rtu;is=vs");
+            @display("p=645,124;i=abstract/table2;is=vs");
         }
         ch01: Historian {
-            @display("p=760,508;i=systems/historian;is=vs");
+            @display("p=760,508;i=abstract/db;is=vs");
         }
         rc01: InetUserHost {
-            @display("p=426,157;i=systems/laptop;is=vs");
+            @display("p=426,157;i=device/laptop;is=vs");
         }
         f00p03: PLC {
-            @display("p=124,432;i=systems/rtu;is=vs");
+            @display("p=124,432;i=abstract/table2;is=vs");
         }
         f01p01: PLC {
-            @display("p=209,107;i=systems/rtu;is=vs");
+            @display("p=209,107;i=abstract/table2;is=vs");
         }
         f00sr03: IED {
-            @display("p=340,573;i=systems/ied;is=vs");
+            @display("p=340,573;i=device/smallrouter;is=vs");
         }
         f02sr01: IED {
-            @display("p=761,320;i=systems/ied;is=vs");
+            @display("p=761,320;i=device/smallrouter;is=vs");
         }
         rc02: InetUserHost {
-            @display("p=479,138;i=systems/laptop;is=vs");
+            @display("p=479,138;i=device/laptop;is=vs");
         }
         f02p02: PLC {
-            @display("p=776,127;i=systems/rtu;is=vs");
+            @display("p=776,127;i=abstract/table2;is=vs");
         }
         f00sr02: IED {
-            @display("p=165,513;i=systems/ied;is=vs");
+            @display("p=165,513;i=device/smallrouter;is=vs");
         }
         f01p14: PLC {
-            @display("p=370,65;i=systems/rtu;is=vs");
+            @display("p=370,65;i=abstract/table2;is=vs");
         }
         f01p12: PLC {
-            @display("p=277,156;i=systems/rtu;is=vs");
+            @display("p=277,156;i=abstract/table2;is=vs");
         }
         f01p09: PLC {
-            @display("p=181,276;i=systems/rtu;is=vs");
+            @display("p=181,276;i=abstract/table2;is=vs");
         }
         f01p02: PLC {
-            @display("p=165,65;i=systems/rtu;is=vs");
+            @display("p=165,65;i=abstract/table2;is=vs");
         }
         c01: InetUserHost {
-            @display("p=452,606;i=systems/pc;is=vs");
+            @display("p=452,606;i=device/pc3;is=vs");
         }
         f00p05: PLC {
-            @display("p=396,471;i=systems/rtu;is=vs");
+            @display("p=396,471;i=abstract/table2;is=vs");
         }
         f00p01: PLC {
-            @display("p=183,342;i=systems/rtu;is=vs");
+            @display("p=183,342;i=abstract/table2;is=vs");
         }
         css02: MTU {
-            @display("p=532,488;i=systems/server;is=vs");
+            @display("p=532,488;i=device/server2;is=vs");
         }
         f01p13: PLC {
-            @display("p=293,76;i=systems/rtu;is=vs");
+            @display("p=293,76;i=abstract/table2;is=vs");
         }
         f00p04: PLC {
-            @display("p=218,536;i=systems/plc;is=vs");
+            @display("p=218,536;i=abstract/table2;is=vs");
         }
         f00sr06: IED {
-            @display("p=244,605;i=systems/ied;is=vs");
+            @display("p=244,605;i=device/smallrouter;is=vs");
         }
         css01: MTU {
-            @display("p=577,446;i=systems/server;is=vs");
+            @display("p=577,446;i=device/server2;is=vs");
         }
         css03: MTU {
-            @display("p=657,559;i=systems/server;is=vs");
+            @display("p=657,559;i=device/server2;is=vs");
         }
         brr: Router {
-            @display("p=479,197;is=vs;i=systems/router");
+            @display("p=479,197;is=vs;i=abstract/switch");
             @AS();
         }
         f01p06: PLC {
-            @display("p=71,199;i=systems/rtu;is=vs");
+            @display("p=71,199;i=abstract/table2;is=vs");
         }
         f01p07: PLC {
-            @display("p=65,265;i=systems/rtu;is=vs");
+            @display("p=65,265;i=abstract/table2;is=vs");
         }
         f00p02: PLC {
-            @display("p=137,377;i=systems/rtu;is=vs");
+            @display("p=137,377;i=abstract/table2;is=vs");
         }
         f01p03: PLC {
-            @display("p=109,81;i=systems/rtu;is=vs");
+            @display("p=109,81;i=abstract/table2;is=vs");
         }
         f01p08: PLC {
-            @display("p=118,266;i=systems/rtu;is=vs");
+            @display("p=118,266;i=abstract/table2;is=vs");
         }
         f02p01: PLC {
-            @display("p=761,252;i=systems/rtu;is=vs");
+            @display("p=761,252;i=abstract/table2;is=vs");
         }
         c03: InetUserHost {
-            @display("p=505,620;i=systems/pc;is=vs");
+            @display("p=505,620;i=device/pc3;is=vs");
         }
         cdb01: DatabaseServer {
-            @display("p=717,554;i=systems/database;is=vs");
+            @display("p=717,554;i=abstract/db;is=vs");
         }
         crs02: InteractiveServer {
-            @display("p=810,446;i=systems/server;is=vs");
+            @display("p=810,446;i=device/server2;is=vs");
         }
         cs01: Router {
-            @display("p=738,407;i=systems/switch;is=vs");
+            @display("p=738,407;i=abstract/switch;is=vs");
         }
 
 
