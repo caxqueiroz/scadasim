@@ -1,5 +1,6 @@
 package scadasim.nodes.scada;
 
+import scadasim.applications.modbusApp.ModbusUser;
 import inet.base.NotificationBoard;
 import inet.linklayer.ethernet.EthernetInterface;
 import inet.linklayer.ppp.PPPInterface;
@@ -37,7 +38,7 @@ module RemoteUserHost
         inout pppg[];
         inout ethg[];
     submodules:
-        inetUser: InetUser {
+        inetUser: ModbusUser {
             parameters:
                 @display("p=60,390;i=abstract/person");
 

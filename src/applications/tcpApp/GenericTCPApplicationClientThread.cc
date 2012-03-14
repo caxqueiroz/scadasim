@@ -192,7 +192,7 @@ void GenericTCPApplicationClientThread::sendRequest() {
 
     appmsg->setByteLength(packetSize);
     appmsg->setReplyLength(curProfile.getReplyLength(true));
-    double timeToRespond = curProfile.getTimeToRespond(false);
+    double timeToRespond = curProfile.getTimeToRespond(true);
 
     appmsg->setTimeToRespond(timeToRespond);
     appmsg->setReplyPerRequest(1);

@@ -60,7 +60,7 @@ module Historian
         tcp: TCP {
             parameters:
                 //  maxThreadCount = maxTCPThreadCount;
-                @display("p=163,154;i=block/wheelbarrow");
+                @display("p=268,156;i=block/wheelbarrow");
 
         }
         //        udp: UDP_hack {
@@ -68,14 +68,14 @@ module Historian
         //                @display("p=272,154;i=block/transport");
         //
         //        }
-        //        pingApp: GenericICMPPingApplication {
-        //            parameters:
-        //                isServer = true;
-        //                profileNumber = 21;
-        //                port = 0;
-        //                @display("i=block/app;p=343,200");
-        //
-        //        }
+        dbApp: GenericTCPApplication {
+            parameters:
+                isServer = true;
+                profileNumber = 11;
+                port = 3336;
+                @display("i=block/app;p=326,70");
+
+        }
         networkLayer: NetworkLayer {
             parameters:
                 proxyARP = false;
@@ -96,8 +96,8 @@ module Historian
 
         }
     connections allowunconnected:
-//        tcpApp.tcpOut --> tcp.appIn++;
-//        tcpApp.tcpIn <-- tcp.appOut++;
+        dbApp.tcpOut --> tcp.appIn++;
+        dbApp.tcpIn <-- tcp.appOut++;
 
         tcp.ipOut --> networkLayer.tcpIn;
         tcp.ipIn <-- networkLayer.tcpOut;

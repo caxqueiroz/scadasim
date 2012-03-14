@@ -15,10 +15,11 @@
 
 package InfoDivSimulation;
 
+import scadasim.nodes.scada.WorkstationHost;
 import scadasim.base.ConnectionManager;
 import scadasim.applications.scada.SCADATrafficProfileManager;
 import scadasim.base.TrafficProfileManager;
-import scadasim.nodes.inet.InteractiveServer;
+import scadasim.nodes.scada.RemoteServer;
 import scadasim.nodes.inet.DatabaseServer;
 import scadasim.nodes.scada.Historian;
 import scadasim.nodes.scada.MTU;
@@ -107,13 +108,13 @@ network CaseStudy
         f00s02: Router {
             @display("p=324,436;i=abstract/switch;is=vs");
         }
-        rc04: InetUserHost {
+        rc04: RemoteUserHost {
             @display("p=549,171;i=device/laptop;is=vs");
         }
         f01p10: PLC {
             @display("p=233,287;i=abstract/table2;is=vs");
         }
-        crs01: InteractiveServer {
+        crs01: RemoteServer {
             @display("p=810,383;i=device/server2;is=vs");
         }
         f01p04: PLC {
@@ -134,7 +135,7 @@ network CaseStudy
         cs03: Router {
             @display("p=505,545;i=abstract/switch;is=vs");
         }
-        c02: InetUserHost {
+        c02: WorkstationHost {
             @display("p=438,541;i=device/pc3;is=vs");
         }
         f01p11: PLC {
@@ -170,13 +171,13 @@ network CaseStudy
         f02sr02: IED {
             @display("p=723,87;i=device/smallrouter;is=vs");
         }
-        c04: InetUserHost {
+        c04: WorkstationHost {
             @display("p=562,606;i=device/pc3;is=vs");
         }
         f02r01: RTU {
             @display("p=686,297;i=device/hub;is=vs");
         }
-        rc03: InetUserHost {
+        rc03: RemoteUserHost {
             @display("p=521,138;i=device/laptop;is=vs");
         }
         f02p04: PLC {
@@ -185,7 +186,7 @@ network CaseStudy
         ch01: Historian {
             @display("p=760,508;i=abstract/db;is=vs");
         }
-        rc01: InetUserHost {
+        rc01: RemoteUserHost {
             @display("p=426,157;i=device/laptop;is=vs");
         }
         f00p03: PLC {
@@ -200,7 +201,7 @@ network CaseStudy
         f02sr01: IED {
             @display("p=761,320;i=device/smallrouter;is=vs");
         }
-        rc02: InetUserHost {
+        rc02: RemoteUserHost {
             @display("p=479,138;i=device/laptop;is=vs");
         }
         f02p02: PLC {
@@ -221,7 +222,7 @@ network CaseStudy
         f01p02: PLC {
             @display("p=165,65;i=abstract/table2;is=vs");
         }
-        c01: InetUserHost {
+        c01: WorkstationHost {
             @display("p=452,606;i=device/pc3;is=vs");
         }
         f00p05: PLC {
@@ -270,13 +271,13 @@ network CaseStudy
         f02p01: PLC {
             @display("p=761,252;i=abstract/table2;is=vs");
         }
-        c03: InetUserHost {
+        c03: WorkstationHost {
             @display("p=505,620;i=device/pc3;is=vs");
         }
         cdb01: DatabaseServer {
             @display("p=717,554;i=abstract/db;is=vs");
         }
-        crs02: InteractiveServer {
+        crs02: RemoteServer {
             @display("p=810,446;i=device/server2;is=vs");
         }
         cs01: Router {

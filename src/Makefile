@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for scadasim
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -I../../inet/src/networklayer/rsvp_te -I../../inet/src/networklayer/common -I../../inet/src/networklayer/icmpv6 -I../../inet/src/transport/tcp -I../../inet/src/networklayer/mpls -I../../inet/src/networklayer/ted -I../../inet/src/networklayer/contract -I../../inet/src/util -I../../inet/src/transport/contract -I../../inet/src/linklayer/mfcore -I../../inet/src/networklayer/ldp -I../../inet/src/networklayer/ipv4 -I../../inet/src/base -I../../inet/src/util/headerserializers -I../../inet/src/networklayer/ipv6 -I../../inet/src/transport/sctp -I../../inet/src/world -I../../inet/src/applications/pingapp -I../../inet/src/linklayer/contract -I../../inet/src/networklayer/arp -I../../inet/src/transport/udp -L../../inet/out/$(CONFIGNAME)/src -linet -KINET_PROJ=../../inet
+#  opp_makemake -f --deep -I../../inet/src/networklayer/ipv4 -I../../inet/src/networklayer/common -I../../inet/src/networklayer/rsvp_te -I../../inet/src/networklayer/icmpv6 -I../../inet/src/transport/tcp -I../../inet/src/networklayer/mpls -I../../inet/src/base -I../../inet/src/networklayer/ted -I../../inet/src/util/headerserializers -I../../inet/src/networklayer/contract -I../../inet/src/util -I../../inet/src/transport/contract -I../../inet/src/linklayer/mfcore -I../../inet/src/networklayer/ipv6 -I../../inet/src/transport/sctp -I../../inet/src/world -I../../inet/src/applications/pingapp -I../../inet/src/linklayer/contract -I../../inet/src/networklayer/arp -I../../inet/src/networklayer/ldp -I../../inet/src/transport/udp -L../../inet/out/$(CONFIGNAME)/src -linet -KINET_PROJ=../../inet
 #
 
 # Name of target to be created (-o option)
@@ -15,26 +15,26 @@ USERIF_LIBS = $(ALL_ENV_LIBS) # that is, $(TKENV_LIBS) $(CMDENV_LIBS)
 
 # C++ include paths (with -I)
 INCLUDE_PATH = \
-    -I../../inet/src/networklayer/rsvp_te \
+    -I../../inet/src/networklayer/ipv4 \
     -I../../inet/src/networklayer/common \
+    -I../../inet/src/networklayer/rsvp_te \
     -I../../inet/src/networklayer/icmpv6 \
     -I../../inet/src/transport/tcp \
     -I../../inet/src/networklayer/mpls \
+    -I../../inet/src/base \
     -I../../inet/src/networklayer/ted \
+    -I../../inet/src/util/headerserializers \
     -I../../inet/src/networklayer/contract \
     -I../../inet/src/util \
     -I../../inet/src/transport/contract \
     -I../../inet/src/linklayer/mfcore \
-    -I../../inet/src/networklayer/ldp \
-    -I../../inet/src/networklayer/ipv4 \
-    -I../../inet/src/base \
-    -I../../inet/src/util/headerserializers \
     -I../../inet/src/networklayer/ipv6 \
     -I../../inet/src/transport/sctp \
     -I../../inet/src/world \
     -I../../inet/src/applications/pingapp \
     -I../../inet/src/linklayer/contract \
     -I../../inet/src/networklayer/arp \
+    -I../../inet/src/networklayer/ldp \
     -I../../inet/src/transport/udp \
     -I. \
     -Iapplications \
@@ -86,7 +86,6 @@ OBJS = \
     $O/applications/modbusApp/ModbusApplicationMasterThread.o \
     $O/applications/pingApp/GenericICMPPingApplication.o \
     $O/applications/scada/SCADATrafficProfileManager.o \
-    $O/applications/scada/SCADAUser.o \
     $O/applications/tcpApp/GenericTCPApplicationClientThread.o \
     $O/applications/tcpApp/GenericTCPApplication.o \
     $O/applications/tcpApp/GenericTCPApplicationServerThread.o \
@@ -433,14 +432,6 @@ $O/applications/pingApp/GenericICMPPingApplication.o: applications/pingApp/Gener
 	base/TrafficProfileManager.h
 $O/applications/scada/SCADATrafficProfileManager.o: applications/scada/SCADATrafficProfileManager.cc \
 	applications/scada/SCADATrafficProfileManager.h
-$O/applications/scada/SCADAUser.o: applications/scada/SCADAUser.cc \
-	$(INET_PROJ)/src/base/INETDefs.h \
-	$(INET_PROJ)/src/networklayer/contract/IPAddress.h \
-	$(INET_PROJ)/src/networklayer/contract/IPv6Address.h \
-	$(INET_PROJ)/src/networklayer/contract/IPvXAddress.h \
-	applications/scada/SCADATransmissionConfig.h \
-	applications/scada/SCADAUser.h \
-	base/SCADASIMDefs.h
 $O/applications/scada/scadamessage_m.o: applications/scada/scadamessage_m.cc \
 	applications/scada/scadamessage_m.h
 $O/applications/tcpApp/GenericTCPApplication.o: applications/tcpApp/GenericTCPApplication.cc \

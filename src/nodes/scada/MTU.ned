@@ -79,6 +79,16 @@ module MTU
                 @display("p=267,67;i=block/app");
 
         }
+        
+        mtuServer: GenericTCPApplication {
+            parameters:
+                isServer = true;
+                profileNumber = 10;
+                port = 5000;
+              
+                @display("p=267,67;i=block/app");
+
+        }
 
         tcp: TCP {
             parameters:
@@ -120,8 +130,8 @@ module MTU
 
         }
     connections allowunconnected:
-//        mtuServer.tcpOut --> tcp.appIn++;
-//        mtuServer.tcpIn <-- tcp.appOut++;
+        mtuServer.tcpOut --> tcp.appIn++;
+        mtuServer.tcpIn <-- tcp.appOut++;
 
         mtuClient.tcpIn <-- tcp.appOut++;
         mtuClient.tcpOut --> tcp.appIn++;
