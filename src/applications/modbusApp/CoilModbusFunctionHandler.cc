@@ -15,9 +15,10 @@
 
 #include "CoilModbusFunctionHandler.h"
 #include "ModbusMessage_m.h"
-
+#include <iostream>
+#include <sstream>
+using namespace std;
 Register_Class(CoilModbusFunctionHandler);
-
 
 CoilModbusFunctionHandler::CoilModbusFunctionHandler() {
     //base class handling this.
@@ -34,13 +35,18 @@ void CoilModbusFunctionHandler::init() {
 cMessage * CoilModbusFunctionHandler::createRandomMessage() {
     ModbusMessage *msg = new ModbusMessage("coil-data");
     uint8_t query[MIN_QUERY_LENGTH];
-    int len = modbus->buildQueryBasis(0, FC_FORCE_SINGLE_COIL, 0, 0, query);
+    int slave = genk_intrand(0, 255);
+    int nb = genk_intrand(0, 99);
+    int start_addr = genk_intrand(0, 50);
+    int len = modbus->buildQueryBasis(slave, FC_FORCE_SINGLE_COIL, start_addr,
+            nb, query);
 
     msg->setByteLength(len);
     msg->setPduArraySize(len);
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; i++) {
         msg->setPdu(i, query[i]);
-    return dynamic_cast<cMessage *> (msg);
+    }
+    return dynamic_cast<cMessage *>(msg);
 }
 
 void CoilModbusFunctionHandler::processMessage(cMessage * msg) {

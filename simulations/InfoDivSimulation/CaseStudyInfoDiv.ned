@@ -69,11 +69,11 @@ network CaseStudy
     @display("bgb=858,655,white");
     submodules:
         flatNetworkConfigurator: FlatNetworkConfigurator {
-            @display("p=739,8;i=abstract/table_s");
+            @display("p=686,31;i=abstract/table_s");
 
         }
         connectionManager: ConnectionManager {
-            @display("p=759,8;i=block/cogwheel;is=s");
+            @display("p=776,50;i=block/cogwheel;is=s");
         }
 
         brf01: Router {
@@ -286,10 +286,10 @@ network CaseStudy
 
 
         trafficProfileManager: TrafficProfileManager {
-            @display("p=801,8;i=block/network2;is=s");
+            @display("p=549,82;i=block/network2;is=s");
         }
         scadaTrafficProfileManager: SCADATrafficProfileManager {
-            @display("p=645,12;is=vs;i=abstract/table");
+            @display("p=521,12;is=vs;i=abstract/table");
         }
     connections:
         f01s02.pppg++ <--> host2gateway <--> f01p09.pppg++;

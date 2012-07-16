@@ -87,7 +87,7 @@ unsigned int ModbusTCP::computeResponseLength(uint8_t *query) {
 }
 
 int ModbusTCP::buildQueryBasis(int slave, int function, int start_addr, int nb,
-        uint8_t *query) {
+        uint8_t query[]) {
 
     /* Extract from MODBUS Messaging on TCP/IP Implementation
      Guide V1.0b (page 23/46):

@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for scadasim
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -I../../inet/src/networklayer/ipv4 -I../../inet/src/networklayer/common -I../../inet/src/networklayer/rsvp_te -I../../inet/src/networklayer/icmpv6 -I../../inet/src/transport/tcp -I../../inet/src/networklayer/mpls -I../../inet/src/base -I../../inet/src/networklayer/ted -I../../inet/src/util/headerserializers -I../../inet/src/networklayer/contract -I../../inet/src/util -I../../inet/src/transport/contract -I../../inet/src/linklayer/mfcore -I../../inet/src/networklayer/ipv6 -I../../inet/src/transport/sctp -I../../inet/src/world -I../../inet/src/applications/pingapp -I../../inet/src/linklayer/contract -I../../inet/src/networklayer/arp -I../../inet/src/networklayer/ldp -I../../inet/src/transport/udp -L../../inet/out/$(CONFIGNAME)/src -linet -KINET_PROJ=../../inet
+#  opp_makemake -f --deep -I/usr/local/mysql/include/ -I/usr/local/lib/include -I../../inet/src/networklayer/ipv4 -I../../inet/src/networklayer/common -I../../inet/src/networklayer/rsvp_te -I../../inet/src/networklayer/icmpv6 -I../../inet/src/transport/tcp -I../../inet/src/networklayer/mpls -I../../inet/src/base -I../../inet/src/networklayer/ted -I../../inet/src/util/headerserializers -I../../inet/src/networklayer/contract -I../../inet/obsolete/rsvp_te -I../../inet/src/util -I../../inet/src/transport/contract -I../../inet/src/linklayer/mfcore -I../../inet/src/networklayer/ipv6 -I../../inet/src/transport/sctp -I../../inet/src/world -I../../inet/src/applications/pingapp -I../../inet/src/linklayer/contract -I../../inet/src/networklayer/arp -I../../inet/src/networklayer/ldp -I../../inet/src/transport/udp -L/usr/local/mysql/lib -L/usr/local/lib/ -L../../inet/out/$(CONFIGNAME)/src -lsqlite3 -linet -KINET_PROJ=../../inet
 #
 
 # Name of target to be created (-o option)
@@ -15,6 +15,8 @@ USERIF_LIBS = $(ALL_ENV_LIBS) # that is, $(TKENV_LIBS) $(CMDENV_LIBS)
 
 # C++ include paths (with -I)
 INCLUDE_PATH = \
+    -I/usr/local/mysql/include/ \
+    -I/usr/local/lib/include \
     -I../../inet/src/networklayer/ipv4 \
     -I../../inet/src/networklayer/common \
     -I../../inet/src/networklayer/rsvp_te \
@@ -25,6 +27,7 @@ INCLUDE_PATH = \
     -I../../inet/src/networklayer/ted \
     -I../../inet/src/util/headerserializers \
     -I../../inet/src/networklayer/contract \
+    -I../../inet/obsolete/rsvp_te \
     -I../../inet/src/util \
     -I../../inet/src/transport/contract \
     -I../../inet/src/linklayer/mfcore \
@@ -40,6 +43,7 @@ INCLUDE_PATH = \
     -Iapplications \
     -Iapplications/ddos \
     -Iapplications/generic \
+    -Iapplications/instrumentation \
     -Iapplications/modbusApp \
     -Iapplications/pingApp \
     -Iapplications/scada \
@@ -58,14 +62,15 @@ INCLUDE_PATH = \
     -Itransport \
     -Itransport/contract \
     -Itransport/tcp \
-    -Itransport/udp
+    -Itransport/udp \
+    -Iutil
 
 # Additional object and library files to link with
 EXTRA_OBJS =
 
 # Additional libraries (-L, -l options)
-LIBS = -L../../inet/out/$(CONFIGNAME)/src  -linet
-LIBS += -Wl,-rpath,`abspath ../../inet/out/$(CONFIGNAME)/src`
+LIBS = -L/usr/local/mysql/lib -L/usr/local/lib/ -L../../inet/out/$(CONFIGNAME)/src  -lsqlite3 -linet
+LIBS += -Wl,-rpath,`abspath /usr/local/mysql/lib` -Wl,-rpath,`abspath /usr/local/lib/` -Wl,-rpath,`abspath ../../inet/out/$(CONFIGNAME)/src`
 
 # Output directory
 PROJECT_OUTPUT_DIR = ../out
@@ -75,35 +80,36 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 # Object files for local .cc and .msg files
 OBJS = \
     $O/applications/ddos/TribeFloodNetwork.o \
-    $O/applications/generic/InetUser.o \
     $O/applications/generic/GenericApplication.o \
+    $O/applications/generic/InetUser.o \
+    $O/applications/instrumentation/SimTrace.o \
+    $O/applications/modbusApp/CoilModbusFunctionHandler.o \
+    $O/applications/modbusApp/ModbusApplicationMasterThread.o \
     $O/applications/modbusApp/ModbusApplicationSlaveThread.o \
-    $O/applications/modbusApp/ModbusUser.o \
+    $O/applications/modbusApp/ModbusFunctionHandler.o \
     $O/applications/modbusApp/ModbusTCP.o \
     $O/applications/modbusApp/ModbusTCPApplication.o \
-    $O/applications/modbusApp/CoilModbusFunctionHandler.o \
-    $O/applications/modbusApp/ModbusFunctionHandler.o \
-    $O/applications/modbusApp/ModbusApplicationMasterThread.o \
+    $O/applications/modbusApp/ModbusUser.o \
     $O/applications/pingApp/GenericICMPPingApplication.o \
     $O/applications/scada/SCADATrafficProfileManager.o \
-    $O/applications/tcpApp/GenericTCPApplicationClientThread.o \
     $O/applications/tcpApp/GenericTCPApplication.o \
+    $O/applications/tcpApp/GenericTCPApplicationClientThread.o \
     $O/applications/tcpApp/GenericTCPApplicationServerThread.o \
     $O/applications/worm/UDPWormVictim.o \
-    $O/base/TrafficProfileManager.o \
     $O/base/ConnectionManager.o \
-    $O/external/SSScheduler.o \
+    $O/base/TrafficProfileManager.o \
     $O/external/ModbusGate.o \
-    $O/external/SSThread.o \
     $O/external/SSGate.o \
-    $O/external/modbus.o \
     $O/external/SSProxy.o \
+    $O/external/SSScheduler.o \
+    $O/external/SSThread.o \
+    $O/external/modbus.o \
     $O/networklayer/autorouting/TGMNetworkConfigurator.o \
     $O/networklayer/ipv4/IP_hack.o \
     $O/networklayer/queue/DropTailTraceQueue.o \
     $O/transport/contract/UDPSocketVector.o \
-    $O/transport/tcp/TCP_hack.o \
     $O/transport/tcp/TCPConnection_hack.o \
+    $O/transport/tcp/TCP_hack.o \
     $O/transport/udp/UDP_hack.o \
     $O/applications/generic/GenericApplicationMessage_m.o \
     $O/applications/modbusApp/ModbusMessage_m.o \
@@ -170,16 +176,14 @@ endif
 #------------------------------------------------------------------------------
 
 # Main target
-all: $(TARGET)
-
-$(TARGET) : $O/$(TARGET)
+all: $O/$(TARGET)
 	$(LN) $O/$(TARGET) .
 
 $O/$(TARGET): $(OBJS)  $(wildcard $(EXTRA_OBJS)) Makefile
 	@$(MKPATH) $O
 	$(CXX) $(LDFLAGS) -o $O/$(TARGET)  $(OBJS) $(EXTRA_OBJS) $(AS_NEEDED_OFF) $(WHOLE_ARCHIVE_ON) $(LIBS) $(WHOLE_ARCHIVE_OFF) $(OMNETPP_LIBS)
 
-.PHONY:
+.PHONY: all clean cleanall depend msgheaders
 
 .SUFFIXES: .cc
 
@@ -199,6 +203,7 @@ clean:
 	-rm -f applications/*_m.cc applications/*_m.h
 	-rm -f applications/ddos/*_m.cc applications/ddos/*_m.h
 	-rm -f applications/generic/*_m.cc applications/generic/*_m.h
+	-rm -f applications/instrumentation/*_m.cc applications/instrumentation/*_m.h
 	-rm -f applications/modbusApp/*_m.cc applications/modbusApp/*_m.h
 	-rm -f applications/pingApp/*_m.cc applications/pingApp/*_m.h
 	-rm -f applications/scada/*_m.cc applications/scada/*_m.h
@@ -218,12 +223,13 @@ clean:
 	-rm -f transport/contract/*_m.cc transport/contract/*_m.h
 	-rm -f transport/tcp/*_m.cc transport/tcp/*_m.h
 	-rm -f transport/udp/*_m.cc transport/udp/*_m.h
+	-rm -f util/*_m.cc util/*_m.h
 
 cleanall: clean
 	-rm -rf $(PROJECT_OUTPUT_DIR)
 
 depend:
-	$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc applications/*.cc applications/ddos/*.cc applications/generic/*.cc applications/modbusApp/*.cc applications/pingApp/*.cc applications/scada/*.cc applications/tcpApp/*.cc applications/worm/*.cc base/*.cc external/*.cc networklayer/*.cc networklayer/autorouting/*.cc networklayer/contract/*.cc networklayer/ipv4/*.cc networklayer/queue/*.cc nodes/*.cc nodes/inet/*.cc nodes/scada/*.cc transport/*.cc transport/contract/*.cc transport/tcp/*.cc transport/udp/*.cc
+	$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES)  ./*.cc applications/*.cc applications/ddos/*.cc applications/generic/*.cc applications/instrumentation/*.cc applications/modbusApp/*.cc applications/pingApp/*.cc applications/scada/*.cc applications/tcpApp/*.cc applications/worm/*.cc base/*.cc external/*.cc networklayer/*.cc networklayer/autorouting/*.cc networklayer/contract/*.cc networklayer/ipv4/*.cc networklayer/queue/*.cc nodes/*.cc nodes/inet/*.cc nodes/scada/*.cc transport/*.cc transport/contract/*.cc transport/tcp/*.cc transport/udp/*.cc util/*.cc
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 $O/applications/ddos/TribeFloodNetwork.o: applications/ddos/TribeFloodNetwork.cc \
@@ -298,6 +304,8 @@ $O/applications/generic/InetUser.o: applications/generic/InetUser.cc \
 	base/ConnectionManager.h \
 	base/SCADASIMDefs.h \
 	base/TrafficProfileManager.h
+$O/applications/instrumentation/SimTrace.o: applications/instrumentation/SimTrace.cc \
+	applications/instrumentation/SimTrace.h
 $O/applications/modbusApp/CoilModbusFunctionHandler.o: applications/modbusApp/CoilModbusFunctionHandler.cc \
 	$(INET_PROJ)/src/base/INETDefs.h \
 	applications/modbusApp/CoilModbusFunctionHandler.h \
@@ -317,6 +325,7 @@ $O/applications/modbusApp/ModbusApplicationMasterThread.o: applications/modbusAp
 	applications/generic/GenericApplication.h \
 	applications/generic/InetUser.h \
 	applications/generic/TransmissionConfig.h \
+	applications/instrumentation/SimTrace.h \
 	applications/modbusApp/ModbusApplicationMasterThread.h \
 	applications/modbusApp/ModbusFunctionHandler.h \
 	applications/modbusApp/ModbusMessage_m.h \
@@ -341,6 +350,7 @@ $O/applications/modbusApp/ModbusApplicationSlaveThread.o: applications/modbusApp
 	applications/generic/GenericApplication.h \
 	applications/generic/InetUser.h \
 	applications/generic/TransmissionConfig.h \
+	applications/instrumentation/SimTrace.h \
 	applications/modbusApp/ModbusApplicationSlaveThread.h \
 	applications/modbusApp/ModbusFunctionHandler.h \
 	applications/modbusApp/ModbusMessage_m.h \

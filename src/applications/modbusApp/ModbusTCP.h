@@ -287,7 +287,7 @@ class ModbusTCP
 		void errorTreat(int code, const char *string);
 
 		/* Builds a TCP query header */
-		int buildQueryBasis(int slave, int function, int start_addr, int nb, uint8_t *query);
+		int buildQueryBasis(int slave, int function, int start_addr, int nb, uint8_t query[]);
 
 		int buildResponseBasis(sft_t *sft, uint8_t *response);
 

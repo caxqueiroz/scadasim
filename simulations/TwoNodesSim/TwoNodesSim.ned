@@ -68,11 +68,11 @@ network TwoNodesSim
     @display("bgb=858,655,white");
     submodules:
         flatNetworkConfigurator: FlatNetworkConfigurator {
-            @display("p=739,8;i=abstract/table_s");
+            @display("p=554,99;i=abstract/table_s");
 
         }
         connectionManager: ConnectionManager {
-            @display("p=759,8;i=block/cogwheel;is=s");
+            @display("p=705,164;i=block/cogwheel;is=s");
         }
 
         Internet: Router {
@@ -96,11 +96,11 @@ network TwoNodesSim
         f00p01: PLC {
             @display("p=77,374;i=device/device;is=vs");
         }
-        css01:MTU {
+        css01: MTU {
             @display("p=785,496;i=device/pc3;is=vs");
         }
         trafficProfileManager: TrafficProfileManager {
-            @display("p=801,8;i=block/network2;is=s");
+            @display("p=396,247;i=block/network2;is=s");
         }
     //        scadaTrafficProfileManager: SCADATrafficProfileManager {
     //            @display("p=645,12;is=vs;i=abstract/table");

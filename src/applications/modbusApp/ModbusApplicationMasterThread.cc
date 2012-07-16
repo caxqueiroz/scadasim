@@ -18,6 +18,9 @@
 #include "ModbusMessage_m.h"
 #include "ModbusTCPApplication.h"
 #include "ModbusFunctionHandler.h"
+#include "SimTrace.h"
+#include <iostream>
+#include <sstream>
 
 ModbusApplicationMasterThread::ModbusApplicationMasterThread(TrafficProfile &p,
         TargetInfo &i) :
@@ -70,11 +73,21 @@ void ModbusApplicationMasterThread::sendRequest() {
     ModbusMessage *mbmsg = dynamic_cast<ModbusMessage *> (mfh->createRandomMessage());
     noBytesSend += mbmsg->getByteLength();
 
-    double timeToRespond = curProfile.getTimeToRespond(false);
+    double timeToRespond = curProfile.getTimeToRespond(true);
     mbmsg->setReplyDelay(timeToRespond);
-
     mbmsg->setCloseConn(threadState == DISCONNECTED);
+    SimTrace simtrace;
 
+    int len = mbmsg->getPduArraySize();
+    ostringstream stringbuilder;
+    for (int i = 0; i < len; ++i) {
+        if(i>5)
+            stringbuilder << simtrace.hexC(mbmsg->getPdu(i));
+    }
+    string source = socket->getLocalAddress().get4().str();
+    string dest = socket->getRemoteAddress().get4().str();
+
+    simtrace.dump(stringbuilder.str(),source,dest,string("master"));
     socket->send(mbmsg);
 
 }

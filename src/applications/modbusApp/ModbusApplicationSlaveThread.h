@@ -25,6 +25,7 @@ public:
 
 protected:
     void socketDataArrived(int connId, void *youtPtr, cPacket *msg, bool urgent);
+    void timerExpired(cMessage *msg);
 };
 
 #endif /* SCADATCPAPPLICATIONSLAVETHREAD_H_ */
