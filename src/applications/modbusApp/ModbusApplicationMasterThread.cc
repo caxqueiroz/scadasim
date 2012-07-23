@@ -87,7 +87,7 @@ void ModbusApplicationMasterThread::sendRequest() {
     string source = socket->getLocalAddress().get4().str();
     string dest = socket->getRemoteAddress().get4().str();
 
-    simtrace.dump(stringbuilder.str(),source,dest,string("master"));
+    simtrace.dump(stringbuilder.str(),source,dest,string("client"));
     socket->send(mbmsg);
 
 }

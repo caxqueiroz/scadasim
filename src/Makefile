@@ -98,18 +98,18 @@ OBJS = \
     $O/applications/worm/UDPWormVictim.o \
     $O/base/ConnectionManager.o \
     $O/base/TrafficProfileManager.o \
+    $O/external/modbus.o \
     $O/external/ModbusGate.o \
     $O/external/SSGate.o \
     $O/external/SSProxy.o \
     $O/external/SSScheduler.o \
     $O/external/SSThread.o \
-    $O/external/modbus.o \
     $O/networklayer/autorouting/TGMNetworkConfigurator.o \
     $O/networklayer/ipv4/IP_hack.o \
     $O/networklayer/queue/DropTailTraceQueue.o \
     $O/transport/contract/UDPSocketVector.o \
-    $O/transport/tcp/TCPConnection_hack.o \
     $O/transport/tcp/TCP_hack.o \
+    $O/transport/tcp/TCPConnection_hack.o \
     $O/transport/udp/UDP_hack.o \
     $O/applications/generic/GenericApplicationMessage_m.o \
     $O/applications/modbusApp/ModbusMessage_m.o \

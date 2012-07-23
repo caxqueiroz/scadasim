@@ -45,7 +45,7 @@ void ModbusApplicationSlaveThread::timerExpired(cMessage *msg) {
         }
         string source = socket->getLocalAddress().get4().str();
         string dest = socket->getRemoteAddress().get4().str();
-        simtrace.dump(oss.str(), source, dest, string("slave"));
+        simtrace.dump(oss.str(), source, dest, string("server"));
         socket->send(mbmsg);
         replies.pop();
     }
