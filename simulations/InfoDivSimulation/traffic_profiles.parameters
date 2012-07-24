@@ -1,6 +1,6 @@
 <Profile>
 	<Id><2>
-	<Label><Remote Interactive Traffic>
+	<Label><RDP>
 	<RequestLength><200>
 	<RequestsPerSession><10>
 	<ReplyLength><1000>
@@ -13,7 +13,7 @@
 </Profile>
 <Profile>
 	<Id><3>
-	<Label><Web Traffic>
+	<Label><HTTP>
 	<RequestLength><200>
 	<RequestsPerSession><10>
 	<ReplyLength><1000>
@@ -26,7 +26,7 @@
 </Profile>
 <Profile>
 	<Id><5>
-	<Label><MODBUS>
+	<Label><MODBUS/TCP>
 	<RequestLength><200>
 	<RequestsPerSession><10>
 	<ReplyLength><1000>
