@@ -26,6 +26,7 @@ import scadasim.nodes.scada.MTU;
 import scadasim.nodes.scada.RTU;
 import scadasim.nodes.scada.PLC;
 import scadasim.nodes.scada.IED;
+import scadasim.nodes.scada.HMIServer;
 import scadasim.nodes.inet.WebServer;
 import scadasim.networklayer.autorouting.TGMNetworkConfigurator;
 import inet.networklayer.autorouting.FlatNetworkConfigurator;
@@ -123,7 +124,7 @@ network CaseStudy
         cs02: Router {
             @display("p=642,489;i=abstract/switch;is=vs");
         }
-        chs01: WebServer {
+        chs01: HMIServer{
             @display("p=577,545;i=device/server;is=vs");
         }
         f02r03: RTU {
